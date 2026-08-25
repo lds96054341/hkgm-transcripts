@@ -30,10 +30,17 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Start PO token provider
+        run: |
+          docker run --name bgutil-provider -d --init -p 4416:4416 \
+            brainicism/bgutil-ytdlp-pot-provider || echo "provider 기동 실패(계속 진행)"
+          sleep 8
+          curl -s -m 5 http://127.0.0.1:4416/ping && echo " provider OK" || echo "provider 응답 없음(계속 진행)"
+
       - name: Install yt-dlp
         run: |
           python -m pip install --upgrade pip
-          pip install --upgrade yt-dlp
+          pip install --upgrade yt-dlp bgutil-ytdlp-pot-provider
           yt-dlp --version
 
       - name: Fetch transcripts
@@ -184,7 +191,7 @@ jobs:
                   continue
 
               url = f"https://www.youtube.com/watch?v={vid}"
-              got_sub, used_client, info = None, None, None
+              got_sub, used_client, info, last_err = None, None, None, ""
 
               for client in CLIENTS:
                   shutil.rmtree(TMP, ignore_errors=True)
@@ -210,10 +217,12 @@ jobs:
                   if pick:
                       got_sub, used_client = pick[0], client
                       break
+                  last_err = f"[{client}] " + (r.stderr or r.stdout or "(출력 없음)")[-400:]
                   time.sleep(2)
 
               if not got_sub:
-                  status["results"].append({"id": vid, "state": "no_subtitle"})
+                  status["results"].append({"id": vid, "state": "no_subtitle",
+                                            "error": last_err})
                   index[vid] = {"ok": False, "title": (info or {}).get("title", "")}
                   continue
 
