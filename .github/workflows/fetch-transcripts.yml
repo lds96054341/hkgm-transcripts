@@ -1,0 +1,239 @@
+name: fetch-hkgm-transcripts
+
+on:
+  schedule:
+    # UTC 기준. 21:20 UTC = 06:20 KST, 21:45 UTC = 06:45 KST (두 번 시도)
+    - cron: '20 21 * * *'
+    - cron: '45 21 * * *'
+  workflow_dispatch:        # 수동 실행 버튼
+
+permissions:
+  contents: write
+
+concurrency:
+  group: hkgm-transcripts
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install yt-dlp
+        run: |
+          python -m pip install --upgrade pip
+          pip install --upgrade yt-dlp
+          yt-dlp --version
+
+      - name: Fetch transcripts
+        env:
+          YT_COOKIES: ${{ secrets.YT_COOKIES }}
+        run: |
+          python - <<'PY'
+          import json, os, re, subprocess, shutil, glob, time
+          from datetime import datetime, timezone, timedelta
+
+          CHANNEL   = "https://www.youtube.com/@hkglobalmarket/videos"
+          RECENT_N  = 15          # 최근 몇 개까지 확인할지
+          KEEP_DAYS = 45          # 오래된 자막 정리 기준
+          OUT       = "transcripts"
+          TMP       = "_tmp"
+          # 자막이 나올 때까지 순서대로 시도할 플레이어 클라이언트
+          CLIENTS   = ["default", "tv", "web_safari", "android", "ios"]
+
+          os.makedirs(OUT, exist_ok=True)
+          shutil.rmtree(TMP, ignore_errors=True)
+          os.makedirs(TMP, exist_ok=True)
+
+          base = []
+          if os.environ.get("YT_COOKIES", "").strip():
+              with open("cookies.txt", "w") as f:
+                  f.write(os.environ["YT_COOKIES"])
+              base += ["--cookies", "cookies.txt"]
+              print("[i] cookies 사용")
+
+          def run(args, timeout=300):
+              return subprocess.run(args, capture_output=True, text=True, timeout=timeout)
+
+          # ---------- 1. 최근 업로드 목록 ----------
+          ids = []
+          list_err = ""
+          for client in CLIENTS:
+              r = run(["yt-dlp", "--flat-playlist", "--playlist-end", str(RECENT_N),
+                       "--print", "%(id)s", "--extractor-args",
+                       f"youtube:player_client={client}", *base, CHANNEL])
+              got = [l.strip() for l in r.stdout.splitlines() if len(l.strip()) == 11]
+              if got:
+                  ids = got
+                  print(f"[i] 목록 확보: {len(ids)}개 (client={client})")
+                  break
+              list_err = (r.stderr or "")[-800:]
+          if not ids:
+              print("[!] 채널 목록을 가져오지 못했습니다")
+              print(list_err)
+
+          # ---------- 2. VTT -> 타임스탬프 텍스트 ----------
+          TAG = re.compile(r"<[^>]+>")
+
+          def vtt_to_text(path, bucket=30):
+              """자동자막 VTT를 30초 단위 [HH:MM:SS] 블록 텍스트로 변환"""
+              cues, cur_t = [], None
+              for raw in open(path, encoding="utf-8", errors="ignore"):
+                  line = raw.rstrip("\n")
+                  m = re.match(r"(\d{2}):(\d{2}):(\d{2})\.\d{3}\s+-->", line)
+                  if m:
+                      h, mi, s = int(m.group(1)), int(m.group(2)), int(m.group(3))
+                      cur_t = h * 3600 + mi * 60 + s
+                      continue
+                  if not line.strip() or line.startswith(("WEBVTT", "Kind:", "Language:", "NOTE")):
+                      continue
+                  if cur_t is None:
+                      continue
+                  txt = TAG.sub("", line).strip()
+                  if txt:
+                      cues.append((cur_t, txt))
+
+              # 롤링 자막 중복 제거
+              seen_last, dedup = None, []
+              for t, txt in cues:
+                  if txt == seen_last:
+                      continue
+                  seen_last = txt
+                  dedup.append((t, txt))
+
+              # 30초 버킷으로 묶기
+              blocks, cur_key, buf = [], None, []
+              for t, txt in dedup:
+                  key = (t // bucket) * bucket
+                  if cur_key is None:
+                      cur_key = key
+                  if key != cur_key:
+                      if buf:
+                          blocks.append((cur_key, " ".join(buf)))
+                      cur_key, buf = key, []
+                  buf.append(txt)
+              if buf:
+                  blocks.append((cur_key, " ".join(buf)))
+
+              out = []
+              for t, txt in blocks:
+                  hh, rem = divmod(t, 3600)
+                  mm, ss = divmod(rem, 60)
+                  # 버킷 안에서도 반복 어절 정리
+                  words, prev = [], None
+                  for w in txt.split():
+                      if w != prev:
+                          words.append(w)
+                      prev = w
+                  out.append(f"[{hh:02d}:{mm:02d}:{ss:02d}] " + " ".join(words))
+              return "\n".join(out)
+
+          # ---------- 3. 영상별 처리 ----------
+          status = {
+              "last_run_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+              "channel": CHANNEL, "listed": len(ids), "results": [], "list_error": list_err[:400],
+          }
+          index = {}
+          if os.path.exists(os.path.join(OUT, "index.json")):
+              try:
+                  index = json.load(open(os.path.join(OUT, "index.json"), encoding="utf-8"))
+              except Exception:
+                  index = {}
+
+          for vid in ids:
+              target = os.path.join(OUT, f"{vid}.txt")
+              if os.path.exists(target) and index.get(vid, {}).get("ok"):
+                  status["results"].append({"id": vid, "state": "cached"})
+                  continue
+
+              url = f"https://www.youtube.com/watch?v={vid}"
+              got_sub, used_client, info = None, None, None
+
+              for client in CLIENTS:
+                  shutil.rmtree(TMP, ignore_errors=True)
+                  os.makedirs(TMP, exist_ok=True)
+                  r = run(["yt-dlp", "--skip-download",
+                           "--write-auto-subs", "--write-subs",
+                           "--sub-langs", "ko.*,ko,en.*",
+                           "--sub-format", "vtt/best",
+                           "--write-info-json",
+                           "--retries", "3", "--socket-timeout", "30",
+                           "--extractor-args", f"youtube:player_client={client}",
+                           "-o", os.path.join(TMP, "%(id)s"), *base, url], timeout=420)
+                  vtts = sorted(glob.glob(os.path.join(TMP, "*.vtt")))
+                  # 한국어 우선
+                  ko = [p for p in vtts if re.search(r"\.ko", os.path.basename(p))]
+                  pick = (ko or vtts)
+                  ij = glob.glob(os.path.join(TMP, "*.info.json"))
+                  if ij:
+                      try:
+                          info = json.load(open(ij[0], encoding="utf-8"))
+                      except Exception:
+                          info = None
+                  if pick:
+                      got_sub, used_client = pick[0], client
+                      break
+                  time.sleep(2)
+
+              if not got_sub:
+                  status["results"].append({"id": vid, "state": "no_subtitle"})
+                  index[vid] = {"ok": False, "title": (info or {}).get("title", "")}
+                  continue
+
+              body = vtt_to_text(got_sub)
+              title = (info or {}).get("title", "")
+              ts    = (info or {}).get("timestamp") or 0
+              dur   = (info or {}).get("duration") or 0
+              lang  = re.search(r"\.([A-Za-z\-]+)\.vtt$", os.path.basename(got_sub))
+              lang  = lang.group(1) if lang else "?"
+              kst   = datetime.fromtimestamp(ts, timezone(timedelta(hours=9))).strftime("%Y-%m-%d %H:%M KST") if ts else "?"
+
+              header = (f"# videoId: {vid}\n# title: {title}\n# uploaded_kst: {kst}\n"
+                        f"# uploaded_epoch: {ts}\n# duration_sec: {dur}\n"
+                        f"# sub_lang: {lang}\n# client: {used_client}\n"
+                        f"# note: 30초 단위 블록, [HH:MM:SS]는 영상 내 위치\n\n")
+              with open(target, "w", encoding="utf-8") as f:
+                  f.write(header + body + "\n")
+
+              index[vid] = {"ok": True, "title": title, "uploaded_epoch": ts,
+                            "duration_sec": dur, "lang": lang, "chars": len(body)}
+              status["results"].append({"id": vid, "state": "fetched",
+                                        "lang": lang, "client": used_client, "chars": len(body)})
+              print(f"[+] {vid} {lang} {len(body)}자 (client={used_client})")
+
+          # ---------- 4. 오래된 파일 정리 ----------
+          cutoff = time.time() - KEEP_DAYS * 86400
+          for p in glob.glob(os.path.join(OUT, "*.txt")):
+              vid = os.path.splitext(os.path.basename(p))[0]
+              ep = index.get(vid, {}).get("uploaded_epoch") or 0
+              if ep and ep < cutoff:
+                  os.remove(p)
+                  index.pop(vid, None)
+
+          json.dump(index, open(os.path.join(OUT, "index.json"), "w", encoding="utf-8"),
+                    ensure_ascii=False, indent=1, sort_keys=True)
+          json.dump(status, open("status.json", "w", encoding="utf-8"),
+                    ensure_ascii=False, indent=1)
+          shutil.rmtree(TMP, ignore_errors=True)
+          if os.path.exists("cookies.txt"):
+              os.remove("cookies.txt")
+          print(json.dumps(status, ensure_ascii=False, indent=1)[:2000])
+          PY
+
+      - name: Commit
+        run: |
+          git config user.name  "hkgm-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A transcripts status.json
+          if git diff --cached --quiet; then
+            echo "변경 없음"
+          else
+            git commit -m "transcripts: $(date -u +%Y-%m-%dT%H:%MZ)"
+            git push
+          fi
