@@ -1,67 +1,82 @@
 {
- "last_run_utc": "2026-08-25T05:41:50+00:00",
+ "last_run_utc": "2026-08-25T06:49:31+00:00",
  "source_used": "https://www.youtube.com/playlist?list=UUWskYkV4c4S9D__rsfOl2JA",
  "listed": 15,
  "results": [
   {
    "id": "GuaJkS0PT4o",
-   "state": "no_subtitle"
+   "state": "no_subtitle",
+   "error": "[ios] ay also be missing\nERROR: [youtube] GuaJkS0PT4o: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
   },
   {
    "id": "rTF7RDjJNSM",
-   "state": "no_subtitle"
+   "state": "no_subtitle",
+   "error": "[ios] ay also be missing\nERROR: [youtube] rTF7RDjJNSM: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
   },
   {
    "id": "gxf4FKDZC-A",
-   "state": "no_subtitle"
+   "state": "no_subtitle",
+   "error": "[ios] ay also be missing\nERROR: [youtube] gxf4FKDZC-A: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
   },
   {
    "id": "L5oscSKOXy4",
-   "state": "no_subtitle"
+   "state": "no_subtitle",
+   "error": "[ios] ay also be missing\nERROR: [youtube] L5oscSKOXy4: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
   },
   {
    "id": "yOdCFYNu4ww",
-   "state": "no_subtitle"
+   "state": "no_subtitle",
+   "error": "[ios] ay also be missing\nERROR: [youtube] yOdCFYNu4ww: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
   },
   {
    "id": "6is5_Lkl8Mc",
-   "state": "no_subtitle"
+   "state": "no_subtitle",
+   "error": "[ios] ay also be missing\nERROR: [youtube] 6is5_Lkl8Mc: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
   },
   {
    "id": "sRzFMAcQT9o",
-   "state": "no_subtitle"
+   "state": "no_subtitle",
+   "error": "[ios] ay also be missing\nERROR: [youtube] sRzFMAcQT9o: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
   },
   {
    "id": "ZegvKEBDjfI",
-   "state": "no_subtitle"
+   "state": "no_subtitle",
+   "error": "[ios] ay also be missing\nERROR: [youtube] ZegvKEBDjfI: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
   },
   {
    "id": "HxwIonJ2nyw",
-   "state": "no_subtitle"
+   "state": "no_subtitle",
+   "error": "[ios] ay also be missing\nERROR: [youtube] HxwIonJ2nyw: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
   },
   {
    "id": "OSDOJt27ufc",
-   "state": "no_subtitle"
+   "state": "no_subtitle",
+   "error": "[ios] ay also be missing\nERROR: [youtube] OSDOJt27ufc: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
   },
   {
    "id": "jYJjcbOQbhA",
-   "state": "no_subtitle"
+   "state": "no_subtitle",
+   "error": "[ios] ay also be missing\nERROR: [youtube] jYJjcbOQbhA: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
   },
   {
    "id": "PdvP6J8Ad2k",
-   "state": "no_subtitle"
+   "state": "no_subtitle",
+   "error": "[ios] ay also be missing\nERROR: [youtube] PdvP6J8Ad2k: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
   },
   {
    "id": "Xl69Bw2qzvM",
-   "state": "no_subtitle"
+   "state": "no_subtitle",
+   "error": "[ios] ay also be missing\nERROR: [youtube] Xl69Bw2qzvM: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
   },
   {
    "id": "CGNc0PEfhUo",
-   "state": "no_subtitle"
+   "state": "no_subtitle",
+   "error": "[ios] ay also be missing\nERROR: [youtube] CGNc0PEfhUo: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
   },
   {
    "id": "V6Q982egXwU",
-   "state": "no_subtitle"
+   "state": "no_subtitle",
+   "error": "[ios] ay also be missing\nERROR: [youtube] V6Q982egXwU: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
   }
  ],
  "list_error": ""
