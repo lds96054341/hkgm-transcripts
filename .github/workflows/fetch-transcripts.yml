@@ -63,7 +63,8 @@ jobs:
           OUT       = "transcripts"
           TMP       = "_tmp"
           # 자막이 나올 때까지 순서대로 시도할 플레이어 클라이언트
-          CLIENTS   = ["default", "tv", "web_safari", "android", "ios"]
+          # ios는 쿠키를 지원하지 않아 제외. 쿠키를 쓰는 클라이언트만 사용.
+          CLIENTS   = ["default", "web_safari", "tv", "mweb", "android"]
 
           KEY = os.environ.get("TRANSCRIPT_KEY", "").strip()
           if not KEY:
@@ -197,6 +198,8 @@ jobs:
                   shutil.rmtree(TMP, ignore_errors=True)
                   os.makedirs(TMP, exist_ok=True)
                   r = run(["yt-dlp", "--skip-download",
+                           # 자막만 받으므로 재생 포맷이 없어도 오류로 처리하지 않음
+                           "--ignore-no-formats-error", "--no-abort-on-error",
                            "--write-auto-subs", "--write-subs",
                            "--sub-langs", "ko.*,ko,en.*",
                            "--sub-format", "vtt/best",
