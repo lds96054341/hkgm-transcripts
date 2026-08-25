@@ -40,7 +40,12 @@ jobs:
           import json, os, re, subprocess, shutil, glob, time
           from datetime import datetime, timezone, timedelta
 
-          CHANNEL   = "https://www.youtube.com/@hkglobalmarket/videos"
+          # 핸들(@hkglobalmarket)은 404가 납니다 — 실제 커스텀 URL은 한글(@한경글로벌마켓).
+          # 업로드 재생목록(UU...)이 가장 안정적이라 그것부터 시도합니다.
+          SOURCES   = [
+              "https://www.youtube.com/playlist?list=UUWskYkV4c4S9D__rsfOl2JA",
+              "https://www.youtube.com/channel/UCWskYkV4c4S9D__rsfOl2JA/videos",
+          ]
           RECENT_N  = 15          # 최근 몇 개까지 확인할지
           KEEP_DAYS = 45          # 오래된 자막 정리 기준
           OUT       = "transcripts"
@@ -80,18 +85,20 @@ jobs:
               return subprocess.run(args, capture_output=True, text=True, timeout=timeout)
 
           # ---------- 1. 최근 업로드 목록 ----------
-          ids = []
-          list_err = ""
-          for client in CLIENTS:
-              r = run(["yt-dlp", "--flat-playlist", "--playlist-end", str(RECENT_N),
-                       "--print", "%(id)s", "--extractor-args",
-                       f"youtube:player_client={client}", *base, CHANNEL])
-              got = [l.strip() for l in r.stdout.splitlines() if len(l.strip()) == 11]
-              if got:
-                  ids = got
-                  print(f"[i] 목록 확보: {len(ids)}개 (client={client})")
+          ids, list_err, src_used = [], "", None
+          for src in SOURCES:
+              for client in CLIENTS:
+                  r = run(["yt-dlp", "--flat-playlist", "--playlist-end", str(RECENT_N),
+                           "--print", "%(id)s", "--extractor-args",
+                           f"youtube:player_client={client}", *base, src])
+                  got = [l.strip() for l in r.stdout.splitlines() if len(l.strip()) == 11]
+                  if got:
+                      ids, src_used = got, src
+                      print(f"[i] 목록 확보: {len(ids)}개 (src={src}, client={client})")
+                      break
+                  list_err = f"[{src} / {client}] " + (r.stderr or "")[-600:]
+              if ids:
                   break
-              list_err = (r.stderr or "")[-800:]
           if not ids:
               print("[!] 채널 목록을 가져오지 못했습니다")
               print(list_err)
@@ -155,7 +162,8 @@ jobs:
           # ---------- 3. 영상별 처리 ----------
           status = {
               "last_run_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-              "channel": CHANNEL, "listed": len(ids), "results": [], "list_error": list_err[:400],
+              "source_used": src_used, "listed": len(ids), "results": [],
+              "list_error": list_err[:500],
           }
           index = {}
           if os.path.exists(os.path.join(OUT, "index.json")):
