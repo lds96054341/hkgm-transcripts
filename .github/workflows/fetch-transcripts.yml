@@ -6,6 +6,11 @@ on:
     - cron: '20 21 * * *'
     - cron: '45 21 * * *'
   workflow_dispatch:        # 수동 실행 버튼
+  push:                     # main에 아무 커밋이나 하면 즉시 실행 (폰에서 트리거하기 쉬움)
+    branches: [main]
+    paths-ignore:           # 봇이 만든 결과물 커밋으로는 다시 돌지 않음
+      - 'transcripts/**'
+      - 'status.json'
 
 permissions:
   contents: write
