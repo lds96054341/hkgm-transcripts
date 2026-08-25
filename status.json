@@ -1,7 +1,68 @@
 {
- "last_run_utc": "2026-08-25T05:17:49+00:00",
- "channel": "https://www.youtube.com/@hkglobalmarket/videos",
- "listed": 0,
- "results": [],
- "list_error": "tab] @hkglobalmarket/videos: Unable to download webpage: HTTP Error 404: Not Found (caused by <HTTPError 404: Not Found>). Giving up after 3 retries\nWARNING: [youtube:tab] YouTube said: ERROR - Requested entity was not found.\nWARNING: [youtube:tab] HTTP Error 404: Not Found. Retrying (1/3)...\nWARNING: [youtube:tab] YouTube said: ERROR - Requested entity was not found.\nWARNING: [youtube:tab] HTTP E"
+ "last_run_utc": "2026-08-25T05:41:50+00:00",
+ "source_used": "https://www.youtube.com/playlist?list=UUWskYkV4c4S9D__rsfOl2JA",
+ "listed": 15,
+ "results": [
+  {
+   "id": "GuaJkS0PT4o",
+   "state": "no_subtitle"
+  },
+  {
+   "id": "rTF7RDjJNSM",
+   "state": "no_subtitle"
+  },
+  {
+   "id": "gxf4FKDZC-A",
+   "state": "no_subtitle"
+  },
+  {
+   "id": "L5oscSKOXy4",
+   "state": "no_subtitle"
+  },
+  {
+   "id": "yOdCFYNu4ww",
+   "state": "no_subtitle"
+  },
+  {
+   "id": "6is5_Lkl8Mc",
+   "state": "no_subtitle"
+  },
+  {
+   "id": "sRzFMAcQT9o",
+   "state": "no_subtitle"
+  },
+  {
+   "id": "ZegvKEBDjfI",
+   "state": "no_subtitle"
+  },
+  {
+   "id": "HxwIonJ2nyw",
+   "state": "no_subtitle"
+  },
+  {
+   "id": "OSDOJt27ufc",
+   "state": "no_subtitle"
+  },
+  {
+   "id": "jYJjcbOQbhA",
+   "state": "no_subtitle"
+  },
+  {
+   "id": "PdvP6J8Ad2k",
+   "state": "no_subtitle"
+  },
+  {
+   "id": "Xl69Bw2qzvM",
+   "state": "no_subtitle"
+  },
+  {
+   "id": "CGNc0PEfhUo",
+   "state": "no_subtitle"
+  },
+  {
+   "id": "V6Q982egXwU",
+   "state": "no_subtitle"
+  }
+ ],
+ "list_error": ""
 }
