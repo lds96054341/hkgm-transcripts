@@ -1,10 +1,25 @@
 {
- "last_run_utc": "2026-08-25T21:58:40+00:00",
+ "last_run_utc": "2026-08-27T00:52:21+00:00",
  "source_used": "https://www.youtube.com/playlist?list=UUWskYkV4c4S9D__rsfOl2JA",
  "listed": 15,
  "results": [
   {
-   "id": "GuxCf_v40mc",
+   "id": "N5ATdKss8Pw",
+   "state": "no_subtitle",
+   "error": "[android] ot a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\nWARNING: No video formats found!\nWARNING: Requested format is not available\n"
+  },
+  {
+   "id": "ugFWgZTMmco",
+   "state": "no_subtitle",
+   "error": "[android] ot a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\nWARNING: No video formats found!\nWARNING: Requested format is not available\n"
+  },
+  {
+   "id": "07gk3cngKx0",
+   "state": "no_subtitle",
+   "error": "[android] ot a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\nWARNING: No video formats found!\nWARNING: Requested format is not available\n"
+  },
+  {
+   "id": "oddhu5wf7M8",
    "state": "no_subtitle",
    "error": "[android] ot a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\nWARNING: No video formats found!\nWARNING: Requested format is not available\n"
   },
@@ -52,18 +67,6 @@
   },
   {
    "id": "OSDOJt27ufc",
-   "state": "cached"
-  },
-  {
-   "id": "jYJjcbOQbhA",
-   "state": "cached"
-  },
-  {
-   "id": "PdvP6J8Ad2k",
-   "state": "cached"
-  },
-  {
-   "id": "Xl69Bw2qzvM",
    "state": "cached"
   }
  ],
