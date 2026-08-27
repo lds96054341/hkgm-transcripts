@@ -1,4 +1,4 @@
-   name: fetch-hkgm-transcripts
+name: fetch-hkgm-transcripts
 
 on:
   schedule:
