@@ -1,4 +1,4 @@
-name: fetch-hkgm-transcripts
+   name: fetch-hkgm-transcripts
 
 on:
   schedule:
@@ -6,6 +6,11 @@ on:
     # 07:40분 실행은 07:20~07:30에 올라오는 「김현석의 월스트리트나우」를 잡기 위한 것
     - cron: '45 21 * * *'
     - cron: '40 22 * * *'
+    # 백필 — 유튜브 자동자막은 업로드 몇 시간~며칠 뒤에 붙는다.
+    # 낮/저녁에 다시 훑어 뒤늦게 생긴 자막을 채워 넣는다.
+    # (겸사겸사 GitHub 예약 실행이 종종 건너뛰는 문제의 보험 역할도 한다)
+    - cron: '10 4 * * *'
+    - cron: '20 12 * * *'
   workflow_dispatch:        # 수동 실행 버튼
   push:                     # main에 아무 커밋이나 하면 즉시 실행 (폰에서 트리거하기 쉬움)
     branches: [main]
@@ -284,4 +289,5 @@ jobs:
             git commit -m "transcripts: $(date -u +%Y-%m-%dT%H:%MZ)"
             git push
           fi
+         
 
