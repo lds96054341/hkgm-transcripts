@@ -1,12 +1,17 @@
 {
- "last_run_utc": "2026-09-04T00:22:56+00:00",
+ "last_run_utc": "2026-09-04T08:48:44+00:00",
  "source_used": "https://www.youtube.com/playlist?list=UUWskYkV4c4S9D__rsfOl2JA",
  "listed": 15,
  "results": [
   {
+   "id": "22ecgqFvM_o",
+   "state": "no_subtitle",
+   "error": "[android] ot a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\nWARNING: No video formats found!\nWARNING: Requested format is not available\n"
+  },
+  {
    "id": "0PcrGAduHKk",
    "state": "no_subtitle",
-   "error": "[android] WARNING: [youtube] This live event will begin in 12 hours.\nWARNING: No video formats found!\nWARNING: Requested format is not available\n"
+   "error": "[android] WARNING: [youtube] This live event will begin in 3 hours.\nWARNING: No video formats found!\nWARNING: Requested format is not available\n"
   },
   {
    "id": "Oay5hMyiBGo",
@@ -55,10 +60,7 @@
   },
   {
    "id": "12PU2HvotsA",
-   "state": "fetched",
-   "lang": "ko-orig",
-   "client": "tv",
-   "chars": 272
+   "state": "cached"
   },
   {
    "id": "TF3F2WxyISA",
@@ -74,10 +76,6 @@
    "id": "BwszCRtx0Ag",
    "state": "no_subtitle",
    "error": "[android] ot a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\nWARNING: No video formats found!\nWARNING: Requested format is not available\n"
-  },
-  {
-   "id": "ybN74LY7b-M",
-   "state": "cached"
   }
  ],
  "list_error": ""
