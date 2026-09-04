@@ -1,5 +1,5 @@
 {
- "last_run_utc": "2026-09-03T23:31:34+00:00",
+ "last_run_utc": "2026-09-04T00:22:56+00:00",
  "source_used": "https://www.youtube.com/playlist?list=UUWskYkV4c4S9D__rsfOl2JA",
  "listed": 15,
  "results": [
@@ -55,8 +55,10 @@
   },
   {
    "id": "12PU2HvotsA",
-   "state": "no_subtitle",
-   "error": "[android] ot a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\nWARNING: No video formats found!\nWARNING: Requested format is not available\n"
+   "state": "fetched",
+   "lang": "ko-orig",
+   "client": "tv",
+   "chars": 272
   },
   {
    "id": "TF3F2WxyISA",
