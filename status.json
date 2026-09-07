@@ -1,112 +1,67 @@
 {
- "last_run_utc": "2026-09-07T12:55:57+00:00",
+ "last_run_utc": "2026-09-07T17:45:22+00:00",
  "source_used": "https://www.youtube.com/playlist?list=UUWskYkV4c4S9D__rsfOl2JA",
  "listed": 15,
  "results": [
   {
    "id": "yNMf5kdMPUA",
-   "state": "fetched",
-   "lang": "ko-orig",
-   "client": "default",
-   "chars": 16479
+   "state": "cached"
   },
   {
    "id": "NP16rOD8A5g",
-   "state": "fetched",
-   "lang": "ko-orig",
-   "client": "default",
-   "chars": 6492
+   "state": "cached"
   },
   {
    "id": "tfHVO3wxG0I",
-   "state": "fetched",
-   "lang": "ko-orig",
-   "client": "default",
-   "chars": 515
+   "state": "cached"
   },
   {
    "id": "Xuh70VQwd_k",
-   "state": "fetched",
-   "lang": "ko-orig",
-   "client": "default",
-   "chars": 7921
+   "state": "cached"
   },
   {
    "id": "mTiybxvCZpI",
-   "state": "fetched",
-   "lang": "ko-orig",
-   "client": "default",
-   "chars": 475
+   "state": "cached"
   },
   {
    "id": "9BqeV8e-X-U",
-   "state": "fetched",
-   "lang": "ko-orig",
-   "client": "default",
-   "chars": 15485
+   "state": "cached"
   },
   {
    "id": "6lFp2f7mOso",
-   "state": "fetched",
-   "lang": "ko-orig",
-   "client": "default",
-   "chars": 13909
+   "state": "cached"
   },
   {
    "id": "aRmr1PeXSac",
-   "state": "fetched",
-   "lang": "ko-orig",
-   "client": "default",
-   "chars": 4129
+   "state": "cached"
   },
   {
    "id": "gOJntPlIIUM",
-   "state": "fetched",
-   "lang": "ko-orig",
-   "client": "default",
-   "chars": 12539
+   "state": "cached"
   },
   {
    "id": "0PcrGAduHKk",
-   "state": "fetched",
-   "lang": "ko-orig",
-   "client": "default",
-   "chars": 5817
+   "state": "cached"
   },
   {
    "id": "22ecgqFvM_o",
-   "state": "fetched",
-   "lang": "ko-orig",
-   "client": "default",
-   "chars": 8922
+   "state": "cached"
   },
   {
    "id": "Oay5hMyiBGo",
-   "state": "fetched",
-   "lang": "ko-orig",
-   "client": "default",
-   "chars": 16634
+   "state": "cached"
   },
   {
    "id": "L0TH8J7cH2U",
-   "state": "fetched",
-   "lang": "ko",
-   "client": "default",
-   "chars": 4527
+   "state": "cached"
   },
   {
    "id": "jXfjM9VPK78",
-   "state": "fetched",
-   "lang": "ko-orig",
-   "client": "default",
-   "chars": 14248
+   "state": "cached"
   },
   {
    "id": "-MP4H9zGdKs",
-   "state": "fetched",
-   "lang": "ko",
-   "client": "default",
-   "chars": 295
+   "state": "cached"
   }
  ],
  "list_error": ""
