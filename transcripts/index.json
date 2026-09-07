@@ -1,7 +1,11 @@
 {
  "-MP4H9zGdKs": {
-  "ok": false,
-  "title": "Is China's Semiconductor Industry a Threat or Not?"
+  "chars": 295,
+  "duration_sec": 34,
+  "lang": "ko",
+  "ok": true,
+  "title": "중국 반도체 위협이다 vs 아니다",
+  "uploaded_epoch": 1788350407
  },
  "00AEfpaMfUQ": {
   "ok": false,
@@ -12,8 +16,12 @@
   "title": "[Kim Hyun-seok's Breaking News] July PCE Inflation Report! August 26, 9:30 PM L.I.V.E"
  },
  "0PcrGAduHKk": {
-  "ok": false,
-  "title": "[김현석의 브레이킹 뉴스] 8월 고용보고서 발표! 9월 4일 오후 9시 30분 L.I.V.E"
+  "chars": 5817,
+  "duration_sec": 818,
+  "lang": "ko-orig",
+  "ok": true,
+  "title": "[김현석의 브레이킹 뉴스] 8월 고용보고서 발표! 9월 4일 오후 9시 30분 L.I.V.E",
+  "uploaded_epoch": 1788526089
  },
  "12PU2HvotsA": {
   "chars": 272,
@@ -24,8 +32,12 @@
   "uploaded_epoch": 0
  },
  "22ecgqFvM_o": {
-  "ok": false,
-  "title": "260903"
+  "chars": 8922,
+  "duration_sec": 1190,
+  "lang": "ko-orig",
+  "ok": true,
+  "title": "각 국이 미국에서 금을 옮기고, 전체 금 매입을 늘리는 이유를살펴봤습니다 | 박신영의 월가아나토미",
+  "uploaded_epoch": 1788483621
  },
  "6is5_Lkl8Mc": {
   "chars": 9367,
@@ -36,12 +48,20 @@
   "uploaded_epoch": 1787274039
  },
  "6lFp2f7mOso": {
-  "ok": false,
-  "title": "Kevin Warsh’s Betrayal and a Nervous Trump | Wall Street Briefing"
+  "chars": 13909,
+  "duration_sec": 1620,
+  "lang": "ko-orig",
+  "ok": true,
+  "title": "케빈 워시의 배신 그리고 불안한 트럼프 | 월가백브리핑",
+  "uploaded_epoch": 1788577227
  },
  "9BqeV8e-X-U": {
-  "ok": false,
-  "title": "Will Mamdani’s DSA become the Trump administration’s X-Man? | Lee Sang-eun’s Washington Now"
+  "chars": 15485,
+  "duration_sec": 1754,
+  "lang": "ko-orig",
+  "ok": true,
+  "title": "맘다니의 DSA, 트럼프정부 X맨 되나 | 이상은의 워싱턴나우",
+  "uploaded_epoch": 1788598804
  },
  "BwszCRtx0Ag": {
   "ok": false,
@@ -72,8 +92,12 @@
   "uploaded_epoch": 1787147988
  },
  "L0TH8J7cH2U": {
-  "ok": false,
-  "title": "Before Jensen Huang and Lisa Su, there was him… Meeting a legend of the U.S. semiconductor indust..."
+  "chars": 4527,
+  "duration_sec": 711,
+  "lang": "ko",
+  "ok": true,
+  "title": "젠슨황·리사수 전에 그가 있었다…미국 반도체계의 전설을 만나다ㅣ김인엽의 실리콘밸리나우",
+  "uploaded_epoch": 1788426036
  },
  "L5oscSKOXy4": {
   "chars": 10923,
@@ -88,8 +112,12 @@
   "title": "Is Samsung a Rival or a Partner to Nvidia?"
  },
  "NP16rOD8A5g": {
-  "ok": false,
-  "title": "Where is the Stock Market Headed Ahead of the Midterm Elections? | Kim Hyun-seok's Wall Now Weekly Q"
+  "chars": 6492,
+  "duration_sec": 719,
+  "lang": "ko-orig",
+  "ok": true,
+  "title": "중간선거 앞둔 증시 향방은ㅣ김현석의 월나우 위클리Q",
+  "uploaded_epoch": 1788730217
  },
  "OSDOJt27ufc": {
   "chars": 16133,
@@ -100,8 +128,12 @@
   "uploaded_epoch": 1787062718
  },
  "Oay5hMyiBGo": {
-  "ok": false,
-  "title": "[Park Shin-young's Pre-Market Brief - Sep 3] Jensen Huang Develops ChatGPT Rival | Broadcom CEO S..."
+  "chars": 16634,
+  "duration_sec": 2393,
+  "lang": "ko-orig",
+  "ok": true,
+  "title": "[박신영의 개장전요것만-9월3일] 젠슨 황, 챗GPT 대항마 키운다 | 브로드컴, CEO “조심” vs 월가 “더 오른다”",
+  "uploaded_epoch": 1788448064
  },
  "PdvP6J8Ad2k": {
   "chars": 7449,
@@ -144,8 +176,12 @@
   "uploaded_epoch": 1786762823
  },
  "Xuh70VQwd_k": {
-  "ok": false,
-  "title": "Has Semiconductor Momentum Broken? | Wall Street Briefing"
+  "chars": 7921,
+  "duration_sec": 921,
+  "lang": "ko-orig",
+  "ok": true,
+  "title": "반도체 모멘텀은 꺾어진 걸까 | 월가백브리핑",
+  "uploaded_epoch": 1788663627
  },
  "ZegvKEBDjfI": {
   "chars": 5883,
@@ -160,8 +196,12 @@
   "title": "[박신영의 개장전요것만-8월25일] 비트코인 8만달러 돌파...\"추가 상승 여력 있어\" | 채권시장, 브로드컴 위험 경고"
  },
  "aRmr1PeXSac": {
-  "ok": false,
-  "title": "Caught in the AI cloud war and now Mamdani’s target… Was Amazon’s peak actually real? | Buy Ameri..."
+  "chars": 4129,
+  "duration_sec": 508,
+  "lang": "ko-orig",
+  "ok": true,
+  "title": "AI 클라우드 전쟁에 맘다니 타깃까지 됐다…아마존, 최고가는 진짜였을까ㅣ바이아메리카 in 뉴욕",
+  "uploaded_epoch": 1788566400
  },
  "aig2WN5150s": {
   "ok": false,
@@ -176,8 +216,12 @@
   "title": "서로 한방씩 주고받은 베선트 vs 워시…싸울 일만 남았다ㅣ이상은의 워싱턴나우"
  },
  "gOJntPlIIUM": {
-  "ok": false,
-  "title": "[Park Shin-young's Pre-Market Brief - Sep 4] The world's biggest buyer leaves U.S. Treasuries | S..."
+  "chars": 12539,
+  "duration_sec": 1762,
+  "lang": "ko-orig",
+  "ok": true,
+  "title": "[박신영의 개장전요것만-9월4일] 美 국채서 떠나는 세계 1위 큰손 | 주가 부진, 메모리는 죄가 없다",
+  "uploaded_epoch": 1788530146
  },
  "gxf4FKDZC-A": {
   "chars": 10031,
@@ -188,8 +232,12 @@
   "uploaded_epoch": 1787454030
  },
  "jXfjM9VPK78": {
-  "ok": false,
-  "title": "[Park Shin-young's Pre-market Brief - Sept. 2] This company tripled after the AI inference era be..."
+  "chars": 14248,
+  "duration_sec": 2106,
+  "lang": "ko-orig",
+  "ok": true,
+  "title": "[박신영의 개장전요것만-9월2일] AI 추론 시대 열리자 3배 뛴 ‘이 회사’..월가 “40% 더 오른다” | “데이터센터 투자, 4.3‘경’원 간다”",
+  "uploaded_epoch": 1788359067
  },
  "jYJjcbOQbhA": {
   "chars": 14164,
@@ -204,8 +252,12 @@
   "title": "[Park Shin-young's Pre-market Brief - August 27] They said AI would consume us, but... Salesforce..."
  },
  "mTiybxvCZpI": {
-  "ok": false,
-  "title": "Why Trump Is Obsessed With Low Interest Rates"
+  "chars": 475,
+  "duration_sec": 48,
+  "lang": "ko-orig",
+  "ok": true,
+  "title": "트럼프가 저금리에 집착하는 이유",
+  "uploaded_epoch": 1788609602
  },
  "oddhu5wf7M8": {
   "ok": false,
@@ -228,8 +280,12 @@
   "uploaded_epoch": 1787234532
  },
  "tfHVO3wxG0I": {
-  "ok": false,
-  "title": "How to Time Currency Exchange"
+  "chars": 515,
+  "duration_sec": 56,
+  "lang": "ko-orig",
+  "ok": true,
+  "title": "환전 타이밍 재는 법",
+  "uploaded_epoch": 1788696039
  },
  "ugFWgZTMmco": {
   "ok": false,
@@ -248,8 +304,12 @@
   "title": "[박신영의 개장전요것만-8월28일] “스페이스X 매출 4800조원 간다” | 앤트로픽, 엔비디아 독립 준비?"
  },
  "yNMf5kdMPUA": {
-  "ok": false,
-  "title": "Bureaucrats Who Became Trump's 'Yes Men,' Defying Economic Principles | Lee Sang-won's Washington..."
+  "chars": 16479,
+  "duration_sec": 1715,
+  "lang": "ko-orig",
+  "ok": true,
+  "title": "경제학과 싸우는 트럼프 예스맨이 된 관료들 | 이상은의 워싱턴나우",
+  "uploaded_epoch": 1788750021
  },
  "yOdCFYNu4ww": {
   "chars": 11419,

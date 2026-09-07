@@ -1,82 +1,112 @@
 {
- "last_run_utc": "2026-09-07T09:16:39+00:00",
+ "last_run_utc": "2026-09-07T12:55:57+00:00",
  "source_used": "https://www.youtube.com/playlist?list=UUWskYkV4c4S9D__rsfOl2JA",
  "listed": 15,
  "results": [
   {
    "id": "yNMf5kdMPUA",
-   "state": "no_subtitle",
-   "error": "[android] ot a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\nWARNING: No video formats found!\nWARNING: Requested format is not available\n"
+   "state": "fetched",
+   "lang": "ko-orig",
+   "client": "default",
+   "chars": 16479
   },
   {
    "id": "NP16rOD8A5g",
-   "state": "no_subtitle",
-   "error": "[android] ot a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\nWARNING: No video formats found!\nWARNING: Requested format is not available\n"
+   "state": "fetched",
+   "lang": "ko-orig",
+   "client": "default",
+   "chars": 6492
   },
   {
    "id": "tfHVO3wxG0I",
-   "state": "no_subtitle",
-   "error": "[android] ot a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\nWARNING: No video formats found!\nWARNING: Requested format is not available\n"
+   "state": "fetched",
+   "lang": "ko-orig",
+   "client": "default",
+   "chars": 515
   },
   {
    "id": "Xuh70VQwd_k",
-   "state": "no_subtitle",
-   "error": "[android] ot a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\nWARNING: No video formats found!\nWARNING: Requested format is not available\n"
+   "state": "fetched",
+   "lang": "ko-orig",
+   "client": "default",
+   "chars": 7921
   },
   {
    "id": "mTiybxvCZpI",
-   "state": "no_subtitle",
-   "error": "[android] ot a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\nWARNING: No video formats found!\nWARNING: Requested format is not available\n"
+   "state": "fetched",
+   "lang": "ko-orig",
+   "client": "default",
+   "chars": 475
   },
   {
    "id": "9BqeV8e-X-U",
-   "state": "no_subtitle",
-   "error": "[android] ot a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\nWARNING: No video formats found!\nWARNING: Requested format is not available\n"
+   "state": "fetched",
+   "lang": "ko-orig",
+   "client": "default",
+   "chars": 15485
   },
   {
    "id": "6lFp2f7mOso",
-   "state": "no_subtitle",
-   "error": "[android] ot a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\nWARNING: No video formats found!\nWARNING: Requested format is not available\n"
+   "state": "fetched",
+   "lang": "ko-orig",
+   "client": "default",
+   "chars": 13909
   },
   {
    "id": "aRmr1PeXSac",
-   "state": "no_subtitle",
-   "error": "[android] ot a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\nWARNING: No video formats found!\nWARNING: Requested format is not available\n"
+   "state": "fetched",
+   "lang": "ko-orig",
+   "client": "default",
+   "chars": 4129
   },
   {
    "id": "gOJntPlIIUM",
-   "state": "no_subtitle",
-   "error": "[android] ot a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\nWARNING: No video formats found!\nWARNING: Requested format is not available\n"
+   "state": "fetched",
+   "lang": "ko-orig",
+   "client": "default",
+   "chars": 12539
   },
   {
    "id": "0PcrGAduHKk",
-   "state": "no_subtitle",
-   "error": "[android] ot a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\nWARNING: No video formats found!\nWARNING: Requested format is not available\n"
+   "state": "fetched",
+   "lang": "ko-orig",
+   "client": "default",
+   "chars": 5817
   },
   {
    "id": "22ecgqFvM_o",
-   "state": "no_subtitle",
-   "error": "[android] ot a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\nWARNING: No video formats found!\nWARNING: Requested format is not available\n"
+   "state": "fetched",
+   "lang": "ko-orig",
+   "client": "default",
+   "chars": 8922
   },
   {
    "id": "Oay5hMyiBGo",
-   "state": "no_subtitle",
-   "error": "[android] ot a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\nWARNING: No video formats found!\nWARNING: Requested format is not available\n"
+   "state": "fetched",
+   "lang": "ko-orig",
+   "client": "default",
+   "chars": 16634
   },
   {
    "id": "L0TH8J7cH2U",
-   "state": "no_subtitle",
-   "error": "[android] ot a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\nWARNING: No video formats found!\nWARNING: Requested format is not available\n"
+   "state": "fetched",
+   "lang": "ko",
+   "client": "default",
+   "chars": 4527
   },
   {
    "id": "jXfjM9VPK78",
-   "state": "no_subtitle",
-   "error": "[android] ot a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\nWARNING: No video formats found!\nWARNING: Requested format is not available\n"
+   "state": "fetched",
+   "lang": "ko-orig",
+   "client": "default",
+   "chars": 14248
   },
   {
    "id": "-MP4H9zGdKs",
-   "state": "no_subtitle",
-   "error": "[android] ot a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\nWARNING: No video formats found!\nWARNING: Requested format is not available\n"
+   "state": "fetched",
+   "lang": "ko",
+   "client": "default",
+   "chars": 295
   }
  ],
  "list_error": ""
