@@ -1,21 +1,20 @@
 {
- "last_run_utc": "2026-09-10T16:27:08+00:00",
+ "last_run_utc": "2026-09-10T23:23:29+00:00",
  "source_used": "https://www.youtube.com/playlist?list=UUWskYkV4c4S9D__rsfOl2JA",
  "listed": 15,
  "results": [
   {
+   "id": "c231nJa5C9c",
+   "state": "no_subtitle",
+   "error": "[android] WARNING: [youtube] This live event will begin in 13 hours.\nWARNING: No video formats found!\nWARNING: Requested format is not available\n"
+  },
+  {
    "id": "HXHDZcwXtXg",
-   "state": "fetched",
-   "lang": "ko-orig",
-   "client": "web_safari",
-   "chars": 17852
+   "state": "cached"
   },
   {
    "id": "9bo7tIWaq-Y",
-   "state": "fetched",
-   "lang": "ko-orig",
-   "client": "web_safari",
-   "chars": 10724
+   "state": "cached"
   },
   {
    "id": "oyrOdL7aPBo",
@@ -63,10 +62,6 @@
   },
   {
    "id": "6lFp2f7mOso",
-   "state": "cached"
-  },
-  {
-   "id": "aRmr1PeXSac",
    "state": "cached"
   }
  ],
