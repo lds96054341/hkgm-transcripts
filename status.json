@@ -1,21 +1,29 @@
 {
- "last_run_utc": "2026-09-10T08:55:06+00:00",
+ "last_run_utc": "2026-09-10T16:27:08+00:00",
  "source_used": "https://www.youtube.com/playlist?list=UUWskYkV4c4S9D__rsfOl2JA",
  "listed": 15,
  "results": [
   {
-   "id": "oyrOdL7aPBo",
+   "id": "HXHDZcwXtXg",
    "state": "fetched",
-   "lang": "ko",
+   "lang": "ko-orig",
    "client": "web_safari",
-   "chars": 328
+   "chars": 17852
+  },
+  {
+   "id": "9bo7tIWaq-Y",
+   "state": "fetched",
+   "lang": "ko-orig",
+   "client": "web_safari",
+   "chars": 10724
+  },
+  {
+   "id": "oyrOdL7aPBo",
+   "state": "cached"
   },
   {
    "id": "s9Ke5W8eH6c",
-   "state": "fetched",
-   "lang": "ko",
-   "client": "web_safari",
-   "chars": 413
+   "state": "cached"
   },
   {
    "id": "kTalKXMeX8k",
@@ -59,14 +67,6 @@
   },
   {
    "id": "aRmr1PeXSac",
-   "state": "cached"
-  },
-  {
-   "id": "gOJntPlIIUM",
-   "state": "cached"
-  },
-  {
-   "id": "0PcrGAduHKk",
    "state": "cached"
   }
  ],
