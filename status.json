@@ -1,14 +1,18 @@
 {
- "last_run_utc": "2026-09-13T09:28:12+00:00",
+ "last_run_utc": "2026-09-13T16:20:57+00:00",
  "source_used": "https://www.youtube.com/playlist?list=UUWskYkV4c4S9D__rsfOl2JA",
  "listed": 15,
  "results": [
   {
-   "id": "XpubPMH0dA4",
+   "id": "tA-XCLAHdy8",
    "state": "fetched",
    "lang": "ko-orig",
    "client": "web_safari",
-   "chars": 11359
+   "chars": 463
+  },
+  {
+   "id": "XpubPMH0dA4",
+   "state": "cached"
   },
   {
    "id": "bL4nrz7J8MY",
@@ -60,10 +64,6 @@
   },
   {
    "id": "yNMf5kdMPUA",
-   "state": "cached"
-  },
-  {
-   "id": "NP16rOD8A5g",
    "state": "cached"
   }
  ],
