@@ -1,14 +1,11 @@
 {
- "last_run_utc": "2026-09-13T23:29:46+00:00",
+ "last_run_utc": "2026-09-14T00:24:49+00:00",
  "source_used": "https://www.youtube.com/playlist?list=UUWskYkV4c4S9D__rsfOl2JA",
  "listed": 15,
  "results": [
   {
    "id": "gi_VcRUycUo",
-   "state": "fetched",
-   "lang": "ko-orig",
-   "client": "web_safari",
-   "chars": 4119
+   "state": "cached"
   },
   {
    "id": "tA-XCLAHdy8",
