@@ -3,18 +3,16 @@ name: fetch-hkgm-transcripts
 on:
   schedule:
     # UTC 기준. 21:45 UTC = 06:45 KST, 22:40 UTC = 07:40 KST
-    # 07:40분 실행은 07:20~07:30에 올라오는 「김현석의 월스트리트나우」를 잡기 위한 것
+    # 07:40 실행은 07:20~07:30에 올라오는 「김현석의 월스트리트나우」를 잡기 위한 것
     - cron: '45 21 * * *'
     - cron: '40 22 * * *'
-    # 백필 — 유튜브 자동자막은 업로드 몇 시간~며칠 뒤에 붙는다.
-    # 낮/저녁에 다시 훑어 뒤늦게 생긴 자막을 채워 넣는다.
-    # (겸사겸사 GitHub 예약 실행이 종종 건너뛰는 문제의 보험 역할도 한다)
+    # 백필 — 늦게 붙는 자막 회수 + GitHub 예약 실행 누락 보험
     - cron: '10 4 * * *'
     - cron: '20 12 * * *'
-  workflow_dispatch:        # 수동 실행 버튼
-  push:                     # main에 아무 커밋이나 하면 즉시 실행 (폰에서 트리거하기 쉬움)
+  workflow_dispatch:
+  push:
     branches: [main]
-    paths-ignore:           # 봇이 만든 결과물 커밋으로는 다시 돌지 않음
+    paths-ignore:
       - 'transcripts/**'
       - 'status.json'
 
@@ -28,13 +26,20 @@ concurrency:
 jobs:
   fetch:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+
+      # Whisper 모델(약 500MB)을 매번 내려받지 않도록 캐시
+      - name: Cache whisper model
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: whisper-small-v1
 
       - name: Start PO token provider
         run: |
@@ -43,11 +48,12 @@ jobs:
           sleep 8
           curl -s -m 5 http://127.0.0.1:4416/ping && echo " provider OK" || echo "provider 응답 없음(계속 진행)"
 
-      - name: Install yt-dlp
+      - name: Install tools
         run: |
           python -m pip install --upgrade pip
-          pip install --upgrade yt-dlp bgutil-ytdlp-pot-provider
+          pip install --upgrade yt-dlp bgutil-ytdlp-pot-provider faster-whisper
           yt-dlp --version
+          ffmpeg -version | head -1
 
       - name: Fetch transcripts
         env:
@@ -58,28 +64,70 @@ jobs:
           import json, os, re, subprocess, shutil, glob, time
           from datetime import datetime, timezone, timedelta
 
-          # 핸들(@hkglobalmarket)은 404가 납니다 — 실제 커스텀 URL은 한글(@한경글로벌마켓).
-          # 업로드 재생목록(UU...)이 가장 안정적이라 그것부터 시도합니다.
-          SOURCES   = [
-              "https://www.youtube.com/playlist?list=UUWskYkV4c4S9D__rsfOl2JA",
-              "https://www.youtube.com/channel/UCWskYkV4c4S9D__rsfOl2JA/videos",
+          # ────────────────────────────────────────────────────────────
+          # 수집 대상 채널
+          #   include=None  → 올라온 것 전부
+          #   include=정규식 → 제목이 매칭되는 것만
+          # 한국경제TV는 하루 55건이 올라오고 반려동물·차트게임 등이 섞여 있어
+          # 🔴 라이브 코너 「당잠사」만 고른다 (매일 06:10~06:15 KST, 미국장 마감 정리).
+          # 코너를 추가하려면 include 정규식에 |로 이어 붙이면 된다.
+          # ────────────────────────────────────────────────────────────
+          CHANNELS = [
+              {
+                  "key": "hkgm", "name": "한경 글로벌마켓",
+                  "sources": [
+                      "https://www.youtube.com/playlist?list=UUWskYkV4c4S9D__rsfOl2JA",
+                      "https://www.youtube.com/channel/UCWskYkV4c4S9D__rsfOl2JA/videos",
+                  ],
+                  "scan": 15, "include": None,
+              },
+              {
+                  "key": "hkwowtv", "name": "한국경제TV",
+                  "sources": [
+                      "https://www.youtube.com/playlist?list=UUF8AeLlUbEpKju6v1H6p8Eg",
+                      "https://www.youtube.com/channel/UCF8AeLlUbEpKju6v1H6p8Eg/videos",
+                  ],
+                  "scan": 90,
+                  "include": r"당잠사|당신이\s*잠든\s*사이",
+              },
           ]
-          RECENT_N  = 15          # 최근 몇 개까지 확인할지
-          KEEP_DAYS = 45          # 오래된 자막 정리 기준
-          OUT       = "transcripts"
-          TMP       = "_tmp"
-          # 자막이 나올 때까지 순서대로 시도할 플레이어 클라이언트
-          # ios는 쿠키를 지원하지 않아 제외. 쿠키를 쓰는 클라이언트만 사용.
-          CLIENTS   = ["default", "web_safari", "tv", "mweb", "android"]
+
+          KEEP_DAYS = 45
+          OUT  = "transcripts"
+          TMP  = "_tmp"
+          CLIENTS = ["default", "web_safari", "tv", "mweb", "android"]
+
+          # ── 음성 받아쓰기(자막이 없을 때만) ──────────────────────────
+          WHISPER_MODEL   = "small"   # CPU int8 기준 실시간의 약 5배 속도
+          WHISPER_MAX     = 3         # 한 회차에 받아쓸 최대 영상 수(폭주 방지)
+          WHISPER_MAX_MIN = 90        # 이보다 긴 영상은 건너뜀(상시 라이브 방지)
+          # 고유명사 오인식을 줄이기 위한 도메인 사전
+          DOMAIN_PROMPT = (
+              "미국 증시와 반도체 시장 브리핑입니다. "
+              "엔비디아, 삼성전자, SK하이닉스, 마이크론, 브로드컴, TSMC, 인텔, AMD, "
+              "HBM, 파운드리, 오픈AI, 앤트로픽, 팔란티어, 테슬라, 애플, 알파벳, "
+              "연준, FOMC, 파월, 워시 의장, 국채금리, 나스닥, S&P500, 다우, 코스피, "
+              "환율, 관세, 희토류, CATL, BYD 등이 언급됩니다."
+          )
+          # ────────────────────────────────────────────────────────────
 
           KEY = os.environ.get("TRANSCRIPT_KEY", "").strip()
           if not KEY:
-              # 암호화 키가 없으면 평문이 공개 저장소에 올라가므로 즉시 중단
-              raise SystemExit("[!] TRANSCRIPT_KEY 시크릿이 없습니다. 저장소 Settings > Secrets 에 추가하세요.")
+              raise SystemExit("[!] TRANSCRIPT_KEY 시크릿이 없습니다.")
 
           os.makedirs(OUT, exist_ok=True)
           shutil.rmtree(TMP, ignore_errors=True)
           os.makedirs(TMP, exist_ok=True)
+
+          base = []
+          if os.environ.get("YT_COOKIES", "").strip():
+              with open("cookies.txt", "w") as f:
+                  f.write(os.environ["YT_COOKIES"])
+              base += ["--cookies", "cookies.txt"]
+              print("[i] cookies 사용")
+
+          def run(args, timeout=300):
+              return subprocess.run(args, capture_output=True, text=True, timeout=timeout)
 
           def encrypt_to(text, dest):
               src = os.path.join(TMP, "_plain.txt")
@@ -93,83 +141,30 @@ jobs:
               if r.returncode != 0:
                   raise SystemExit("[!] 암호화 실패: " + (r.stderr or "")[-300:])
 
-          base = []
-          if os.environ.get("YT_COOKIES", "").strip():
-              with open("cookies.txt", "w") as f:
-                  f.write(os.environ["YT_COOKIES"])
-              base += ["--cookies", "cookies.txt"]
-              print("[i] cookies 사용")
-
-          def run(args, timeout=300):
-              return subprocess.run(args, capture_output=True, text=True, timeout=timeout)
-
-          # ---------- 1. 최근 업로드 목록 ----------
-          ids, list_err, src_used = [], "", None
-          for src in SOURCES:
-              for client in CLIENTS:
-                  r = run(["yt-dlp", "--flat-playlist", "--playlist-end", str(RECENT_N),
-                           "--print", "%(id)s", "--extractor-args",
-                           f"youtube:player_client={client}", *base, src])
-                  got = [l.strip() for l in r.stdout.splitlines() if len(l.strip()) == 11]
-                  if got:
-                      ids, src_used = got, src
-                      print(f"[i] 목록 확보: {len(ids)}개 (src={src}, client={client})")
-                      break
-                  list_err = f"[{src} / {client}] " + (r.stderr or "")[-600:]
-              if ids:
-                  break
-          if not ids:
-              print("[!] 채널 목록을 가져오지 못했습니다")
-              print(list_err)
-
-          # ---------- 2. VTT -> 타임스탬프 텍스트 ----------
-          TAG = re.compile(r"<[^>]+>")
-
-          def vtt_to_text(path, bucket=30):
-              """자동자막 VTT를 30초 단위 [HH:MM:SS] 블록 텍스트로 변환"""
-              cues, cur_t = [], None
-              for raw in open(path, encoding="utf-8", errors="ignore"):
-                  line = raw.rstrip("\n")
-                  m = re.match(r"(\d{2}):(\d{2}):(\d{2})\.\d{3}\s+-->", line)
-                  if m:
-                      h, mi, s = int(m.group(1)), int(m.group(2)), int(m.group(3))
-                      cur_t = h * 3600 + mi * 60 + s
-                      continue
-                  if not line.strip() or line.startswith(("WEBVTT", "Kind:", "Language:", "NOTE")):
-                      continue
-                  if cur_t is None:
-                      continue
-                  txt = TAG.sub("", line).strip()
-                  if txt:
-                      cues.append((cur_t, txt))
-
-              # 롤링 자막 중복 제거
+          def bucketize(pairs, bucket=30):
+              """[(초, 텍스트)] → '[HH:MM:SS] …' 30초 블록 문자열"""
               seen_last, dedup = None, []
-              for t, txt in cues:
+              for t, txt in pairs:
                   if txt == seen_last:
                       continue
                   seen_last = txt
                   dedup.append((t, txt))
-
-              # 30초 버킷으로 묶기
               blocks, cur_key, buf = [], None, []
               for t, txt in dedup:
-                  key = (t // bucket) * bucket
+                  k = int(t // bucket) * bucket
                   if cur_key is None:
-                      cur_key = key
-                  if key != cur_key:
+                      cur_key = k
+                  if k != cur_key:
                       if buf:
                           blocks.append((cur_key, " ".join(buf)))
-                      cur_key, buf = key, []
+                      cur_key, buf = k, []
                   buf.append(txt)
               if buf:
                   blocks.append((cur_key, " ".join(buf)))
-
               out = []
               for t, txt in blocks:
-                  hh, rem = divmod(t, 3600)
+                  hh, rem = divmod(int(t), 3600)
                   mm, ss = divmod(rem, 60)
-                  # 버킷 안에서도 반복 어절 정리
                   words, prev = [], None
                   for w in txt.split():
                       if w != prev:
@@ -178,33 +173,153 @@ jobs:
                   out.append(f"[{hh:02d}:{mm:02d}:{ss:02d}] " + " ".join(words))
               return "\n".join(out)
 
-          # ---------- 3. 영상별 처리 ----------
+          # ---------- 경로 1: 유튜브 자막 ----------
+          TAG = re.compile(r"<[^>]+>")
+
+          def vtt_to_text(path):
+              cues, cur_t = [], None
+              for raw in open(path, encoding="utf-8", errors="ignore"):
+                  line = raw.rstrip("\n")
+                  m = re.match(r"(\d{2}):(\d{2}):(\d{2})\.\d{3}\s+-->", line)
+                  if m:
+                      cur_t = int(m.group(1))*3600 + int(m.group(2))*60 + int(m.group(3))
+                      continue
+                  if not line.strip() or line.startswith(("WEBVTT", "Kind:", "Language:", "NOTE")):
+                      continue
+                  if cur_t is None:
+                      continue
+                  txt = TAG.sub("", line).strip()
+                  if txt:
+                      cues.append((cur_t, txt))
+              return bucketize(cues)
+
+          # ---------- 경로 2: 음성 받아쓰기 ----------
+          _model = {"m": None}
+
+          def whisper_model():
+              if _model["m"] is None:
+                  from faster_whisper import WhisperModel
+                  print(f"[i] whisper 모델 로딩: {WHISPER_MODEL} (CPU/int8)")
+                  _model["m"] = WhisperModel(WHISPER_MODEL, device="cpu", compute_type="int8")
+              return _model["m"]
+
+          def audio_to_text(vid):
+              """(본문, info, 에러) — 음성을 받아 텍스트로. 실패 시 (None, info, 에러)"""
+              url = f"https://www.youtube.com/watch?v={vid}"
+              apath, info, err = None, None, ""
+              for client in CLIENTS:
+                  shutil.rmtree(TMP, ignore_errors=True)
+                  os.makedirs(TMP, exist_ok=True)
+                  r = run(["yt-dlp", "-f", "bestaudio/best",
+                           "-x", "--audio-format", "mp3", "--audio-quality", "5",
+                           "--write-info-json", "--retries", "3", "--socket-timeout", "30",
+                           "--extractor-args", f"youtube:player_client={client}",
+                           "-o", os.path.join(TMP, "%(id)s.%(ext)s"), *base, url],
+                          timeout=900)
+                  ij = glob.glob(os.path.join(TMP, "*.info.json"))
+                  if ij:
+                      try:
+                          info = json.load(open(ij[0], encoding="utf-8"))
+                      except Exception:
+                          pass
+                  mp3 = glob.glob(os.path.join(TMP, "*.mp3"))
+                  if mp3:
+                      apath = mp3[0]
+                      break
+                  err = f"[audio/{client}] " + (r.stderr or "(출력 없음)")[-350:]
+                  time.sleep(2)
+
+              if not apath:
+                  return None, info, err
+
+              dur = (info or {}).get("duration") or 0
+              if dur and dur > WHISPER_MAX_MIN * 60:
+                  os.remove(apath)
+                  return None, info, f"길이 {int(dur/60)}분 — 받아쓰기 상한({WHISPER_MAX_MIN}분) 초과로 건너뜀"
+
+              try:
+                  t0 = time.time()
+                  segs, _ = whisper_model().transcribe(
+                      apath, language="ko", vad_filter=True, beam_size=5,
+                      initial_prompt=DOMAIN_PROMPT)
+                  pairs = [(s.start, s.text.strip()) for s in segs if s.text.strip()]
+                  took = time.time() - t0
+                  print(f"[i] {vid} 받아쓰기 {took:.0f}초 (오디오 {int(dur)}초)")
+              except Exception as e:
+                  return None, info, f"whisper 실패: {str(e)[-300:]}"
+              finally:
+                  if os.path.exists(apath):
+                      os.remove(apath)   # 음성 파일은 즉시 삭제
+
+              if not pairs:
+                  return None, info, "받아쓰기 결과가 비어 있음"
+              return bucketize(pairs), info, ""
+
+          # ---------- 목록 수집 ----------
+          def list_channel(ch):
+              pat = re.compile(ch["include"]) if ch["include"] else None
+              last_err = ""
+              for src in ch["sources"]:
+                  for client in CLIENTS:
+                      r = run(["yt-dlp", "--flat-playlist",
+                               "--playlist-end", str(ch["scan"]),
+                               "--print", "%(id)s\t%(title)s",
+                               "--extractor-args", f"youtube:player_client={client}",
+                               *base, src], timeout=240)
+                      rows, kept = 0, []
+                      for line in r.stdout.splitlines():
+                          if "\t" not in line:
+                              continue
+                          vid, title = line.split("\t", 1)
+                          vid = vid.strip()
+                          if len(vid) != 11:
+                              continue
+                          rows += 1
+                          if pat is None or pat.search(title):
+                              kept.append(vid)
+                      if rows:
+                          print(f"[i] {ch['name']}: {rows}건 스캔 → {len(kept)}건 선별 (client={client})")
+                          return kept, ""
+                      last_err = f"[{src}/{client}] " + (r.stderr or "")[-400:]
+              return [], last_err
+
+          # ---------- 실행 ----------
           status = {
               "last_run_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-              "source_used": src_used, "listed": len(ids), "results": [],
-              "list_error": list_err[:500],
+              "channels": {}, "results": [],
           }
           index = {}
-          if os.path.exists(os.path.join(OUT, "index.json")):
+          idx_path = os.path.join(OUT, "index.json")
+          if os.path.exists(idx_path):
               try:
-                  index = json.load(open(os.path.join(OUT, "index.json"), encoding="utf-8"))
+                  index = json.load(open(idx_path, encoding="utf-8"))
               except Exception:
                   index = {}
 
-          for vid in ids:
+          targets = []
+          for ch in CHANNELS:
+              ids, err = list_channel(ch)
+              status["channels"][ch["key"]] = {"name": ch["name"], "listed": len(ids),
+                                               "list_error": err[:400]}
+              for v in ids:
+                  targets.append((v, ch["key"], ch["name"]))
+
+          whisper_used = 0
+
+          for vid, ckey, cname in targets:
               target = os.path.join(OUT, f"{vid}.enc")
               if os.path.exists(target) and index.get(vid, {}).get("ok"):
-                  status["results"].append({"id": vid, "state": "cached"})
+                  status["results"].append({"id": vid, "channel": ckey, "state": "cached"})
                   continue
 
               url = f"https://www.youtube.com/watch?v={vid}"
               got_sub, used_client, info, last_err = None, None, None, ""
 
+              # 경로 1 — 유튜브 자막
               for client in CLIENTS:
                   shutil.rmtree(TMP, ignore_errors=True)
                   os.makedirs(TMP, exist_ok=True)
                   r = run(["yt-dlp", "--skip-download",
-                           # 자막만 받으므로 재생 포맷이 없어도 오류로 처리하지 않음
                            "--ignore-no-formats-error", "--no-abort-on-error",
                            "--write-auto-subs", "--write-subs",
                            "--sub-langs", "ko.*,ko,en.*",
@@ -214,7 +329,6 @@ jobs:
                            "--extractor-args", f"youtube:player_client={client}",
                            "-o", os.path.join(TMP, "%(id)s"), *base, url], timeout=420)
                   vtts = sorted(glob.glob(os.path.join(TMP, "*.vtt")))
-                  # 한국어 우선
                   ko = [p for p in vtts if re.search(r"\.ko", os.path.basename(p))]
                   pick = (ko or vtts)
                   ij = glob.glob(os.path.join(TMP, "*.info.json"))
@@ -226,36 +340,56 @@ jobs:
                   if pick:
                       got_sub, used_client = pick[0], client
                       break
-                  last_err = f"[{client}] " + (r.stderr or r.stdout or "(출력 없음)")[-400:]
+                  last_err = f"[{client}] " + (r.stderr or r.stdout or "(출력 없음)")[-350:]
                   time.sleep(2)
 
-              if not got_sub:
-                  status["results"].append({"id": vid, "state": "no_subtitle",
-                                            "error": last_err})
-                  index[vid] = {"ok": False, "title": (info or {}).get("title", "")}
+              source, body, lang = None, None, None
+              if got_sub:
+                  source = "caption"
+                  body   = vtt_to_text(got_sub)
+                  m = re.search(r"\.([A-Za-z\-]+)\.vtt$", os.path.basename(got_sub))
+                  lang = m.group(1) if m else "?"
+              elif whisper_used < WHISPER_MAX:
+                  # 경로 2 — 자막이 없을 때만 음성 받아쓰기
+                  whisper_used += 1
+                  body, ainfo, aerr = audio_to_text(vid)
+                  if ainfo:
+                      info = ainfo
+                  if body:
+                      source, lang, used_client = "audio", f"whisper-{WHISPER_MODEL}", "audio"
+                  else:
+                      last_err = (last_err + " || " + aerr)[-700:]
+
+              if not body:
+                  status["results"].append({"id": vid, "channel": ckey,
+                                            "state": "no_subtitle", "error": last_err})
+                  index[vid] = {"ok": False, "channel": ckey,
+                                "title": (info or {}).get("title", "")}
                   continue
 
-              body = vtt_to_text(got_sub)
               title = (info or {}).get("title", "")
               ts    = (info or {}).get("timestamp") or 0
               dur   = (info or {}).get("duration") or 0
-              lang  = re.search(r"\.([A-Za-z\-]+)\.vtt$", os.path.basename(got_sub))
-              lang  = lang.group(1) if lang else "?"
               kst   = datetime.fromtimestamp(ts, timezone(timedelta(hours=9))).strftime("%Y-%m-%d %H:%M KST") if ts else "?"
+              src_label = "유튜브 자막" if source == "caption" else "음성 받아쓰기(Whisper)"
 
-              header = (f"# videoId: {vid}\n# title: {title}\n# uploaded_kst: {kst}\n"
-                        f"# uploaded_epoch: {ts}\n# duration_sec: {dur}\n"
-                        f"# sub_lang: {lang}\n# client: {used_client}\n"
+              header = (f"# videoId: {vid}\n# channel: {cname}\n# title: {title}\n"
+                        f"# uploaded_kst: {kst}\n# uploaded_epoch: {ts}\n"
+                        f"# duration_sec: {dur}\n# source: {source} ({src_label})\n"
+                        f"# lang: {lang}\n# client: {used_client}\n"
                         f"# note: 30초 단위 블록, [HH:MM:SS]는 영상 내 위치\n\n")
               encrypt_to(header + body + "\n", target)
 
-              index[vid] = {"ok": True, "title": title, "uploaded_epoch": ts,
-                            "duration_sec": dur, "lang": lang, "chars": len(body)}
-              status["results"].append({"id": vid, "state": "fetched",
-                                        "lang": lang, "client": used_client, "chars": len(body)})
-              print(f"[+] {vid} {lang} {len(body)}자 (client={used_client})")
+              index[vid] = {"ok": True, "channel": ckey, "title": title,
+                            "uploaded_epoch": ts, "duration_sec": dur,
+                            "source": source, "lang": lang, "chars": len(body)}
+              status["results"].append({"id": vid, "channel": ckey, "state": "fetched",
+                                        "source": source, "lang": lang, "chars": len(body)})
+              print(f"[+] {vid} [{cname}] {source}/{lang} {len(body)}자")
 
-          # ---------- 4. 오래된 파일 정리 ----------
+          status["whisper_used"] = whisper_used
+
+          # ---------- 오래된 파일 정리 ----------
           cutoff = time.time() - KEEP_DAYS * 86400
           for p in glob.glob(os.path.join(OUT, "*.enc")):
               vid = os.path.splitext(os.path.basename(p))[0]
@@ -264,21 +398,25 @@ jobs:
                   os.remove(p)
                   index.pop(vid, None)
 
-          json.dump(index, open(os.path.join(OUT, "index.json"), "w", encoding="utf-8"),
+          json.dump(index, open(idx_path, "w", encoding="utf-8"),
                     ensure_ascii=False, indent=1, sort_keys=True)
           json.dump(status, open("status.json", "w", encoding="utf-8"),
                     ensure_ascii=False, indent=1)
           shutil.rmtree(TMP, ignore_errors=True)
           if os.path.exists("cookies.txt"):
               os.remove("cookies.txt")
-          print(json.dumps(status, ensure_ascii=False, indent=1)[:2000])
+          print(json.dumps(status["channels"], ensure_ascii=False, indent=1))
+          print("whisper 사용:", whisper_used, "건")
           PY
 
       - name: Commit
         run: |
-          # 안전장치: 평문 자막이 남아 있으면 커밋하지 않고 중단
+          # 안전장치: 평문 자막·음성 파일이 남아 있으면 커밋 중단
           if ls transcripts/*.txt >/dev/null 2>&1; then
-            echo "평문 자막 파일이 발견되어 커밋을 중단합니다"; exit 1
+            echo "평문 자막 파일 발견 — 커밋 중단"; exit 1
+          fi
+          if ls transcripts/*.mp3 transcripts/*.m4a >/dev/null 2>&1; then
+            echo "음성 파일 발견 — 커밋 중단"; exit 1
           fi
           git config user.name  "hkgm-bot"
           git config user.email "actions@users.noreply.github.com"
@@ -289,5 +427,3 @@ jobs:
             git commit -m "transcripts: $(date -u +%Y-%m-%dT%H:%MZ)"
             git push
           fi
-         
-
