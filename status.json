@@ -1,5 +1,5 @@
 {
- "last_run_utc": "2026-09-15T17:02:35+00:00",
+ "last_run_utc": "2026-09-15T23:41:43+00:00",
  "channels": {
   "hkgm": {
    "name": "한경 글로벌마켓",
@@ -8,7 +8,7 @@
   },
   "hkwowtv": {
    "name": "한국경제TV",
-   "listed": 1,
+   "listed": 2,
    "list_error": ""
   }
  },
@@ -16,10 +16,7 @@
   {
    "id": "aEI24vJid78",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 14792
+   "state": "cached"
   },
   {
    "id": "2PWISwIlt_4",
@@ -90,6 +87,14 @@
    "id": "s9Ke5W8eH6c",
    "channel": "hkgm",
    "state": "cached"
+  },
+  {
+   "id": "p3_yFKUpjH4",
+   "channel": "hkwowtv",
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 18122
   },
   {
    "id": "Vjx3Lr7lSQ0",
