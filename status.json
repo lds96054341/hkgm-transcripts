@@ -1,68 +1,101 @@
 {
- "last_run_utc": "2026-09-15T00:53:27+00:00",
- "source_used": "https://www.youtube.com/playlist?list=UUWskYkV4c4S9D__rsfOl2JA",
- "listed": 15,
+ "last_run_utc": "2026-09-15T00:54:10+00:00",
+ "channels": {
+  "hkgm": {
+   "name": "한경 글로벌마켓",
+   "listed": 15,
+   "list_error": ""
+  },
+  "hkwowtv": {
+   "name": "한국경제TV",
+   "listed": 1,
+   "list_error": ""
+  }
+ },
  "results": [
   {
    "id": "2PWISwIlt_4",
+   "channel": "hkgm",
    "state": "cached"
   },
   {
    "id": "Jl-igqPuNGY",
+   "channel": "hkgm",
    "state": "cached"
   },
   {
    "id": "gi_VcRUycUo",
+   "channel": "hkgm",
    "state": "cached"
   },
   {
    "id": "tA-XCLAHdy8",
+   "channel": "hkgm",
    "state": "cached"
   },
   {
    "id": "XpubPMH0dA4",
+   "channel": "hkgm",
    "state": "cached"
   },
   {
    "id": "bL4nrz7J8MY",
+   "channel": "hkgm",
    "state": "cached"
   },
   {
    "id": "gNxBiqhTRLM",
+   "channel": "hkgm",
    "state": "cached"
   },
   {
    "id": "rqbm0hYx8S4",
+   "channel": "hkgm",
    "state": "cached"
   },
   {
    "id": "c231nJa5C9c",
+   "channel": "hkgm",
    "state": "cached"
   },
   {
    "id": "8FkN7shZ8kw",
+   "channel": "hkgm",
    "state": "cached"
   },
   {
    "id": "HXHDZcwXtXg",
+   "channel": "hkgm",
    "state": "cached"
   },
   {
    "id": "9bo7tIWaq-Y",
+   "channel": "hkgm",
    "state": "cached"
   },
   {
    "id": "oyrOdL7aPBo",
+   "channel": "hkgm",
    "state": "cached"
   },
   {
    "id": "s9Ke5W8eH6c",
+   "channel": "hkgm",
    "state": "cached"
   },
   {
    "id": "kTalKXMeX8k",
+   "channel": "hkgm",
    "state": "cached"
+  },
+  {
+   "id": "Vjx3Lr7lSQ0",
+   "channel": "hkwowtv",
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 17670
   }
  ],
- "list_error": ""
+ "whisper_used": 0
 }
