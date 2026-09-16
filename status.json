@@ -1,5 +1,5 @@
 {
- "last_run_utc": "2026-09-16T09:15:38+00:00",
+ "last_run_utc": "2026-09-16T17:01:07+00:00",
  "channels": {
   "hkgm": {
    "name": "한경 글로벌마켓",
@@ -8,11 +8,23 @@
   },
   "hkwowtv": {
    "name": "한국경제TV",
-   "listed": 2,
+   "listed": 1,
    "list_error": ""
   }
  },
  "results": [
+  {
+   "id": "_5YIKSFR6gY",
+   "channel": "hkgm",
+   "state": "no_subtitle",
+   "error": "[default] 자막 트랙 없음 → 음성 받아쓰기로 즉시 전환 || [audio/android] ign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
+  },
+  {
+   "id": "3UA7xwbfQPI",
+   "channel": "hkgm",
+   "state": "no_subtitle",
+   "error": "[android] WARNING: [youtube] This live event will begin in 38 minutes.\nWARNING: No video formats found!\nWARNING: Requested format is not available\n || [audio/android] ERROR: [youtube] 3UA7xwbfQPI: This live event will begin in 37 minutes.\n"
+  },
   {
    "id": "28DALzoJODU",
    "channel": "hkgm",
@@ -80,25 +92,10 @@
    "state": "cached"
   },
   {
-   "id": "9bo7tIWaq-Y",
-   "channel": "hkgm",
-   "state": "cached"
-  },
-  {
-   "id": "oyrOdL7aPBo",
-   "channel": "hkgm",
-   "state": "cached"
-  },
-  {
    "id": "p3_yFKUpjH4",
-   "channel": "hkwowtv",
-   "state": "cached"
-  },
-  {
-   "id": "Vjx3Lr7lSQ0",
    "channel": "hkwowtv",
    "state": "cached"
   }
  ],
- "whisper_used": 1
+ "whisper_used": 3
 }
