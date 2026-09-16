@@ -26,7 +26,7 @@ concurrency:
 jobs:
   fetch:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 150
     steps:
       - uses: actions/checkout@v4
 
@@ -99,7 +99,7 @@ jobs:
 
           # ── 음성 받아쓰기(자막이 없을 때만) ──────────────────────────
           WHISPER_MODEL   = "small"   # CPU int8 기준 실시간의 약 5배 속도
-          WHISPER_MAX     = 3         # 한 회차에 받아쓸 최대 영상 수(폭주 방지)
+          WHISPER_MAX     = 6         # 한 회차에 받아쓸 최대 영상 수(폭주 방지)
           WHISPER_MAX_MIN = 90        # 이보다 긴 영상은 건너뜀(상시 라이브 방지)
           # 고유명사 오인식을 줄이기 위한 도메인 사전
           DOMAIN_PROMPT = (
@@ -339,6 +339,12 @@ jobs:
                           info = None
                   if pick:
                       got_sub, used_client = pick[0], client
+                      break
+                  # 추출은 됐는데 자막 트랙(수동·자동 모두)이 아예 없으면
+                  # 다른 클라이언트를 더 돌지 않고 즉시 음성 받아쓰기로 넘어간다
+                  if info and not (info.get("subtitles") or info.get("automatic_captions")):
+                      last_err = f"[{client}] 자막 트랙 없음 → 음성 받아쓰기로 즉시 전환"
+                      print(f"[i] {vid} 자막 트랙 없음 → 음성 받아쓰기로 즉시 전환")
                       break
                   last_err = f"[{client}] " + (r.stderr or r.stdout or "(출력 없음)")[-350:]
                   time.sleep(2)
