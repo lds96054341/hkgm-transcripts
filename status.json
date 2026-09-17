@@ -1,5 +1,5 @@
 {
- "last_run_utc": "2026-09-16T23:49:58+00:00",
+ "last_run_utc": "2026-09-17T00:52:45+00:00",
  "channels": {
   "hkgm": {
    "name": "한경 글로벌마켓",
@@ -94,10 +94,7 @@
   {
    "id": "e8Mc-p3NaPc",
    "channel": "hkwowtv",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 16640
+   "state": "cached"
   },
   {
    "id": "p3_yFKUpjH4",
