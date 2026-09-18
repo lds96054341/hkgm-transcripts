@@ -1,10 +1,10 @@
 {
- "last_run_utc": "2026-09-18T12:26:30+00:00",
- "last_run_kst": "2026-09-18 21:26:30 KST",
+ "last_run_utc": "2026-09-18T12:58:05+00:00",
+ "last_run_kst": "2026-09-18 21:58:05 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
-   "listed": 2,
+   "listed": 6,
    "list_error": ""
   },
   "hkgm": {
@@ -15,10 +15,44 @@
  },
  "results": [
   {
+   "id": "wu3uluJ-F0w",
+   "channel": "hkwowtv",
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 921
+  },
+  {
    "id": "6Wljggm-qTE",
    "channel": "hkwowtv",
-   "state": "no_subtitle",
-   "error": "자막 트랙 없음(default,tv,web_safari,mweb) → 음성 받아쓰기로 전환 || [audio/mweb] ign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 15815
+  },
+  {
+   "id": "vtu2Gh1A9Ec",
+   "channel": "hkwowtv",
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 1477
+  },
+  {
+   "id": "lDnnv-k_XqM",
+   "channel": "hkwowtv",
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 1244
+  },
+  {
+   "id": "WWZ3sqOhZ-I",
+   "channel": "hkwowtv",
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 793
   },
   {
    "id": "e8Mc-p3NaPc",
@@ -28,38 +62,50 @@
   {
    "id": "mjJ6bbNvc1I",
    "channel": "hkgm",
-   "state": "no_subtitle",
-   "error": "자막 트랙 없음(default,tv,web_safari,mweb) → 음성 받아쓰기로 전환 || [audio/mweb] ign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 7413
   },
   {
    "id": "3uxzvAib7dg",
    "channel": "hkgm",
-   "state": "no_subtitle",
-   "error": "자막 트랙 없음(default,tv,web_safari,mweb) → 음성 받아쓰기로 전환 || 봇 차단 2회로 이번 회차 받아쓰기 중단"
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 15897
   },
   {
    "id": "vXVPXZiWk5k",
    "channel": "hkgm",
-   "state": "no_subtitle",
-   "error": "자막 트랙 없음(default,tv,web_safari,mweb) → 음성 받아쓰기로 전환 || 봇 차단 2회로 이번 회차 받아쓰기 중단"
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 3971
   },
   {
    "id": "3UA7xwbfQPI",
    "channel": "hkgm",
-   "state": "no_subtitle",
-   "error": "자막 트랙 없음(default,tv,web_safari,mweb) → 음성 받아쓰기로 전환 || 봇 차단 2회로 이번 회차 받아쓰기 중단"
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 52912
   },
   {
    "id": "_5YIKSFR6gY",
    "channel": "hkgm",
-   "state": "no_subtitle",
-   "error": "자막 트랙 없음(default,tv,web_safari,mweb) → 음성 받아쓰기로 전환 || 봇 차단 2회로 이번 회차 받아쓰기 중단"
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 15697
   },
   {
    "id": "28DALzoJODU",
    "channel": "hkgm",
-   "state": "no_subtitle",
-   "error": "자막 트랙 없음(default,tv,web_safari,mweb) → 음성 받아쓰기로 전환 || 봇 차단 2회로 이번 회차 받아쓰기 중단"
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 10514
   },
   {
    "id": "aEI24vJid78",
@@ -107,26 +153,35 @@
    "state": "cached"
   }
  ],
- "whisper_used": 2,
+ "whisper_used": 0,
  "health": {
   "cookie": {
-   "status": "not_logged_in",
-   "youtube_cookies": 4,
-   "auth_cookies": [],
-   "nearest_expiry_kst": "2027-03-17 19:37 KST",
-   "days_left": 179.9,
-   "note": "로그인 쿠키(SID·SAPISID·__Secure-3PSID 등)가 없습니다. 시크릿 창에서 로그인 → youtube.com/robots.txt 방문 → 내보내기 순서로 다시 만드세요."
+   "status": "expiring_soon",
+   "youtube_cookies": 27,
+   "auth_cookies": [
+    "APISID",
+    "HSID",
+    "LOGIN_INFO",
+    "SAPISID",
+    "SID",
+    "SSID",
+    "__Secure-1PAPISID",
+    "__Secure-1PSID",
+    "__Secure-3PAPISID",
+    "__Secure-3PSID"
+   ],
+   "nearest_expiry_kst": "2026-09-18 22:04 KST",
+   "days_left": 0.0,
+   "note": "쿠키가 약 0.0일 뒤 만료됩니다. 미리 재발급하세요."
   },
   "pot_provider": "ok",
-  "bot_blocked": 2,
-  "audio_disabled": true,
-  "fetched": 0,
-  "by_caption": 0,
-  "failed": 7,
+  "bot_blocked": 0,
+  "audio_disabled": false,
+  "fetched": 11,
+  "by_caption": 11,
+  "failed": 0,
   "warnings": [
-   "자막 수집기 쿠키 무효 — 로그인 쿠키(SID·SAPISID·__Secure-3PSID 등)가 없습니다. 시크릿 창에서 로그인 → youtube.com/robots.txt 방문 → 내보내기 순서로 다시 만드세요.",
-   "YouTube 봇 차단 2회 — GitHub Actions의 데이터센터 IP는 차단 대상입니다. 자막 경로로만 수집됩니다.",
-   "이번 회차 신규 수집 0건(실패 7건) — 리포트는 기사 기반으로 작성해야 합니다."
+   "자막 수집기 쿠키 곧 만료 — 쿠키가 약 0.0일 뒤 만료됩니다. 미리 재발급하세요."
   ]
  }
 }

@@ -41,10 +41,13 @@
  },
  "28DALzoJODU": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
-  "title": "The Hidden Danger of Inflation: How It Slowly Erodes Your Finances Over Time | Park Shin-young's ...",
-  "uploaded_epoch": 0
+  "chars": 10514,
+  "duration_sec": 1400,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "당장의 큰 타격은 없지만 시간이 갈수록 경제를 서서히 갉아먹는 인플레이션의 위험을 짚어봅니다 | 박신영의 월가아나토미",
+  "uploaded_epoch": 1789520852
  },
  "2PWISwIlt_4": {
   "chars": 17609,
@@ -56,24 +59,33 @@
  },
  "3UA7xwbfQPI": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
+  "chars": 52912,
+  "duration_sec": 5194,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
   "title": "[9월 FOMC 생중계] 워시 의장 기자회견 집중분석 | 해설 김현석·박신영 뉴욕특파원",
-  "uploaded_epoch": 0
+  "uploaded_epoch": 1789588011
  },
  "3uxzvAib7dg": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
+  "chars": 15897,
+  "duration_sec": 2151,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
   "title": "[박신영의 개장전요것만-9월17일] 아마존의 AI전력 수혜주는? | 추락하는 나이키",
-  "uploaded_epoch": 0
+  "uploaded_epoch": 1789654160
  },
  "6Wljggm-qTE": {
   "channel": "hkwowtv",
-  "duration_sec": 0,
-  "ok": false,
+  "chars": 15815,
+  "duration_sec": 2245,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
   "title": "[🔴09/18 #당잠사] 美 증시 3대지수 상승ㅣ美 주간 신규 실업수당 19만6천건…예상치 하회ㅣ네비우스 “엔비디아 GPU 임대료 20% 인상”ㅣ#엔비디아 #아마존 #알파벳",
-  "uploaded_epoch": 0
+  "uploaded_epoch": 1789679518
  },
  "6is5_Lkl8Mc": {
   "chars": 9367,
@@ -245,6 +257,16 @@
   "ok": false,
   "title": "[Park Shin-young's Pre-market Briefing - August 31] Will SaaS climb even higher in September-Octo..."
  },
+ "WWZ3sqOhZ-I": {
+  "channel": "hkwowtv",
+  "chars": 793,
+  "duration_sec": 90,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "9월 17일 글로벌 1분 시황✅ #당잠사 #굿모닝한경글로벌마켓 #1분시황 #",
+  "uploaded_epoch": 1789605471
+ },
  "Xl69Bw2qzvM": {
   "chars": 14602,
   "duration_sec": 1634,
@@ -279,10 +301,13 @@
  },
  "_5YIKSFR6gY": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
-  "title": "[Park Shin-young's Pre-Market Brief - Sep 16] Treasury yields dragging down AI stocks... Yardeni ...",
-  "uploaded_epoch": 0
+  "chars": 15697,
+  "duration_sec": 2190,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "[박신영의 개장전요것만-9월16일] 국채금리가 발목잡는 AI 주가...야데니도 올해 전망치 내렸다",
+  "uploaded_epoch": 1789568959
  },
  "_FuiApUkxWI": {
   "ok": false,
@@ -412,6 +437,16 @@
   "title": "[박신영의 개장전요것만-9월9일] 베선트, 금리는 “나에게 베팅”..엔화 강세에 발목잡힌 반도체",
   "uploaded_epoch": 1788963346
  },
+ "lDnnv-k_XqM": {
+  "channel": "hkwowtv",
+  "chars": 1244,
+  "duration_sec": 174,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "9월 17일 글로벌 주요 이슈 #당잠사 #굿모닝한경글로벌마켓 #글로벌주요이슈",
+  "uploaded_epoch": 1789605917
+ },
  "mTiybxvCZpI": {
   "chars": 475,
   "duration_sec": 48,
@@ -422,10 +457,13 @@
  },
  "mjJ6bbNvc1I": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
-  "title": "What risks are blocking AI stock prices? | Shin-young Park's Wall Street Anatomy",
-  "uploaded_epoch": 0
+  "chars": 7413,
+  "duration_sec": 937,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "AI 주가를 가로막는 리스크가 무엇인지 알아보았습니다 | 박신영의 월가아나토미",
+  "uploaded_epoch": 1789693214
  },
  "oddhu5wf7M8": {
   "ok": false,
@@ -503,10 +541,23 @@
  },
  "vXVPXZiWk5k": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
-  "title": "New Titles, No New Faces... Blizzard's Dilemma | Kim In-yeop's Silicon Valley Now",
-  "uploaded_epoch": 0
+  "chars": 3971,
+  "duration_sec": 463,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "신작은 있는데 새 얼굴은 없다…블리자드의 고민ㅣ김인엽의 실리콘밸리나우",
+  "uploaded_epoch": 1789635602
+ },
+ "vtu2Gh1A9Ec": {
+  "channel": "hkwowtv",
+  "chars": 1477,
+  "duration_sec": 178,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "9월 17일 글로벌 주요 이슈 #당잠사 #굿모닝한경글로벌마켓 #글로벌주요이슈",
+  "uploaded_epoch": 1789606604
  },
  "w4OBX-JoHtM": {
   "ok": false,
@@ -523,6 +574,16 @@
   "ok": true,
   "title": "AI 투자에 소극적인 모습을 보여온 애플이 지금과 같은 시장 지배력을 지킬 수 있을지 살펴봤습니다 | 박신영의 월가아나토미",
   "uploaded_epoch": 1788915627
+ },
+ "wu3uluJ-F0w": {
+  "channel": "hkwowtv",
+  "chars": 921,
+  "duration_sec": 101,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "9월 18일 글로벌 1분 시황✅ #당잠사 #굿모닝한경글로벌마켓 #1분시황",
+  "uploaded_epoch": 1789686400
  },
  "y0Rq9qCxTnY": {
   "ok": false,
