@@ -1,5 +1,5 @@
 {
- "last_run_utc": "2026-09-18T00:46:30+00:00",
+ "last_run_utc": "2026-09-18T08:58:29+00:00",
  "channels": {
   "hkgm": {
    "name": "한경 글로벌마켓",
@@ -13,6 +13,12 @@
   }
  },
  "results": [
+  {
+   "id": "mjJ6bbNvc1I",
+   "channel": "hkgm",
+   "state": "no_subtitle",
+   "error": "[default] 자막 트랙 없음 → 음성 받아쓰기로 즉시 전환 || [audio/android] ign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
+  },
   {
    "id": "3uxzvAib7dg",
    "channel": "hkgm",
@@ -89,15 +95,10 @@
    "state": "cached"
   },
   {
-   "id": "c231nJa5C9c",
-   "channel": "hkgm",
-   "state": "cached"
-  },
-  {
    "id": "6Wljggm-qTE",
    "channel": "hkwowtv",
    "state": "no_subtitle",
-   "error": "[default] 자막 트랙 없음 → 음성 받아쓰기로 즉시 전환 || [audio/android] ign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
+   "error": "[default] 자막 트랙 없음 → 음성 받아쓰기로 즉시 전환"
   },
   {
    "id": "e8Mc-p3NaPc",
