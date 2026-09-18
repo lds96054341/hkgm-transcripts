@@ -1,10 +1,10 @@
 {
- "last_run_utc": "2026-09-18T13:07:25+00:00",
- "last_run_kst": "2026-09-18 22:07:25 KST",
+ "last_run_utc": "2026-09-18T16:27:03+00:00",
+ "last_run_kst": "2026-09-19 01:27:03 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
-   "listed": 6,
+   "listed": 1,
    "list_error": ""
   },
   "hkgm": {
@@ -15,32 +15,7 @@
  },
  "results": [
   {
-   "id": "wu3uluJ-F0w",
-   "channel": "hkwowtv",
-   "state": "cached"
-  },
-  {
    "id": "6Wljggm-qTE",
-   "channel": "hkwowtv",
-   "state": "cached"
-  },
-  {
-   "id": "vtu2Gh1A9Ec",
-   "channel": "hkwowtv",
-   "state": "cached"
-  },
-  {
-   "id": "lDnnv-k_XqM",
-   "channel": "hkwowtv",
-   "state": "cached"
-  },
-  {
-   "id": "WWZ3sqOhZ-I",
-   "channel": "hkwowtv",
-   "state": "cached"
-  },
-  {
-   "id": "e8Mc-p3NaPc",
    "channel": "hkwowtv",
    "state": "cached"
   },
@@ -138,7 +113,7 @@
     "__Secure-3PSID"
    ],
    "nearest_expiry_kst": "2027-10-23 21:54 KST",
-   "days_left": 400.0,
+   "days_left": 399.9,
    "note": ""
   },
   "pot_provider": "ok",
