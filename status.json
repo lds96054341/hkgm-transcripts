@@ -1,53 +1,65 @@
 {
- "last_run_utc": "2026-09-18T10:52:01+00:00",
+ "last_run_utc": "2026-09-18T11:10:02+00:00",
+ "last_run_kst": "2026-09-18 20:10:02 KST",
  "channels": {
-  "hkgm": {
-   "name": "한경 글로벌마켓",
-   "listed": 15,
-   "list_error": ""
-  },
   "hkwowtv": {
    "name": "한국경제TV",
    "listed": 2,
+   "list_error": ""
+  },
+  "hkgm": {
+   "name": "한경 글로벌마켓",
+   "listed": 15,
    "list_error": ""
   }
  },
  "results": [
   {
+   "id": "6Wljggm-qTE",
+   "channel": "hkwowtv",
+   "state": "no_subtitle",
+   "error": "자막 트랙 없음(default,tv,web_safari,mweb) → 음성 받아쓰기로 전환 || [audio/mweb] ign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
+  },
+  {
+   "id": "e8Mc-p3NaPc",
+   "channel": "hkwowtv",
+   "state": "cached"
+  },
+  {
    "id": "mjJ6bbNvc1I",
    "channel": "hkgm",
    "state": "no_subtitle",
-   "error": "[default] 자막 트랙 없음 → 음성 받아쓰기로 즉시 전환 || [audio/android] ign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
+   "error": "자막 트랙 없음(default,tv,web_safari,mweb) → 음성 받아쓰기로 전환 || [audio/mweb] ign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
   },
   {
    "id": "3uxzvAib7dg",
    "channel": "hkgm",
    "state": "no_subtitle",
-   "error": "[default] 자막 트랙 없음 → 음성 받아쓰기로 즉시 전환 || [audio/android] ign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
+   "error": "자막 트랙 없음(default,tv,web_safari,mweb) → 음성 받아쓰기로 전환 || 봇 차단 2회로 이번 회차 받아쓰기 중단"
   },
   {
    "id": "vXVPXZiWk5k",
    "channel": "hkgm",
    "state": "no_subtitle",
-   "error": "[default] 자막 트랙 없음 → 음성 받아쓰기로 즉시 전환 || [audio/android] ign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
+   "error": "자막 트랙 없음(default,tv,web_safari,mweb) → 음성 받아쓰기로 전환 || 봇 차단 2회로 이번 회차 받아쓰기 중단"
   },
   {
    "id": "3UA7xwbfQPI",
    "channel": "hkgm",
    "state": "no_subtitle",
-   "error": "[default] 자막 트랙 없음 → 음성 받아쓰기로 즉시 전환 || [audio/android] ign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
+   "error": "자막 트랙 없음(default,tv,web_safari,mweb) → 음성 받아쓰기로 전환 || 봇 차단 2회로 이번 회차 받아쓰기 중단"
   },
   {
    "id": "_5YIKSFR6gY",
    "channel": "hkgm",
    "state": "no_subtitle",
-   "error": "[default] 자막 트랙 없음 → 음성 받아쓰기로 즉시 전환 || [audio/android] ign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
+   "error": "자막 트랙 없음(default,tv,web_safari,mweb) → 음성 받아쓰기로 전환 || 봇 차단 2회로 이번 회차 받아쓰기 중단"
   },
   {
    "id": "28DALzoJODU",
    "channel": "hkgm",
    "state": "no_subtitle",
-   "error": "[default] 자막 트랙 없음 → 음성 받아쓰기로 즉시 전환 || [audio/android] ign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
+   "error": "자막 트랙 없음(default,tv,web_safari,mweb) → 음성 받아쓰기로 전환 || 봇 차단 2회로 이번 회차 받아쓰기 중단"
   },
   {
    "id": "aEI24vJid78",
@@ -93,18 +105,28 @@
    "id": "rqbm0hYx8S4",
    "channel": "hkgm",
    "state": "cached"
-  },
-  {
-   "id": "6Wljggm-qTE",
-   "channel": "hkwowtv",
-   "state": "no_subtitle",
-   "error": "[default] 자막 트랙 없음 → 음성 받아쓰기로 즉시 전환"
-  },
-  {
-   "id": "e8Mc-p3NaPc",
-   "channel": "hkwowtv",
-   "state": "cached"
   }
  ],
- "whisper_used": 6
+ "whisper_used": 2,
+ "health": {
+  "cookie": {
+   "status": "not_logged_in",
+   "youtube_cookies": 4,
+   "auth_cookies": [],
+   "nearest_expiry_kst": "2027-03-17 19:37 KST",
+   "days_left": 180.0,
+   "note": "로그인 쿠키(SID·SAPISID·__Secure-3PSID 등)가 없습니다. 시크릿 창에서 로그인 → youtube.com/robots.txt 방문 → 내보내기 순서로 다시 만드세요."
+  },
+  "pot_provider": "ok",
+  "bot_blocked": 2,
+  "audio_disabled": true,
+  "fetched": 0,
+  "by_caption": 0,
+  "failed": 7,
+  "warnings": [
+   "자막 수집기 쿠키 무효 — 로그인 쿠키(SID·SAPISID·__Secure-3PSID 등)가 없습니다. 시크릿 창에서 로그인 → youtube.com/robots.txt 방문 → 내보내기 순서로 다시 만드세요.",
+   "YouTube 봇 차단 2회 — GitHub Actions의 데이터센터 IP는 차단 대상입니다. 자막 경로로만 수집됩니다.",
+   "이번 회차 신규 수집 0건(실패 7건) — 리포트는 기사 기반으로 작성해야 합니다."
+  ]
+ }
 }
