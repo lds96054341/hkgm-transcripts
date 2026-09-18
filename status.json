@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-09-18T11:10:02+00:00",
- "last_run_kst": "2026-09-18 20:10:02 KST",
+ "last_run_utc": "2026-09-18T12:14:44+00:00",
+ "last_run_kst": "2026-09-18 21:14:44 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -114,7 +114,7 @@
    "youtube_cookies": 4,
    "auth_cookies": [],
    "nearest_expiry_kst": "2027-03-17 19:37 KST",
-   "days_left": 180.0,
+   "days_left": 179.9,
    "note": "로그인 쿠키(SID·SAPISID·__Secure-3PSID 등)가 없습니다. 시크릿 창에서 로그인 → youtube.com/robots.txt 방문 → 내보내기 순서로 다시 만드세요."
   },
   "pot_provider": "ok",
