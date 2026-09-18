@@ -198,6 +198,10 @@ jobs:
                       continue
                   out["youtube_cookies"] += 1
                   names.add(name)
+                  # ★11 만료일은 로그인 쿠키만 본다. GPS 같은 30분짜리 잡쿠키를
+                  #     포함하면 매 실행마다 '곧 만료' 오경보가 뜬다.
+                  if name not in AUTH_MARKERS:
+                      continue
                   try:
                       e = int(exp)
                       if e > 0:
