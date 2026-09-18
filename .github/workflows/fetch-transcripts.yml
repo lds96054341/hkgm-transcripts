@@ -1,5 +1,16 @@
 name: fetch-hkgm-transcripts
 
+# ─────────────────────────────────────────────────────────────────────
+# 2026-09-18 개정판. 변경점은 코드 안에서 ★ 로 표시했다.
+#   ★1 자막 경로 조기 탈출 제거 — 모든 클라이언트를 다 시도한 뒤 판단
+#   ★2 우선순위 채널(당잠사) 먼저 처리 — 받아쓰기 슬롯을 뺏기지 않게
+#   ★3 PO 토큰 프로바이더 상태를 실제로 검증해 status.json에 기록
+#   ★4 android 제거(계정 쿠키 미지원) + tv 우선
+#   ★5 쿠키 건강성 점검 결과를 status.json에 기록
+#   ★6 봇 차단 감지 시 받아쓰기 조기 중단(IP 평판 보호)
+#   ★7 실패한 영상도 업로드 시각을 색인에 남긴다
+# ─────────────────────────────────────────────────────────────────────
+
 on:
   schedule:
     # UTC 기준. 21:45 UTC = 06:45 KST, 22:40 UTC = 07:40 KST
@@ -41,12 +52,29 @@ jobs:
           path: ~/.cache/huggingface
           key: whisper-small-v1
 
+      # ★3 프로바이더 상태를 pot_status.txt 에 남긴다. 실패해도 잡은 계속 진행하되,
+      #    "조용히 죽는" 일이 없도록 결과를 파이썬이 읽어 status.json에 싣는다.
       - name: Start PO token provider
         run: |
+          set +e
+          echo "down" > pot_status.txt
           docker run --name bgutil-provider -d --init -p 4416:4416 \
-            brainicism/bgutil-ytdlp-pot-provider || echo "provider 기동 실패(계속 진행)"
-          sleep 8
-          curl -s -m 5 http://127.0.0.1:4416/ping && echo " provider OK" || echo "provider 응답 없음(계속 진행)"
+            brainicism/bgutil-ytdlp-pot-provider
+          if [ $? -ne 0 ]; then
+            echo "docker_failed" > pot_status.txt
+            echo "[!] provider 컨테이너 기동 실패"
+            exit 0
+          fi
+          for i in $(seq 1 15); do
+            sleep 2
+            if curl -s -m 5 http://127.0.0.1:4416/ping >/dev/null 2>&1; then
+              echo "ok" > pot_status.txt
+              echo "[i] provider OK (${i}회 시도)"
+              exit 0
+            fi
+          done
+          echo "no_response" > pot_status.txt
+          echo "[!] provider 응답 없음 — web/mweb 클라이언트는 실패할 수 있음"
 
       - name: Install tools
         run: |
@@ -64,23 +92,17 @@ jobs:
           import json, os, re, subprocess, shutil, glob, time
           from datetime import datetime, timezone, timedelta
 
+          KST = timezone(timedelta(hours=9))
+
           # ────────────────────────────────────────────────────────────
           # 수집 대상 채널
           #   include=None  → 올라온 것 전부
           #   include=정규식 → 제목이 매칭되는 것만
+          #   priority      → 낮을수록 먼저 처리(★2). 받아쓰기 슬롯을 먼저 가져간다.
           # 한국경제TV는 하루 55건이 올라오고 반려동물·차트게임 등이 섞여 있어
           # 🔴 라이브 코너 「당잠사」만 고른다 (매일 06:10~06:15 KST, 미국장 마감 정리).
-          # 코너를 추가하려면 include 정규식에 |로 이어 붙이면 된다.
           # ────────────────────────────────────────────────────────────
           CHANNELS = [
-              {
-                  "key": "hkgm", "name": "한경 글로벌마켓",
-                  "sources": [
-                      "https://www.youtube.com/playlist?list=UUWskYkV4c4S9D__rsfOl2JA",
-                      "https://www.youtube.com/channel/UCWskYkV4c4S9D__rsfOl2JA/videos",
-                  ],
-                  "scan": 15, "include": None,
-              },
               {
                   "key": "hkwowtv", "name": "한국경제TV",
                   "sources": [
@@ -89,19 +111,33 @@ jobs:
                   ],
                   "scan": 90,
                   "include": r"당잠사|당신이\s*잠든\s*사이",
+                  "priority": 0,          # ★2 당잠사가 먼저
+              },
+              {
+                  "key": "hkgm", "name": "한경 글로벌마켓",
+                  "sources": [
+                      "https://www.youtube.com/playlist?list=UUWskYkV4c4S9D__rsfOl2JA",
+                      "https://www.youtube.com/channel/UCWskYkV4c4S9D__rsfOl2JA/videos",
+                  ],
+                  "scan": 15, "include": None,
+                  "priority": 1,
               },
           ]
 
           KEEP_DAYS = 45
           OUT  = "transcripts"
           TMP  = "_tmp"
-          CLIENTS = ["default", "web_safari", "tv", "mweb", "android"]
+
+          # ★4 android/ios 는 계정 쿠키를 지원하지 않아 재시도 낭비 + 봇 차단 유발.
+          #    tv 는 PO 토큰 없이도 쿠키가 먹는 유일한 클라이언트라 두 번째로 둔다.
+          CLIENTS = ["default", "tv", "web_safari", "mweb"]
 
           # ── 음성 받아쓰기(자막이 없을 때만) ──────────────────────────
           WHISPER_MODEL   = "small"   # CPU int8 기준 실시간의 약 5배 속도
           WHISPER_MAX     = 6         # 한 회차에 받아쓸 최대 영상 수(폭주 방지)
           WHISPER_MAX_MIN = 90        # 이보다 긴 영상은 건너뜀(상시 라이브 방지)
-          # 고유명사 오인식을 줄이기 위한 도메인 사전
+          BOT_BLOCK_STOP  = 2         # ★6 봇 차단 N회면 이번 회차 받아쓰기 포기
+
           DOMAIN_PROMPT = (
               "미국 증시와 반도체 시장 브리핑입니다. "
               "엔비디아, 삼성전자, SK하이닉스, 마이크론, 브로드컴, TSMC, 인텔, AMD, "
@@ -119,12 +155,96 @@ jobs:
           shutil.rmtree(TMP, ignore_errors=True)
           os.makedirs(TMP, exist_ok=True)
 
+          # ─── ★5 쿠키 건강성 점검 ───────────────────────────────────
+          # 로그인 세션을 구성하는 쿠키 중 하나라도 있으면 "로그인된 쿠키"로 본다.
+          AUTH_MARKERS = {
+              "SID", "HSID", "SSID", "APISID", "SAPISID", "LOGIN_INFO",
+              "__Secure-1PSID", "__Secure-3PSID",
+              "__Secure-1PAPISID", "__Secure-3PAPISID",
+          }
+
+          def inspect_cookies(path="cookies.txt"):
+              out = {
+                  "status": "missing", "youtube_cookies": 0, "auth_cookies": [],
+                  "nearest_expiry_kst": None, "days_left": None, "note": "",
+              }
+              if not os.path.exists(path):
+                  out["note"] = "YT_COOKIES 시크릿이 비어 있습니다."
+                  return out
+
+              raw = open(path, encoding="utf-8", errors="ignore").read()
+              lines = [l for l in raw.splitlines()
+                       if l.strip() and not l.lstrip().startswith("#")]
+              if not lines:
+                  out["status"] = "empty"
+                  out["note"] = "쿠키 데이터 줄이 하나도 없습니다."
+                  return out
+
+              rows = [l.split("\t") for l in lines]
+              good = [r for r in rows if len(r) >= 7]
+              if not good:
+                  # Netscape cookies.txt 는 탭 구분. 공백으로 바뀌면 yt-dlp가 못 읽는다.
+                  out["status"] = "malformed"
+                  out["note"] = ("탭 구분이 깨졌습니다 — 복사 과정에서 탭이 공백으로 "
+                                 "바뀐 것으로 보입니다. 메모장에서 직접 복사하거나 "
+                                 "`gh secret set YT_COOKIES < cookies.txt` 를 쓰세요.")
+                  return out
+
+              names, exps = set(), []
+              for r in good:
+                  dom, exp, name = r[0], r[4], r[5]
+                  if ("youtube.com" not in dom) and ("google.com" not in dom):
+                      continue
+                  out["youtube_cookies"] += 1
+                  names.add(name)
+                  try:
+                      e = int(exp)
+                      if e > 0:
+                          exps.append(e)
+                  except ValueError:
+                      pass
+
+              found = sorted(names & AUTH_MARKERS)
+              out["auth_cookies"] = found
+              if exps:
+                  n = min(exps)
+                  out["nearest_expiry_kst"] = datetime.fromtimestamp(n, KST).strftime("%Y-%m-%d %H:%M KST")
+                  out["days_left"] = round((n - time.time()) / 86400, 1)
+
+              if out["youtube_cookies"] == 0:
+                  out["status"] = "no_youtube"
+                  out["note"] = "youtube.com / google.com 도메인 쿠키가 없습니다. 내보낼 때 도메인 필터를 확인하세요."
+              elif not found:
+                  out["status"] = "not_logged_in"
+                  out["note"] = ("로그인 쿠키(SID·SAPISID·__Secure-3PSID 등)가 없습니다. "
+                                 "시크릿 창에서 로그인 → youtube.com/robots.txt 방문 → 내보내기 순서로 다시 만드세요.")
+              elif out["days_left"] is not None and out["days_left"] < 0:
+                  out["status"] = "expired"
+                  out["note"] = "쿠키가 이미 만료됐습니다. 재발급이 필요합니다."
+              elif out["days_left"] is not None and out["days_left"] < 3:
+                  out["status"] = "expiring_soon"
+                  out["note"] = f"쿠키가 약 {out['days_left']}일 뒤 만료됩니다. 미리 재발급하세요."
+              else:
+                  out["status"] = "ok"
+              return out
+
           base = []
           if os.environ.get("YT_COOKIES", "").strip():
               with open("cookies.txt", "w") as f:
                   f.write(os.environ["YT_COOKIES"])
               base += ["--cookies", "cookies.txt"]
               print("[i] cookies 사용")
+          cookie_info = inspect_cookies()
+          print("[i] 쿠키 점검:", json.dumps(cookie_info, ensure_ascii=False))
+
+          # ★3 프로바이더 상태 읽기
+          pot_state = "unknown"
+          if os.path.exists("pot_status.txt"):
+              pot_state = open("pot_status.txt").read().strip() or "unknown"
+          print("[i] PO 토큰 프로바이더:", pot_state)
+
+          # IP 평판을 아끼기 위해 요청 간 간격을 둔다.
+          base += ["--sleep-requests", "1.5"]
 
           def run(args, timeout=300):
               return subprocess.run(args, capture_output=True, text=True, timeout=timeout)
@@ -286,6 +406,7 @@ jobs:
           # ---------- 실행 ----------
           status = {
               "last_run_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+              "last_run_kst": datetime.now(KST).strftime("%Y-%m-%d %H:%M:%S KST"),
               "channels": {}, "results": [],
           }
           index = {}
@@ -302,11 +423,17 @@ jobs:
               status["channels"][ch["key"]] = {"name": ch["name"], "listed": len(ids),
                                                "list_error": err[:400]}
               for v in ids:
-                  targets.append((v, ch["key"], ch["name"]))
+                  targets.append((ch.get("priority", 9), v, ch["key"], ch["name"]))
+
+          # ★2 우선순위 채널이 받아쓰기 슬롯을 먼저 가져가도록 정렬.
+          #    (같은 우선순위 안에서는 목록에 나온 순서 = 최신순 유지)
+          targets.sort(key=lambda t: t[0])
 
           whisper_used = 0
+          bot_hits = 0
+          audio_disabled = False
 
-          for vid, ckey, cname in targets:
+          for _prio, vid, ckey, cname in targets:
               target = os.path.join(OUT, f"{vid}.enc")
               if os.path.exists(target) and index.get(vid, {}).get("ok"):
                   status["results"].append({"id": vid, "channel": ckey, "state": "cached"})
@@ -314,8 +441,13 @@ jobs:
 
               url = f"https://www.youtube.com/watch?v={vid}"
               got_sub, used_client, info, last_err = None, None, None, ""
+              no_track_clients = []
 
               # 경로 1 — 유튜브 자막
+              # ★1 예전에는 첫 클라이언트가 "자막 트랙 없음"을 주면 즉시 break 해서
+              #    tv 등 나머지 클라이언트를 아예 시도하지 않았다. 인증이 약해지면
+              #    default 가 자막 없는 응답을 주는 경우가 많아, 이 조기 탈출이
+              #    자막 경로 전체를 죽이는 원인이었다. 이제는 전부 시도한다.
               for client in CLIENTS:
                   shutil.rmtree(TMP, ignore_errors=True)
                   os.makedirs(TMP, exist_ok=True)
@@ -331,23 +463,31 @@ jobs:
                   vtts = sorted(glob.glob(os.path.join(TMP, "*.vtt")))
                   ko = [p for p in vtts if re.search(r"\.ko", os.path.basename(p))]
                   pick = (ko or vtts)
+                  # 이번 클라이언트가 실제로 내놓은 메타데이터만 판정에 쓴다.
+                  # (직전 클라이언트의 info가 남아 원인을 오인하지 않도록)
+                  cur_info = None
                   ij = glob.glob(os.path.join(TMP, "*.info.json"))
                   if ij:
                       try:
-                          info = json.load(open(ij[0], encoding="utf-8"))
+                          cur_info = json.load(open(ij[0], encoding="utf-8"))
                       except Exception:
-                          info = None
+                          cur_info = None
+                  if cur_info:
+                      info = cur_info          # 업로드 시각 등은 최신 것으로 보존(★7)
                   if pick:
                       got_sub, used_client = pick[0], client
                       break
-                  # 추출은 됐는데 자막 트랙(수동·자동 모두)이 아예 없으면
-                  # 다른 클라이언트를 더 돌지 않고 즉시 음성 받아쓰기로 넘어간다
-                  if info and not (info.get("subtitles") or info.get("automatic_captions")):
-                      last_err = f"[{client}] 자막 트랙 없음 → 음성 받아쓰기로 즉시 전환"
-                      print(f"[i] {vid} 자막 트랙 없음 → 음성 받아쓰기로 즉시 전환")
-                      break
-                  last_err = f"[{client}] " + (r.stderr or r.stdout or "(출력 없음)")[-350:]
+                  if cur_info and not (cur_info.get("subtitles") or cur_info.get("automatic_captions")):
+                      no_track_clients.append(client)
+                      last_err = f"[{client}] 자막 트랙 없음"
+                  else:
+                      last_err = f"[{client}] " + (r.stderr or r.stdout or "(출력 없음)")[-350:]
                   time.sleep(2)
+
+              if not got_sub and no_track_clients:
+                  last_err = ("자막 트랙 없음(" + ",".join(no_track_clients) +
+                              ") → 음성 받아쓰기로 전환")
+                  print(f"[i] {vid} 자막 트랙 없음 ({','.join(no_track_clients)})")
 
               source, body, lang = None, None, None
               if got_sub:
@@ -355,6 +495,8 @@ jobs:
                   body   = vtt_to_text(got_sub)
                   m = re.search(r"\.([A-Za-z\-]+)\.vtt$", os.path.basename(got_sub))
                   lang = m.group(1) if m else "?"
+              elif audio_disabled:
+                  last_err = (last_err + f" || 봇 차단 {bot_hits}회로 이번 회차 받아쓰기 중단")[-700:]
               elif whisper_used < WHISPER_MAX:
                   # 경로 2 — 자막이 없을 때만 음성 받아쓰기
                   whisper_used += 1
@@ -365,18 +507,32 @@ jobs:
                       source, lang, used_client = "audio", f"whisper-{WHISPER_MODEL}", "audio"
                   else:
                       last_err = (last_err + " || " + aerr)[-700:]
-
-              if not body:
-                  status["results"].append({"id": vid, "channel": ckey,
-                                            "state": "no_subtitle", "error": last_err})
-                  index[vid] = {"ok": False, "channel": ckey,
-                                "title": (info or {}).get("title", "")}
-                  continue
+                      # ★6 봇 차단이 반복되면 더 시도해봐야 IP 평판만 깎인다.
+                      if "not a bot" in aerr or "confirm you" in aerr:
+                          bot_hits += 1
+                          if bot_hits >= BOT_BLOCK_STOP:
+                              audio_disabled = True
+                              print(f"[!] 봇 차단 {bot_hits}회 — 이번 회차 받아쓰기를 중단합니다.")
+              else:
+                  last_err = (last_err + f" || 받아쓰기 상한({WHISPER_MAX}건) 소진")[-700:]
 
               title = (info or {}).get("title", "")
               ts    = (info or {}).get("timestamp") or 0
               dur   = (info or {}).get("duration") or 0
-              kst   = datetime.fromtimestamp(ts, timezone(timedelta(hours=9))).strftime("%Y-%m-%d %H:%M KST") if ts else "?"
+
+              if not body:
+                  status["results"].append({"id": vid, "channel": ckey,
+                                            "state": "no_subtitle", "error": last_err})
+                  # ★7 실패해도 업로드 시각·길이를 남긴다.
+                  #    리포트 쪽에서 YouTube API 없이 대상 영상의 시간창을 판정할 수 있어야 한다.
+                  prev = index.get(vid, {})
+                  index[vid] = {"ok": False, "channel": ckey,
+                                "title": title or prev.get("title", ""),
+                                "uploaded_epoch": ts or prev.get("uploaded_epoch", 0),
+                                "duration_sec": dur or prev.get("duration_sec", 0)}
+                  continue
+
+              kst   = datetime.fromtimestamp(ts, KST).strftime("%Y-%m-%d %H:%M KST") if ts else "?"
               src_label = "유튜브 자막" if source == "caption" else "음성 받아쓰기(Whisper)"
 
               header = (f"# videoId: {vid}\n# channel: {cname}\n# title: {title}\n"
@@ -395,6 +551,44 @@ jobs:
 
           status["whisper_used"] = whisper_used
 
+          # ─── ★5 건강성 요약 — 리포트 상단 경고의 원천 ───────────────
+          n_fetched = sum(1 for r in status["results"] if r["state"] == "fetched")
+          n_failed  = sum(1 for r in status["results"] if r["state"] == "no_subtitle")
+          n_caption = sum(1 for r in status["results"] if r.get("source") == "caption")
+
+          warnings = []
+          cs = cookie_info["status"]
+          if cs == "missing":
+              warnings.append("자막 수집기 쿠키 미설정 — YT_COOKIES 시크릿이 비어 있습니다.")
+          elif cs == "malformed":
+              warnings.append("자막 수집기 쿠키 형식 오류 — " + cookie_info["note"])
+          elif cs in ("empty", "no_youtube", "not_logged_in"):
+              warnings.append("자막 수집기 쿠키 무효 — " + cookie_info["note"])
+          elif cs == "expired":
+              warnings.append("자막 수집기 쿠키 만료 — 갱신 필요.")
+          elif cs == "expiring_soon":
+              warnings.append("자막 수집기 쿠키 곧 만료 — " + cookie_info["note"])
+
+          if pot_state != "ok":
+              warnings.append(f"PO 토큰 프로바이더 비정상({pot_state}) — web/mweb 클라이언트가 실패할 수 있습니다.")
+          if bot_hits:
+              warnings.append(f"YouTube 봇 차단 {bot_hits}회 — GitHub Actions의 데이터센터 IP는 차단 대상입니다. 자막 경로로만 수집됩니다.")
+          if n_failed and n_fetched == 0:
+              warnings.append(f"이번 회차 신규 수집 0건(실패 {n_failed}건) — 리포트는 기사 기반으로 작성해야 합니다.")
+
+          status["health"] = {
+              "cookie": cookie_info,
+              "pot_provider": pot_state,
+              "bot_blocked": bot_hits,
+              "audio_disabled": audio_disabled,
+              "fetched": n_fetched,
+              "by_caption": n_caption,
+              "failed": n_failed,
+              "warnings": warnings,
+          }
+          for w in warnings:
+              print("[!] " + w)
+
           # ---------- 오래된 파일 정리 ----------
           cutoff = time.time() - KEEP_DAYS * 86400
           for p in glob.glob(os.path.join(OUT, "*.enc")):
@@ -412,7 +606,7 @@ jobs:
           if os.path.exists("cookies.txt"):
               os.remove("cookies.txt")
           print(json.dumps(status["channels"], ensure_ascii=False, indent=1))
-          print("whisper 사용:", whisper_used, "건")
+          print("whisper 사용:", whisper_used, "건 / 봇 차단:", bot_hits, "회")
           PY
 
       - name: Commit
@@ -423,6 +617,10 @@ jobs:
           fi
           if ls transcripts/*.mp3 transcripts/*.m4a >/dev/null 2>&1; then
             echo "음성 파일 발견 — 커밋 중단"; exit 1
+          fi
+          # 쿠키 파일이 남아 있으면 절대 커밋하지 않는다
+          if [ -f cookies.txt ]; then
+            echo "cookies.txt 발견 — 커밋 중단"; exit 1
           fi
           git config user.name  "hkgm-bot"
           git config user.email "actions@users.noreply.github.com"
