@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-09-23T17:05:26+00:00",
- "last_run_kst": "2026-09-24 02:05:26 KST",
+ "last_run_utc": "2026-09-23T23:55:15+00:00",
+ "last_run_kst": "2026-09-24 08:55:15 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -35,10 +35,28 @@
    "state": "cached"
   },
   {
+   "id": "cUdmu93d7Ho",
+   "channel": "hkgm",
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 340
+  },
+  {
+   "id": "FpEQkgZEGeA",
+   "channel": "hkgm",
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 15816
+  },
+  {
    "id": "ew5hq80sv9c",
    "channel": "hkgm",
-   "state": "no_subtitle",
-   "error": "자막 트랙 없음(default,tv,web_safari,mweb) → 음성 받아쓰기로 전환 || [audio/mweb]  Review any warnings presented before this message. For more details, refer to  https://github.com/yt-dlp/yt-dlp/wiki/EJS\nERROR: [youtube] ew5hq80sv9c: No video formats found!; please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U\n"
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 14966
   },
   {
    "id": "4Dj9-9tYiWc",
@@ -99,19 +117,9 @@
    "id": "3uxzvAib7dg",
    "channel": "hkgm",
    "state": "cached"
-  },
-  {
-   "id": "vXVPXZiWk5k",
-   "channel": "hkgm",
-   "state": "cached"
-  },
-  {
-   "id": "3UA7xwbfQPI",
-   "channel": "hkgm",
-   "state": "cached"
   }
  ],
- "whisper_used": 1,
+ "whisper_used": 0,
  "health": {
   "cookie": {
    "status": "ok",
@@ -129,17 +137,15 @@
     "__Secure-3PSID"
    ],
    "nearest_expiry_kst": "2027-10-23 21:54 KST",
-   "days_left": 394.8,
+   "days_left": 394.5,
    "note": ""
   },
   "pot_provider": "ok",
   "bot_blocked": 0,
   "audio_disabled": false,
-  "fetched": 0,
-  "by_caption": 0,
-  "failed": 1,
-  "warnings": [
-   "이번 회차 신규 수집 0건(실패 1건) — 리포트는 기사 기반으로 작성해야 합니다."
-  ]
+  "fetched": 3,
+  "by_caption": 3,
+  "failed": 0,
+  "warnings": []
  }
 }
