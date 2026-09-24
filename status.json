@@ -1,10 +1,10 @@
 {
- "last_run_utc": "2026-09-24T12:44:28+00:00",
- "last_run_kst": "2026-09-24 21:44:28 KST",
+ "last_run_utc": "2026-09-24T17:14:57+00:00",
+ "last_run_kst": "2026-09-25 02:14:57 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
-   "listed": 4,
+   "listed": 3,
    "list_error": ""
   },
   "hkgm": {
@@ -17,154 +17,95 @@
   {
    "id": "8R9_tvkju38",
    "channel": "hkwowtv",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 758
+   "state": "cached"
   },
   {
    "id": "8lmlcgQBtvQ",
    "channel": "hkwowtv",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 16453
+   "state": "cached"
   },
   {
    "id": "NbOc5WFDzxo",
    "channel": "hkwowtv",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 783
+   "state": "cached"
   },
   {
-   "id": "cyYv1nozkZ0",
-   "channel": "hkwowtv",
+   "id": "67RT7rWa64A",
+   "channel": "hkgm",
    "state": "fetched",
    "source": "caption",
    "lang": "ko-orig",
-   "chars": 16652
+   "chars": 16745
   },
   {
    "id": "T8ybOKpvubQ",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 6494
+   "state": "cached"
   },
   {
    "id": "cUdmu93d7Ho",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 340
+   "state": "cached"
   },
   {
    "id": "FpEQkgZEGeA",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 15816
+   "state": "cached"
   },
   {
    "id": "ew5hq80sv9c",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 14946
+   "state": "cached"
   },
   {
    "id": "4Dj9-9tYiWc",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 7558
+   "state": "cached"
   },
   {
    "id": "RgO2vSLHR8M",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 21108
+   "state": "cached"
   },
   {
    "id": "oqJ3hZsycus",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 16343
+   "state": "cached"
   },
   {
    "id": "g0FiyGQCVMc",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 12015
+   "state": "cached"
   },
   {
    "id": "Q5lThKLnPLM",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 4014
+   "state": "cached"
   },
   {
    "id": "-d2aplBixwI",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 193
+   "state": "cached"
   },
   {
    "id": "dWPmlWirdf4",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 8452
+   "state": "cached"
   },
   {
    "id": "mKhvFbj-Jr4",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 9584
+   "state": "cached"
   },
   {
    "id": "cI4x9R7PcnI",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 11062
+   "state": "cached"
   },
   {
    "id": "-MFEV4-eNJg",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 4724
-  },
-  {
-   "id": "mjJ6bbNvc1I",
-   "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 7413
+   "state": "cached"
   }
  ],
  "whisper_used": 0,
@@ -185,7 +126,7 @@
     "__Secure-3PSID"
    ],
    "nearest_expiry_kst": "2027-10-23 21:54 KST",
-   "days_left": 394.0,
+   "days_left": 393.8,
    "note": ""
   },
   "pot_provider": "ok",
@@ -193,8 +134,8 @@
   "ejs_failures": 0,
   "bot_blocked": 0,
   "audio_disabled": false,
-  "fetched": 19,
-  "by_caption": 19,
+  "fetched": 1,
+  "by_caption": 1,
   "failed": 0,
   "live_pending": 0,
   "warnings": []
