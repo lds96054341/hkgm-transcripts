@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-09-24T12:34:56+00:00",
- "last_run_kst": "2026-09-24 21:34:56 KST",
+ "last_run_utc": "2026-09-24T12:44:28+00:00",
+ "last_run_kst": "2026-09-24 21:44:28 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -17,108 +17,156 @@
   {
    "id": "8R9_tvkju38",
    "channel": "hkwowtv",
-   "state": "cached"
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 758
   },
   {
    "id": "8lmlcgQBtvQ",
    "channel": "hkwowtv",
-   "state": "cached"
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 16453
   },
   {
    "id": "NbOc5WFDzxo",
    "channel": "hkwowtv",
-   "state": "cached"
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 783
   },
   {
    "id": "cyYv1nozkZ0",
    "channel": "hkwowtv",
-   "state": "cached"
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 16652
   },
   {
    "id": "T8ybOKpvubQ",
    "channel": "hkgm",
-   "state": "cached"
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 6494
   },
   {
    "id": "cUdmu93d7Ho",
    "channel": "hkgm",
-   "state": "cached"
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 340
   },
   {
    "id": "FpEQkgZEGeA",
    "channel": "hkgm",
-   "state": "cached"
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 15816
   },
   {
    "id": "ew5hq80sv9c",
    "channel": "hkgm",
-   "state": "cached"
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 14946
   },
   {
    "id": "4Dj9-9tYiWc",
    "channel": "hkgm",
-   "state": "cached"
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 7558
   },
   {
    "id": "RgO2vSLHR8M",
    "channel": "hkgm",
-   "state": "cached"
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 21108
   },
   {
    "id": "oqJ3hZsycus",
    "channel": "hkgm",
-   "state": "cached"
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 16343
   },
   {
    "id": "g0FiyGQCVMc",
    "channel": "hkgm",
-   "state": "cached"
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 12015
   },
   {
    "id": "Q5lThKLnPLM",
    "channel": "hkgm",
-   "state": "cached"
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 4014
   },
   {
    "id": "-d2aplBixwI",
    "channel": "hkgm",
-   "state": "cached"
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 193
   },
   {
    "id": "dWPmlWirdf4",
    "channel": "hkgm",
-   "state": "cached"
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 8452
   },
   {
    "id": "mKhvFbj-Jr4",
    "channel": "hkgm",
-   "state": "cached"
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 9584
   },
   {
    "id": "cI4x9R7PcnI",
    "channel": "hkgm",
-   "state": "cached"
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 11062
   },
   {
    "id": "-MFEV4-eNJg",
    "channel": "hkgm",
-   "state": "cached"
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 4724
   },
   {
    "id": "mjJ6bbNvc1I",
    "channel": "hkgm",
-   "state": "cached"
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 7413
   }
  ],
- "audio_test": {
-  "id": "8R9_tvkju38",
-  "ok": true,
-  "seconds": 42,
-  "duration_sec": 89,
-  "title": "9월 23일 글로벌 1분 시황✅ #당잠사 #굿모닝한경글로벌마켓 #1분시황",
-  "chars": 727,
-  "file": "transcripts/8R9_tvkju38.audio-test.enc"
- },
  "whisper_used": 0,
  "health": {
   "cookie": {
@@ -145,8 +193,8 @@
   "ejs_failures": 0,
   "bot_blocked": 0,
   "audio_disabled": false,
-  "fetched": 0,
-  "by_caption": 0,
+  "fetched": 19,
+  "by_caption": 19,
   "failed": 0,
   "live_pending": 0,
   "warnings": []

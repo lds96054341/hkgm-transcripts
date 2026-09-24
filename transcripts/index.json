@@ -143,7 +143,7 @@
  },
  "8R9_tvkju38": {
   "channel": "hkwowtv",
-  "chars": 718,
+  "chars": 758,
   "duration_sec": 89,
   "lang": "ko-orig",
   "ok": true,
@@ -153,7 +153,7 @@
  },
  "8lmlcgQBtvQ": {
   "channel": "hkwowtv",
-  "chars": 16194,
+  "chars": 16453,
   "duration_sec": 2336,
   "lang": "ko-orig",
   "ok": true,
@@ -315,8 +315,8 @@
  },
  "RgO2vSLHR8M": {
   "channel": "hkgm",
-  "chars": 21095,
-  "duration_sec": 3000,
+  "chars": 21108,
+  "duration_sec": 2937,
   "lang": "ko-orig",
   "ok": true,
   "source": "caption",
@@ -483,7 +483,7 @@
  },
  "cyYv1nozkZ0": {
   "channel": "hkwowtv",
-  "chars": 16406,
+  "chars": 16652,
   "duration_sec": 2378,
   "lang": "ko-orig",
   "ok": true,
@@ -513,8 +513,8 @@
  },
  "ew5hq80sv9c": {
   "channel": "hkgm",
-  "chars": 14966,
-  "duration_sec": 2194,
+  "chars": 14946,
+  "duration_sec": 2157,
   "lang": "ko-orig",
   "ok": true,
   "source": "caption",
@@ -544,7 +544,7 @@
   "lang": "ko-orig",
   "ok": true,
   "source": "caption",
-  "title": "미중정상회담 D-2…전쟁을 준비하는 中, 무역을 기대하는 美 | 이상은의 워싱턴나우",
+  "title": "전쟁을 준비하는 中, 무역을 기대하는 美 | 이상은의 워싱턴나우",
   "uploaded_epoch": 1789959634
  },
  "gNxBiqhTRLM": {
@@ -661,8 +661,8 @@
  },
  "oqJ3hZsycus": {
   "channel": "hkgm",
-  "chars": 16333,
-  "duration_sec": 2342,
+  "chars": 16343,
+  "duration_sec": 2307,
   "lang": "ko-orig",
   "ok": true,
   "source": "caption",
