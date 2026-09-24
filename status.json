@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-09-24T07:38:09+00:00",
- "last_run_kst": "2026-09-24 16:38:09 KST",
+ "last_run_utc": "2026-09-24T07:42:23+00:00",
+ "last_run_kst": "2026-09-24 16:42:23 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -110,14 +110,6 @@
    "state": "cached"
   }
  ],
- "audio_test": {
-  "id": "8R9_tvkju38",
-  "ok": false,
-  "seconds": 46,
-  "duration_sec": 89,
-  "title": "9월 23일 글로벌 1분 시황✅ #당잠사 #굿모닝한경글로벌마켓 #1분시황",
-  "error": "[audio/default] ERROR: Postprocessing: ffprobe and ffmpeg not found. Please install or provide the path using --ffmpeg-location | [audio/tv] ERROR: [youtube] 8R9_tvkju38: The page needs to be reloaded. | [audio/web_safari] WARNING: 8R9_tvkju38: Possible MPEG-TS in MP4 container or m / ERROR: Postprocessing: ffprobe and ffmpeg not found. Please install or provide the path | [audio/mweb] ERROR: Postprocessing: ffprobe and ffmpeg not found. Please install or provide the path using --ffmpeg-location"
- },
  "whisper_used": 0,
  "health": {
   "cookie": {
@@ -140,7 +132,7 @@
    "note": ""
   },
   "pot_provider": "ok",
-  "js_runtime": "ok deno=2.9.7 ejs=0.8.0",
+  "js_runtime": "ok deno=2.9.7 ejs=0.8.0 ffmpeg=6.1.1-3ubuntu5",
   "ejs_failures": 0,
   "bot_blocked": 0,
   "audio_disabled": false,
