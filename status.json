@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-09-24T01:00:00+00:00",
- "last_run_kst": "2026-09-24 10:00:00 KST",
+ "last_run_utc": "2026-09-24T07:23:31+00:00",
+ "last_run_kst": "2026-09-24 16:23:31 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -128,10 +128,12 @@
     "__Secure-3PSID"
    ],
    "nearest_expiry_kst": "2027-10-23 21:54 KST",
-   "days_left": 394.5,
+   "days_left": 394.2,
    "note": ""
   },
   "pot_provider": "ok",
+  "js_runtime": "ok deno=2.9.7 ejs=0.8.0",
+  "ejs_failures": 0,
   "bot_blocked": 0,
   "audio_disabled": false,
   "fetched": 0,
