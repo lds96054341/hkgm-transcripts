@@ -4,7 +4,7 @@
 표준 라이브러리만 쓴다(pip 설치 불필요).
 
 ```bash
-python3 briefing/render.py data.json out/
+python3 /tmp/hkgm/briefing/render.py data.json out/   # routine은 4절에서 받은 /tmp/hkgm clone을 쓴다
 # out/visual.html   Artifact로 게시
 # out/email.html    메일 htmlBody
 # out/email.txt     메일 body
