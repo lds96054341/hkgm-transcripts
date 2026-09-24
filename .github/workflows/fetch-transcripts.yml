@@ -17,6 +17,12 @@ name: fetch-hkgm-transcripts
 #   ★14 workflow_dispatch 입력 audio_test=<videoId> 로 음성 받아쓰기 경로만 강제 실행(테스트)
 #   ★15 ffmpeg 를 명시적으로 설치한다. 러너 이미지에 없어서 오디오 다운로드는 되는데
 #       mp3 변환(후처리)에서 "ffprobe and ffmpeg not found"로 죽었다(09-24 ★14 테스트로 발견).
+#   ★16 라이브 진행 중인 영상은 건너뛴다. 당잠사(06:10~06:55 라이브) 도중에 돌면 자막이 없어
+#       음성 경로로 가는데, 그때 받은 오디오는 방송 일부뿐이고 ok 로 캐시되어 다시 받지 않는다.
+#       라이브면 수집하지 않고 색인에 pending="live"(예약 전이면 "upcoming") 로만 남겨 다음 실행에서
+#       다시 시도한다. 방송 직후(post_live)는 yt-dlp 가 첫 조각부터 전부 받으므로 수집하되, 조각이
+#       빠지면 실패로 처리하고(--abort-on-unavailable-fragments) 받은 오디오 길이를 영상 길이와
+#       대조해 90% 미만이면(PARTIAL) 캐시하지 않는다.
 # ─────────────────────────────────────────────────────────────────────
  
 on:
@@ -397,6 +403,7 @@ jobs:
               return bucketize(cues)
  
           # ---------- 경로 2: 음성 받아쓰기 ----------
+          LIVE_MSG = "LIVE: 라이브 진행 중 — 방송이 끝난 뒤 다음 실행에서 다시 시도"   # ★16
           _model = {"m": None}
  
           def whisper_model():
@@ -415,10 +422,14 @@ jobs:
                   os.makedirs(TMP, exist_ok=True)
                   r = run(["yt-dlp", "-f", "bestaudio/best",
                            "-x", "--audio-format", "mp3", "--audio-quality", "5",
+                           "--match-filter", "!is_live",          # ★16
+                           "--abort-on-unavailable-fragments",    # ★16 조각 누락 시 구멍 난 오디오 대신 실패
                            "--write-info-json", "--retries", "3", "--socket-timeout", "30",
                            "--extractor-args", f"youtube:player_client={client}",
                            "-o", os.path.join(TMP, "%(id)s.%(ext)s"), *base, url],
                           timeout=900)
+                  if "does not pass filter" in (r.stdout or "") + (r.stderr or ""):
+                      return None, info, LIVE_MSG
                   ij = glob.glob(os.path.join(TMP, "*.info.json"))
                   if ij:
                       try:
@@ -442,9 +453,14 @@ jobs:
  
               try:
                   t0 = time.time()
-                  segs, _ = whisper_model().transcribe(
+                  segs, winfo = whisper_model().transcribe(
                       apath, language="ko", vad_filter=True, beam_size=5,
                       initial_prompt=DOMAIN_PROMPT)
+                  # ★16 받은 오디오가 영상 길이보다 확연히 짧으면(방송 일부만 받음) 캐시하지 않는다.
+                  #     transcribe()는 디코딩·길이 계산만 하고 세그먼트는 지연 생성이라 여기서 끊으면 비용이 없다.
+                  adur = float(getattr(winfo, "duration", 0) or 0)
+                  if dur and adur and adur < dur * 0.9:
+                      return None, info, f"PARTIAL: 받은 오디오 {int(adur)}초 < 영상 길이 {int(dur)}초의 90% — 다음 실행에서 다시 시도"
                   pairs = [(s.start, s.text.strip()) for s in segs if s.text.strip()]
                   took = time.time() - t0
                   print(f"[i] {vid} 받아쓰기 {took:.0f}초 (오디오 {int(dur)}초)")
@@ -559,6 +575,7 @@ jobs:
               url = f"https://www.youtube.com/watch?v={vid}"
               got_sub, used_client, info, last_err = None, None, None, ""
               no_track_clients = []
+              live = False          # ★16
  
               # 경로 1 — 유튜브 자막
               # ★1 예전에는 첫 클라이언트가 "자막 트랙 없음"을 주면 즉시 break 해서
@@ -591,6 +608,10 @@ jobs:
                           cur_info = None
                   if cur_info:
                       info = cur_info          # 업로드 시각 등은 최신 것으로 보존(★7)
+                  if cur_info and (cur_info.get("is_live")
+                                   or cur_info.get("live_status") in ("is_live", "is_upcoming")):
+                      live = "upcoming" if cur_info.get("live_status") == "is_upcoming" else "live"   # ★16 방송 중·예약이면 자막·음성 모두 건너뜀
+                      break
                   if pick:
                       got_sub, used_client = pick[0], client
                       break
@@ -612,6 +633,8 @@ jobs:
                   body   = vtt_to_text(got_sub)
                   m = re.search(r"\.([A-Za-z\-]+)\.vtt$", os.path.basename(got_sub))
                   lang = m.group(1) if m else "?"
+              elif live:
+                  last_err = LIVE_MSG if live == "live" else "UPCOMING: 예약된 라이브(아직 시작 전) — 방송이 끝난 뒤 다음 실행에서 다시 시도"
               elif audio_disabled:
                   last_err = (last_err + f" || 봇 차단 {bot_hits}회로 이번 회차 받아쓰기 중단")[-700:]
               elif whisper_used < WHISPER_MAX:
@@ -622,6 +645,9 @@ jobs:
                       info = ainfo
                   if body:
                       source, lang, used_client = "audio", f"whisper-{WHISPER_MODEL}", "audio"
+                  elif aerr == LIVE_MSG:
+                      live, last_err = "live", LIVE_MSG
+                      whisper_used -= 1        # ★16 받아쓰기를 하지 않았으니 슬롯을 돌려준다
                   else:
                       last_err = (last_err + " || " + aerr)[-700:]
                       # ★6 봇 차단이 반복되면 더 시도해봐야 IP 평판만 깎인다.
@@ -639,12 +665,13 @@ jobs:
                   last_err = (last_err + f" || 받아쓰기 상한({WHISPER_MAX}건) 소진")[-700:]
  
               title = (info or {}).get("title", "")
-              ts    = (info or {}).get("timestamp") or 0
+              ts    = (info or {}).get("timestamp") or (info or {}).get("release_timestamp") or 0
               dur   = (info or {}).get("duration") or 0
  
               if not body:
                   status["results"].append({"id": vid, "channel": ckey,
-                                            "state": "no_subtitle", "error": last_err})
+                                            "state": "live_pending" if live else "no_subtitle",
+                                            "error": last_err})
                   # ★7 실패해도 업로드 시각·길이를 남긴다.
                   #    리포트 쪽에서 YouTube API 없이 대상 영상의 시간창을 판정할 수 있어야 한다.
                   prev = index.get(vid, {})
@@ -652,6 +679,8 @@ jobs:
                                 "title": title or prev.get("title", ""),
                                 "uploaded_epoch": ts or prev.get("uploaded_epoch", 0),
                                 "duration_sec": dur or prev.get("duration_sec", 0)}
+                  if live:
+                      index[vid]["pending"] = live        # ★16 "live"=방송 중(리포트가 '방송중'으로 표시), "upcoming"=예약(리포트 제외)
                   continue
  
               kst   = datetime.fromtimestamp(ts, KST).strftime("%Y-%m-%d %H:%M KST") if ts else "?"
@@ -677,6 +706,7 @@ jobs:
           n_fetched = sum(1 for r in status["results"] if r["state"] == "fetched")
           n_failed  = sum(1 for r in status["results"] if r["state"] == "no_subtitle")
           n_caption = sum(1 for r in status["results"] if r.get("source") == "caption")
+          n_live    = sum(1 for r in status["results"] if r["state"] == "live_pending")   # ★16
  
           warnings = []
           cs = cookie_info["status"]
@@ -713,6 +743,7 @@ jobs:
               "fetched": n_fetched,
               "by_caption": n_caption,
               "failed": n_failed,
+              "live_pending": n_live,          # ★16
               "warnings": warnings,
           }
           for w in warnings:
