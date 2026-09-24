@@ -17,6 +17,7 @@ name: fetch-hkgm-transcripts
 #   ★14 workflow_dispatch 입력 audio_test=<videoId> 로 음성 받아쓰기 경로만 강제 실행(테스트)
 #   ★15 ffmpeg 를 명시적으로 설치한다. 러너 이미지에 없어서 오디오 다운로드는 되는데
 #       mp3 변환(후처리)에서 "ffprobe and ffmpeg not found"로 죽었다(09-24 ★14 테스트로 발견).
+#   ★17 캐시된 파일이 현재 TRANSCRIPT_KEY 로 열리지 않으면(키 교체) 다시 수집해 새 키로 저장한다.
 #   ★16 라이브 진행 중인 영상은 건너뛴다. 당잠사(06:10~06:55 라이브) 도중에 돌면 자막이 없어
 #       음성 경로로 가는데, 그때 받은 오디오는 방송 일부뿐이고 ok 로 캐시되어 다시 받지 않는다.
 #       라이브면 수집하지 않고 색인에 pending="live"(예약 전이면 "upcoming") 로만 남겨 다음 실행에서
@@ -338,6 +339,17 @@ jobs:
                   parts.append(lines[-1] if lines else "(출력 없음)")
               return " / ".join(parts)[:n]
  
+          def key_ok(path):
+              """★17 현재 TRANSCRIPT_KEY 로 열리는 파일인지(머리글 11바이트만 확인)."""
+              try:
+                  r = subprocess.run(["openssl", "enc", "-d", "-aes-256-cbc", "-pbkdf2",
+                                      "-iter", "200000", "-a", "-in", path,
+                                      "-pass", "env:TRANSCRIPT_KEY"],
+                                     capture_output=True, timeout=60)
+                  return r.stdout[:11] == b"# videoId: "
+              except Exception:
+                  return False
+
           def encrypt_to(text, dest):
               src = os.path.join(TMP, "_plain.txt")
               with open(src, "w", encoding="utf-8") as f:
@@ -569,8 +581,11 @@ jobs:
           for _prio, vid, ckey, cname in targets:
               target = os.path.join(OUT, f"{vid}.enc")
               if os.path.exists(target) and index.get(vid, {}).get("ok"):
-                  status["results"].append({"id": vid, "channel": ckey, "state": "cached"})
-                  continue
+                  if key_ok(target):
+                      status["results"].append({"id": vid, "channel": ckey, "state": "cached"})
+                      continue
+                  # ★17 키를 바꾼 뒤 옛 키로 암호화된 파일은 리포트가 열 수 없다 → 새 키로 다시 받는다.
+                  print(f"[i] {vid} 현재 키로 열리지 않음 → 다시 수집")
  
               url = f"https://www.youtube.com/watch?v={vid}"
               got_sub, used_client, info, last_err = None, None, None, ""
