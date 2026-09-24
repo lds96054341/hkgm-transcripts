@@ -5,7 +5,7 @@
 
 ```bash
 python3 briefing/render.py data.json out/
-# out/visual.html   Artifact로 게시하고 메일에 첨부
+# out/visual.html   Artifact로 게시
 # out/email.html    메일 htmlBody
 # out/email.txt     메일 body
 # out/subject.txt   메일 제목

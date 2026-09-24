@@ -3,7 +3,7 @@
 """아침 브리핑 렌더러.
 
 하루치 데이터(JSON) 하나로 세 가지를 만든다.
-  visual.html  - 차트가 들어간 비주얼 리포트 (Artifact로 게시, 메일 첨부)
+  visual.html  - 차트가 들어간 비주얼 리포트 (Artifact로 게시)
   email.html   - 메일 본문 HTML (인라인 CSS만, 상단에 비주얼 링크)
   email.txt    - 메일 평문 본문
 
@@ -295,7 +295,7 @@ DEFAULT_FOOTER = ("영상별 근거는 각 카드에 표기했습니다(자막=�
 # ────────────────────────── 메일 ──────────────────────────
 def email_txt(d):
     L = [f'[한경 글로벌마켓+당잠사] {d["date"]} 아침 브리핑', f'수집 시간창: {d["window"]}']
-    if d.get("visual_url"): L.append(f'비주얼 리포트(차트): {d["visual_url"]}  · 같은 내용의 HTML 파일이 첨부돼 있습니다.')
+    if d.get("visual_url"): L.append(f'비주얼 리포트(차트): {d["visual_url"]}')
     cnt = d.get("counts", {})
     L.append(f'근거: 자막 기반 {cnt.get("caption",0)}건 / 기사 기반 {cnt.get("article",0)}건')
     for n in d.get("notices", []): L.append(f"※ {n}")
@@ -336,7 +336,7 @@ def email_html(d):
     vis = ""
     if d.get("visual_url"):
         vis = (f'<div style="margin:16px 0 0 0;"><a href="{E(d["visual_url"])}" style="display:inline-block;background:#1f4e79;color:#fff;text-decoration:none;font-weight:bold;font-size:15px;padding:10px 18px;border-radius:4px;">📊 차트로 보는 비주얼 리포트 열기</a>'
-               f'<div style="font-size:12px;color:#666;margin:6px 0 0 0;">같은 내용의 HTML 파일(visual-{d["date"]}.html)이 첨부돼 있습니다. 링크가 열리지 않으면 첨부 파일을 브라우저로 여세요.</div></div>')
+               f'<div style="font-size:12px;color:#666;margin:6px 0 0 0;">claude.ai에 로그인한 계정으로 열립니다.</div></div>')
     A = "".join(card(v) for v in d["videos"] if v["channel"] == "A")
     B = "".join(card(v) for v in d["videos"] if v["channel"] == "B") or f'<p style="color:#666;">{E(d.get("b_empty","당잠사 미업로드"))}</p>'
     s = d["synthesis"]

@@ -28,15 +28,14 @@ routine 프롬프트의 1~6절(시간창, 대상 확정, 자막 확보, 보조 �
 5. **메일을 한 번 보낸다.** `mcp__Gmail__send_message`
    - `subject`: `subject.txt` 내용 그대로
    - `body`: `email.txt`, `htmlBody`: `email.html` 내용 그대로
-   - `attachments`: `visual.html`을 base64로 인코딩해
-     `{"filename": "visual-YYYY-MM-DD.html", "mimeType": "text/html", "content": "<base64>"}` 로 첨부한다.
-     Artifact는 소유자 계정으로만 열리므로, 수신자는 첨부 파일로도 볼 수 있어야 한다.
+   - 첨부 파일은 넣지 않는다. 메일 도구는 첨부를 base64 문자열로만 받아서, 10만 자 안팎을
+     그대로 옮겨 적어야 하고 한 글자만 틀려도 파일이 깨진다. 비주얼은 링크로만 전달한다.
    - 보내기 전에 렌더러가 "OK"를 출력했는지 확인한다. 렌더러가 실패한 상태로는 절대 보내지 않는다.
 6. **9절 한 줄 보고**에 비주얼 리포트 URL을 덧붙인다.
 
 ### 게시가 실패하면
 
-Artifact 게시가 실패해도 메일은 보낸다. `visual_url` 없이 렌더링하고 `visual.html`만 첨부한다.
+Artifact 게시가 실패해도 메일은 보낸다. `visual_url` 없이 렌더링하면 링크 버튼만 빠진다.
 보고에 게시 실패 사실을 적는다.
 
 ## 저장소 쓰기 규칙
