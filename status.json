@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-09-24T07:48:16+00:00",
- "last_run_kst": "2026-09-24 16:48:16 KST",
+ "last_run_utc": "2026-09-24T09:15:40+00:00",
+ "last_run_kst": "2026-09-24 18:15:40 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -33,6 +33,14 @@
    "id": "cyYv1nozkZ0",
    "channel": "hkwowtv",
    "state": "cached"
+  },
+  {
+   "id": "T8ybOKpvubQ",
+   "channel": "hkgm",
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 6494
   },
   {
    "id": "cUdmu93d7Ho",
@@ -103,22 +111,8 @@
    "id": "mjJ6bbNvc1I",
    "channel": "hkgm",
    "state": "cached"
-  },
-  {
-   "id": "3uxzvAib7dg",
-   "channel": "hkgm",
-   "state": "cached"
   }
  ],
- "audio_test": {
-  "id": "4Dj9-9tYiWc",
-  "ok": true,
-  "seconds": 372,
-  "duration_sec": 970,
-  "title": "뉴욕에서 평범한 월급쟁이가 백만장자가 되는 과정ㅣ박신영의 월가아나토미",
-  "chars": 7528,
-  "file": "transcripts/4Dj9-9tYiWc.audio-test.enc"
- },
  "whisper_used": 0,
  "health": {
   "cookie": {
@@ -145,8 +139,8 @@
   "ejs_failures": 0,
   "bot_blocked": 0,
   "audio_disabled": false,
-  "fetched": 0,
-  "by_caption": 0,
+  "fetched": 1,
+  "by_caption": 1,
   "failed": 0,
   "warnings": []
  }
