@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-09-24T10:55:08+00:00",
- "last_run_kst": "2026-09-24 19:55:08 KST",
+ "last_run_utc": "2026-09-24T11:22:54+00:00",
+ "last_run_kst": "2026-09-24 20:22:54 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -110,15 +110,6 @@
    "state": "cached"
   }
  ],
- "audio_test": {
-  "id": "8lmlcgQBtvQ",
-  "ok": true,
-  "seconds": 651,
-  "duration_sec": 2336,
-  "title": "[🔴09/23 #당잠사] 미-이란, 3시간 유엔 회담…트럼프 “중간선거 후 합의할 것” | 로젠블랫 “샌디스크 목표가 상향”…메모리주 동반 강세 | #마이크론 #애플 #샌디스크",
-  "chars": 15895,
-  "file": "transcripts/8lmlcgQBtvQ.audio-test.enc"
- },
  "whisper_used": 0,
  "health": {
   "cookie": {
