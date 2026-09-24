@@ -9,6 +9,11 @@ name: fetch-hkgm-transcripts
 #   ★5 쿠키 건강성 점검 결과를 status.json에 기록
 #   ★6 봇 차단 감지 시 받아쓰기 조기 중단(IP 평판 보호)
 #   ★7 실패한 영상도 업로드 시각을 색인에 남긴다
+# 2026-09-24 추가
+#   ★12 EJS — Deno 런타임 + yt-dlp[default](yt-dlp-ejs) 설치. 없으면 오디오 포맷을
+#       하나도 못 받아 음성 받아쓰기 폴백이 통째로 죽는다(09-23 ew5hq80sv9c 사례).
+#       런타임 상태와 EJS 실패 횟수를 status.json health 에 기록한다.
+#   ★13 오디오 다운로드 실패 원인을 클라이언트별로 요약해 남긴다(마지막 것만 남던 문제)
 # ─────────────────────────────────────────────────────────────────────
  
 on:
@@ -50,6 +55,15 @@ jobs:
         with:
           python-version: '3.12'
  
+      # ★12 EJS 런타임. yt-dlp 는 유튜브 서명/n 챌린지를 외부 JS 런타임(EJS)으로 푼다.
+      #     런타임이 없으면 자막(--skip-download) 경로는 살아 있지만 오디오 포맷을 하나도
+      #     못 얻어 "No video formats found!"로 끝난다. Deno ≥ 2.3 은 yt-dlp 가 PATH 에서
+      #     자동 탐지하므로 --js-runtimes 옵션이 따로 필요 없다.
+      #     참고: https://github.com/yt-dlp/yt-dlp/wiki/EJS
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+ 
       # Whisper 모델(약 500MB)을 매번 내려받지 않도록 캐시
       - name: Cache whisper model
         uses: actions/cache@v4
@@ -84,9 +98,23 @@ jobs:
       - name: Install tools
         run: |
           python -m pip install --upgrade pip
-          pip install --upgrade yt-dlp bgutil-ytdlp-pot-provider faster-whisper
+          # ★12 "yt-dlp[default]" 라야 챌린지 해결 스크립트(yt-dlp-ejs)가 같이 깔린다.
+          #     맨 yt-dlp 만 깔면 Deno 가 있어도 스크립트가 없어 EJS 가 동작하지 않는다.
+          pip install --upgrade "yt-dlp[default]" bgutil-ytdlp-pot-provider faster-whisper
           yt-dlp --version
           ffmpeg -version | head -1
+          # ★12 런타임 상태를 js_status.txt 에 남겨 status.json 에 싣는다(★3 과 같은 방식).
+          set +e
+          DENO_V=$(deno --version 2>/dev/null | head -1 | awk '{print $2}')
+          EJS_V=$(pip show yt-dlp-ejs 2>/dev/null | awk '/^Version:/{print $2}')
+          if [ -n "$DENO_V" ] && [ -n "$EJS_V" ]; then
+            echo "ok deno=${DENO_V} ejs=${EJS_V}" > js_status.txt
+          else
+            echo "missing deno=${DENO_V:-none} ejs=${EJS_V:-none}" > js_status.txt
+            echo "::warning::JS 런타임/EJS 미비 — 자막 없는 영상의 음성 받아쓰기가 실패합니다 (deno=${DENO_V:-none}, yt-dlp-ejs=${EJS_V:-none})"
+          fi
+          echo "[i] JS runtime: $(cat js_status.txt)"
+          exit 0
  
       - name: Fetch transcripts
         env:
@@ -253,6 +281,12 @@ jobs:
               pot_state = open("pot_status.txt").read().strip() or "unknown"
           print("[i] PO 토큰 프로바이더:", pot_state)
  
+          # ★12 JS 런타임(EJS) 상태 읽기
+          js_state = "unknown"
+          if os.path.exists("js_status.txt"):
+              js_state = open("js_status.txt").read().strip() or "unknown"
+          print("[i] JS 런타임(EJS):", js_state)
+ 
           # IP 평판을 아끼기 위해 요청 간 간격을 둔다.
           base += ["--sleep-requests", "1.5"]
  
@@ -270,6 +304,20 @@ jobs:
                   return _Fail(f"타임아웃({timeout}초) 초과")
               except Exception as e:
                   return _Fail(f"실행 실패: {type(e).__name__}: {str(e)[-200:]}")
+ 
+          def brief(stderr, n=150):
+              """★13 stderr 에서 원인만 추린다: 마지막 WARNING(앞 60자) + 마지막 ERROR(상용구 제거)."""
+              lines = [l.strip() for l in (stderr or "").splitlines() if l.strip()]
+              err = [l for l in lines if l.startswith("ERROR")]
+              wrn = [l for l in lines if l.startswith("WARNING")]
+              parts = []
+              if wrn:
+                  parts.append(wrn[-1][:60])
+              if err:
+                  parts.append(re.sub(r";\s*please report this issue on.*$", "", err[-1]))
+              if not parts:
+                  parts.append(lines[-1] if lines else "(출력 없음)")
+              return " / ".join(parts)[:n]
  
           def encrypt_to(text, dest):
               src = os.path.join(TMP, "_plain.txt")
@@ -348,7 +396,7 @@ jobs:
           def audio_to_text(vid):
               """(본문, info, 에러) — 음성을 받아 텍스트로. 실패 시 (None, info, 에러)"""
               url = f"https://www.youtube.com/watch?v={vid}"
-              apath, info, err = None, None, ""
+              apath, info, errs = None, None, []   # ★13 클라이언트별로 모두 남긴다
               for client in CLIENTS:
                   shutil.rmtree(TMP, ignore_errors=True)
                   os.makedirs(TMP, exist_ok=True)
@@ -368,11 +416,11 @@ jobs:
                   if mp3:
                       apath = mp3[0]
                       break
-                  err = f"[audio/{client}] " + (r.stderr or "(출력 없음)")[-350:]
+                  errs.append(f"[audio/{client}] " + brief(r.stderr))
                   time.sleep(2)
  
               if not apath:
-                  return None, info, err
+                  return None, info, " | ".join(errs)[-700:]
  
               dur = (info or {}).get("duration") or 0
               if dur and dur > WHISPER_MAX_MIN * 60:
@@ -453,6 +501,7 @@ jobs:
  
           whisper_used = 0
           bot_hits = 0
+          ejs_hits = 0            # ★12 포맷 없음/EJS 로 오디오를 못 받은 횟수
           audio_disabled = False
  
           for _prio, vid, ckey, cname in targets:
@@ -535,6 +584,10 @@ jobs:
                           if bot_hits >= BOT_BLOCK_STOP:
                               audio_disabled = True
                               print(f"[!] 봇 차단 {bot_hits}회 — 이번 회차 받아쓰기를 중단합니다.")
+                      # ★12 JS 런타임 부재/EJS 실패 징후 — 리포트 상단 경고로 올린다.
+                      if ("wiki/EJS" in aerr or "JavaScript runtime" in aerr
+                              or "No video formats found" in aerr):
+                          ejs_hits += 1
               else:
                   last_err = (last_err + f" || 받아쓰기 상한({WHISPER_MAX}건) 소진")[-700:]
  
@@ -595,12 +648,19 @@ jobs:
               warnings.append(f"PO 토큰 프로바이더 비정상({pot_state}) — web/mweb 클라이언트가 실패할 수 있습니다.")
           if bot_hits:
               warnings.append(f"YouTube 봇 차단 {bot_hits}회 — GitHub Actions의 데이터센터 IP는 차단 대상입니다. 자막 경로로만 수집됩니다.")
+          # ★12 EJS 경고
+          if not js_state.startswith("ok"):
+              warnings.append(f"JS 런타임(EJS) 미비({js_state}) — 자막 없는 영상은 음성 받아쓰기가 실패합니다. Deno·yt-dlp[default] 설치를 확인하세요.")
+          if ejs_hits:
+              warnings.append(f"음성용 오디오 다운로드 실패 {ejs_hits}회(포맷 없음/EJS) — yt-dlp·Deno·yt-dlp-ejs 버전을 확인하세요.")
           if n_failed and n_fetched == 0:
               warnings.append(f"이번 회차 신규 수집 0건(실패 {n_failed}건) — 리포트는 기사 기반으로 작성해야 합니다.")
  
           status["health"] = {
               "cookie": cookie_info,
               "pot_provider": pot_state,
+              "js_runtime": js_state,          # ★12
+              "ejs_failures": ejs_hits,        # ★12
               "bot_blocked": bot_hits,
               "audio_disabled": audio_disabled,
               "fetched": n_fetched,
