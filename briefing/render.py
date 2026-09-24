@@ -292,15 +292,140 @@ def visual(d):
 DEFAULT_FOOTER = ("영상별 근거는 각 카드에 표기했습니다(자막=유튜브 자동생성 자막, 음성=음성 받아쓰기, 기사=기사·검색 기반). "
                   "한국경제TV는 「당잠사」 코너만 선별합니다. 자막 자동생성 특성상 오인식 가능성이 있으며 확인되지 않은 수치는 '자막 기준'으로 표기했습니다. 투자 자문이 아닙니다.")
 
+
+# ────────────────────────── 메일 본문용 차트 (표 기반, 이미지·SVG 없음) ──────────────────────────
+# 회사 메일(Outlook 포함)은 SVG와 외부 이미지를 막는 경우가 많아, 막대를 표 셀 배경색으로 그린다.
+EC = {"up": "#d6453d", "down": "#2a6fc9", "prev": "#aab2bd", "ink": "#14181f", "track": "#eceef1", "muted": "#6b7380"}
+
+def _bar_row(cells, h=12):
+    """cells: [(width_pct, color or None)] 합이 100이 되게. 폭 0인 셀은 뺀다."""
+    tds = []
+    for w, c in cells:
+        if w <= 0.05: continue
+        attr = (' bgcolor="%s" style="background:%s;font-size:1px"' % (c, c)) if c else ' style="font-size:1px"'
+        tds.append('<td width="%.0f%%" height="%d"%s></td>' % (w, h, attr))
+    return '<table width="100%" cellpadding="0" cellspacing="0" border="0" style="table-layout:fixed"><tr>' + "".join(tds) + '</tr></table>'
+
+def _row(label, bar, value, note=""):
+    return (f'<tr><td width="30%" style="padding:5px 8px 5px 0;font-size:13px">{E(label)}</td>'
+            f'<td style="padding:5px 0">{bar}</td>'
+            f'<td width="22%" style="padding:5px 0 5px 8px;font:bold 13px Menlo,Consolas,monospace;white-space:nowrap">{E(value)}</td></tr>'
+            + (f'<tr><td></td><td colspan="2" style="padding:0 0 4px;font-size:11px;color:{EC["muted"]}">{E(note)}</td></tr>' if note else ""))
+
+def _tbl(rows):
+    return f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">{rows}</table>'
+
+def email_chart(c):
+    t = c["type"]; out = []
+    if t == "diverging":
+        lo, hi = c["domain"]; unit = c.get("unit", "%"); span = hi - lo
+        zero = (0 - lo) / span * 100
+        for it in sorted(c["items"], key=lambda r: r["value"], reverse=True):
+            v = it["value"]; w = abs(v) / span * 100
+            if v >= 0: cells = [(zero, None), (w, EC["up"]), (100 - zero - w, None)]
+            else: cells = [(zero - w, None), (w, EC["down"]), (100 - zero, None)]
+            out.append(_row(it["label"], _bar_row(cells), f"{v:+.2f}{unit}", it.get("note", "")))
+        legend = f'<span style="color:{EC["up"]};">■</span> 상승 &nbsp; <span style="color:{EC["down"]};">■</span> 하락 · 가운데 기준선 0'
+    elif t == "dumbbell":
+        for g in c["groups"]:
+            lo, hi = g["domain"]; span = hi - lo; unit = g.get("unit", ""); dec = g.get("decimals", 1)
+            for r in g["rows"]:
+                a, b = r["from"], r["to"]
+                p0, p1 = (min(a, b) - lo) / span * 100, (max(a, b) - lo) / span * 100
+                col = EC["up"] if b >= a else EC["down"]
+                cells = [(p0, EC["track"]), (max(p1 - p0, 1.2), col), (100 - max(p1, p0 + 1.2), EC["track"])]
+                val = f'{a:.{dec}f} → {r.get("to_label", f"{b:.{dec}f}")}{unit}'
+                out.append(_row(r["label"], _bar_row(cells, 8), val, r.get("note", "")))
+        legend = f'{E(c.get("legend_from","이전"))} → {E(c.get("legend_to","현재"))} · 색 구간이 변화 폭 (<span style="color:{EC["up"]};">■</span> 상승 <span style="color:{EC["down"]};">■</span> 하락), 회색은 축 범위'
+    elif t == "ranges":
+        lo, hi = c["domain"]; span = hi - lo; unit = c.get("unit", "%")
+        for r in c["rows"]:
+            p0, p1 = (r["lo"] - lo) / span * 100, (r["hi"] - lo) / span * 100
+            cells = [(p0, EC["track"]), (max(p1 - p0, 1.5), EC["up"]), (100 - max(p1, p0 + 1.5), EC["track"])]
+            val = f'{r["lo"]:g}~{r["hi"]:g}{unit}' if r["lo"] != r["hi"] else f'{r["lo"]:g}{unit}'
+            out.append(_row(r["label"], _bar_row(cells, 8), val))
+        for dot in c.get("dots", []):
+            out.append(f'<tr><td></td><td colspan="2" style="padding:0 0 4px 0;font-size:11px;color:{EC["muted"]};">● {E(dot["label"])}</td></tr>')
+        legend = f'축 {lo:g}~{hi:g}{unit}' + (f' · 기준선 {E(c.get("ref_label",""))}' if c.get("ref") is not None else "")
+    else:
+        legend = ""
+        for g in c["groups"]:
+            if g.get("subtitle"):
+                out.append(f'<tr><td colspan="3" style="padding:8px 0 2px 0;font-size:12px;color:{EC["muted"]};">{E(g["subtitle"])}</td></tr>')
+            for r in g["rows"]:
+                w = r["value"] / g["max"] * 100
+                out.append(_row(r["label"], _bar_row([(w, EC["down"] if r.get("emphasis") else EC["prev"]), (100 - w, None)]), r["text"]))
+    return (f'<div style="border:1px solid #e3e5e8;border-radius:6px;padding:12px 14px;margin:0 0 12px 0;">'
+            f'<div style="font-weight:bold;font-size:14px;margin:0 0 2px 0;">{E(c["title"])}</div>'
+            + (f'<div style="font-size:11px;color:{EC["muted"]};margin:0 0 6px 0;">{legend}</div>' if legend else "")
+            + _tbl("".join(out))
+            + (f'<div style="font-size:12px;color:#555;margin:8px 0 0 0;line-height:1.6;">{E(c["note"])}</div>' if c.get("note") else "")
+            + '</div>')
+
+def dircol(t):
+    return {"up": EC["up"], "down": EC["down"]}.get(t.get("dir"), "#555")
+
+def email_visual(d):
+    parts = []
+    tk = d["tickers"]
+    cells = "".join(
+        f'<td width="{100/min(4,len(tk)):.0f}%" style="padding:8px 10px;border:1px solid #e3e5e8;vertical-align:top;">'
+        f'<div style="font-size:11px;color:{EC["muted"]};">{E(t["name"])}</div>'
+        f'<div style="font-size:16px;font-weight:bold;font-family:Menlo,Consolas,monospace;">{E(t["value"])}</div>'
+        f'<div style="font-size:12px;font-family:Menlo,Consolas,monospace;color:{dircol(t)};">{E(t["delta"])}</div></td>'
+        + ('</tr><tr>' if (i % 4 == 3 and i != len(tk) - 1) else "")
+        for i, t in enumerate(tk))
+    parts.append(f'<div style="font-size:12px;color:{EC["muted"]};margin:22px 0 6px 0;">{E(d.get("tickers_label","직전 거래일 뉴욕 마감"))}</div>'
+                 f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border-top:2px solid #111;"><tr>{cells}</tr></table>')
+    if d.get("drivers"):
+        dr = d["drivers"]
+        rows = "".join(f'<tr><td style="padding:6px 8px 6px 0;vertical-align:top;font-weight:bold;color:{EC["up"]};font-family:Menlo,Consolas,monospace;width:18px;">{i+1}</td>'
+                       f'<td style="padding:6px 0;vertical-align:top;font-size:14px;"><strong>{E(x["title"])}</strong> <span style="font-family:Menlo,Consolas,monospace;font-size:13px;">{E(x["num"])}</span><br><span style="color:#555;font-size:13px;">{E(x["text"])}</span></td></tr>'
+                       for i, x in enumerate(dr["items"]))
+        res = dr.get("result")
+        parts.append(f'<h2 style="font-size:18px;margin:24px 0 6px 0;">{E(dr["title"])}</h2>'
+                     + _tbl(rows)
+                     + (f'<div style="background:#111;color:#fff;padding:12px 14px;margin:8px 0 0 0;"><span style="font-size:13px;">{E(res["label"])}</span> '
+                        f'<strong style="font-size:24px;font-family:Menlo,Consolas,monospace;">{E(res["big"])}</strong><br><span style="font-size:12px;color:#ddd;">{E(res["note"])}</span></div>' if res else ""))
+    if d.get("charts"):
+        parts.append(f'<h2 style="font-size:18px;margin:24px 0 8px 0;">{E(d.get("charts_title","숫자로 본 하루"))}</h2>' + "".join(email_chart(c) for c in d["charts"]))
+    return "".join(parts)
+
+def chart_text(c):
+    t = c["type"]; L = [f"[{c['title']}]"]
+    if t == "diverging":
+        u = c.get("unit", "%")
+        L += [f"  {it['label']} {it['value']:+.2f}{u}" + (f" ({it['note']})" if it.get("note") else "") for it in sorted(c["items"], key=lambda r: r["value"], reverse=True)]
+    elif t == "dumbbell":
+        for g in c["groups"]:
+            dec, u = g.get("decimals", 1), g.get("unit", "")
+            L += [f"  {r['label']} {r['from']:.{dec}f} → " + (r.get('to_label') or ('%.*f' % (dec, r['to']))) + u for r in g["rows"]]
+    elif t == "ranges":
+        u = c.get("unit", "%")
+        L += [f"  {r['label']} {r['lo']:g}~{r['hi']:g}{u}" for r in c["rows"]] + [f"  · {x['label']}" for x in c.get("dots", [])]
+    else:
+        for g in c["groups"]:
+            L += [f"  {r['label']} {r['text']}" for r in g["rows"]]
+    if c.get("note"): L.append(f"  → {c['note']}")
+    return L
+
 # ────────────────────────── 메일 ──────────────────────────
 def email_txt(d):
     L = [f'[한경 글로벌마켓+당잠사] {d["date"]} 아침 브리핑', f'수집 시간창: {d["window"]}']
-    if d.get("visual_url"): L.append(f'비주얼 리포트(차트): {d["visual_url"]}')
+    if d.get("visual_url"): L.append(f'인터랙티브 비주얼 리포트(claude.ai 소유자 계정 전용): {d["visual_url"]}')
     cnt = d.get("counts", {})
     L.append(f'근거: 자막 기반 {cnt.get("caption",0)}건 / 기사 기반 {cnt.get("article",0)}건')
     for n in d.get("notices", []): L.append(f"※ {n}")
     for w in d.get("health_warnings", []): L.append(f"⚠️ {w}")
     L += ["", "■ 오늘의 결론 3줄"] + [f"- {c}" for c in d["conclusions"]]
+    L += ["", "■ " + d.get("tickers_label", "직전 거래일 뉴욕 마감")] + ["  " + " / ".join(f"{t['name']} {t['value']} ({t['delta']})" for t in d["tickers"])]
+    if d.get("drivers"):
+        L += ["", "■ " + d["drivers"]["title"]] + [f"  {i+1}. {x['title']} — {x['num']}: {x['text']}" for i, x in enumerate(d["drivers"]["items"])]
+        if d["drivers"].get("result"):
+            r = d["drivers"]["result"]; L.append(f"  ⇒ {r['label']} {r['big']} ({r['note']})")
+    if d.get("charts"):
+        L += ["", "■ " + d.get("charts_title", "숫자로 본 하루")]
+        for c in d["charts"]: L += chart_text(c)
     for ch, name in (("A", "■■ 한경 글로벌마켓"), ("B", "■■ 한국경제TV 「당잠사」")):
         L += ["", name]
         vs = [v for v in d["videos"] if v["channel"] == ch]
@@ -335,8 +460,8 @@ def email_html(d):
     warn = "".join(f'<div style="background:#fff3f0;border:1px solid #f0c4b8;color:#8a2a1c;padding:8px 12px;margin:10px 0 0 0;font-size:14px;">⚠️ {E(w)}</div>' for w in d.get("health_warnings", []))
     vis = ""
     if d.get("visual_url"):
-        vis = (f'<div style="margin:16px 0 0 0;"><a href="{E(d["visual_url"])}" style="display:inline-block;background:#1f4e79;color:#fff;text-decoration:none;font-weight:bold;font-size:15px;padding:10px 18px;border-radius:4px;">📊 차트로 보는 비주얼 리포트 열기</a>'
-               f'<div style="font-size:12px;color:#666;margin:6px 0 0 0;">claude.ai에 로그인한 계정으로 열립니다.</div></div>')
+        vis = (f'<div style="margin:16px 0 0 0;"><a href="{E(d["visual_url"])}" style="display:inline-block;background:#1f4e79;color:#fff;text-decoration:none;font-weight:bold;font-size:15px;padding:10px 18px;border-radius:4px;">📊 인터랙티브 비주얼 리포트 (claude.ai 소유자 계정 전용)</a>'
+               f'<div style="font-size:12px;color:#666;margin:6px 0 0 0;">차트는 아래 메일 본문에도 모두 들어 있습니다. 링크는 claude.ai에 로그인한 소유자 계정에서만 열립니다.</div></div>')
     A = "".join(card(v) for v in d["videos"] if v["channel"] == "A")
     B = "".join(card(v) for v in d["videos"] if v["channel"] == "B") or f'<p style="color:#666;">{E(d.get("b_empty","당잠사 미업로드"))}</p>'
     s = d["synthesis"]
@@ -349,6 +474,7 @@ def email_html(d):
 <div style="font-size:13px;color:#666;">수집 시간창: {E(d["window"])}</div>
 <div style="margin:10px 0 0 0;">{badge_html}</div>{warn}{vis}
 <div style="background:#fbf7f2;border-left:4px solid #c0392b;padding:12px 16px;margin:18px 0 0 0;"><div style="font-weight:bold;margin:0 0 6px 0;">오늘의 결론 3줄</div><ul style="margin:0;padding-left:20px;">{li(d["conclusions"])}</ul></div>
+{email_visual(d)}
 {band(f"한경 글로벌마켓 — {nA}건", "#111")}{A}
 {band(d.get("b_band", "한국경제TV 「당잠사」"), "#1f4e79")}{B}
 <div style="border:2px solid #111;border-radius:6px;padding:16px;margin:24px 0 0 0;"><h2 style="font-size:18px;margin:0 0 12px 0;">종합 뷰</h2>
