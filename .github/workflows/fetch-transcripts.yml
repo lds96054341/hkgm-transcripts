@@ -15,6 +15,8 @@ name: fetch-hkgm-transcripts
 #       런타임 상태와 EJS 실패 횟수를 status.json health 에 기록한다.
 #   ★13 오디오 다운로드 실패 원인을 클라이언트별로 요약해 남긴다(마지막 것만 남던 문제)
 #   ★14 workflow_dispatch 입력 audio_test=<videoId> 로 음성 받아쓰기 경로만 강제 실행(테스트)
+#   ★15 ffmpeg 를 명시적으로 설치한다. 러너 이미지에 없어서 오디오 다운로드는 되는데
+#       mp3 변환(후처리)에서 "ffprobe and ffmpeg not found"로 죽었다(09-24 ★14 테스트로 발견).
 # ─────────────────────────────────────────────────────────────────────
  
 on:
@@ -103,21 +105,25 @@ jobs:
  
       - name: Install tools
         run: |
+          # ★15 ffmpeg — yt-dlp 의 -x/--audio-format mp3 후처리에 필수. 러너 이미지에는 없다.
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq ffmpeg >/dev/null
           python -m pip install --upgrade pip
           # ★12 "yt-dlp[default]" 라야 챌린지 해결 스크립트(yt-dlp-ejs)가 같이 깔린다.
           #     맨 yt-dlp 만 깔면 Deno 가 있어도 스크립트가 없어 EJS 가 동작하지 않는다.
           pip install --upgrade "yt-dlp[default]" bgutil-ytdlp-pot-provider faster-whisper
           yt-dlp --version
-          ffmpeg -version | head -1
-          # ★12 런타임 상태를 js_status.txt 에 남겨 status.json 에 싣는다(★3 과 같은 방식).
+          # ★12/★15 런타임·ffmpeg 상태를 js_status.txt 에 남겨 status.json 에 싣는다(★3 과 같은 방식).
+          #   (예전의 `ffmpeg -version | head -1` 은 파이프 때문에 ffmpeg 가 없어도 통과했다)
           set +e
           DENO_V=$(deno --version 2>/dev/null | head -1 | awk '{print $2}')
           EJS_V=$(pip show yt-dlp-ejs 2>/dev/null | awk '/^Version:/{print $2}')
-          if [ -n "$DENO_V" ] && [ -n "$EJS_V" ]; then
-            echo "ok deno=${DENO_V} ejs=${EJS_V}" > js_status.txt
+          FF_V=$(ffmpeg -version 2>/dev/null | head -1 | awk '{print $3}')
+          if [ -n "$DENO_V" ] && [ -n "$EJS_V" ] && [ -n "$FF_V" ]; then
+            echo "ok deno=${DENO_V} ejs=${EJS_V} ffmpeg=${FF_V}" > js_status.txt
           else
-            echo "missing deno=${DENO_V:-none} ejs=${EJS_V:-none}" > js_status.txt
-            echo "::warning::JS 런타임/EJS 미비 — 자막 없는 영상의 음성 받아쓰기가 실패합니다 (deno=${DENO_V:-none}, yt-dlp-ejs=${EJS_V:-none})"
+            echo "missing deno=${DENO_V:-none} ejs=${EJS_V:-none} ffmpeg=${FF_V:-none}" > js_status.txt
+            echo "::warning::JS 런타임/EJS/ffmpeg 미비 — 자막 없는 영상의 음성 받아쓰기가 실패합니다 (deno=${DENO_V:-none}, yt-dlp-ejs=${EJS_V:-none}, ffmpeg=${FF_V:-none})"
           fi
           echo "[i] JS runtime: $(cat js_status.txt)"
           exit 0
@@ -626,7 +632,8 @@ jobs:
                               print(f"[!] 봇 차단 {bot_hits}회 — 이번 회차 받아쓰기를 중단합니다.")
                       # ★12 JS 런타임 부재/EJS 실패 징후 — 리포트 상단 경고로 올린다.
                       if ("wiki/EJS" in aerr or "JavaScript runtime" in aerr
-                              or "No video formats found" in aerr):
+                              or "No video formats found" in aerr
+                              or "ffmpeg not found" in aerr):        # ★15
                           ejs_hits += 1
               else:
                   last_err = (last_err + f" || 받아쓰기 상한({WHISPER_MAX}건) 소진")[-700:]
@@ -690,7 +697,7 @@ jobs:
               warnings.append(f"YouTube 봇 차단 {bot_hits}회 — GitHub Actions의 데이터센터 IP는 차단 대상입니다. 자막 경로로만 수집됩니다.")
           # ★12 EJS 경고
           if not js_state.startswith("ok"):
-              warnings.append(f"JS 런타임(EJS) 미비({js_state}) — 자막 없는 영상은 음성 받아쓰기가 실패합니다. Deno·yt-dlp[default] 설치를 확인하세요.")
+              warnings.append(f"JS 런타임(EJS)/ffmpeg 미비({js_state}) — 자막 없는 영상은 음성 받아쓰기가 실패합니다. Deno·yt-dlp[default]·ffmpeg 설치를 확인하세요.")
           if ejs_hits:
               warnings.append(f"음성용 오디오 다운로드 실패 {ejs_hits}회(포맷 없음/EJS) — yt-dlp·Deno·yt-dlp-ejs 버전을 확인하세요.")
           if n_failed and n_fetched == 0:
@@ -785,5 +792,6 @@ jobs:
           done
           echo "::error::3회 시도 후에도 푸시하지 못했습니다. 원격 main이 계속 바뀌고 있거나 권한 문제입니다."
           exit 1
+
 
 
