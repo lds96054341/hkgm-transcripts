@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-09-24T07:42:23+00:00",
- "last_run_kst": "2026-09-24 16:42:23 KST",
+ "last_run_utc": "2026-09-24T07:44:03+00:00",
+ "last_run_kst": "2026-09-24 16:44:03 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -110,6 +110,15 @@
    "state": "cached"
   }
  ],
+ "audio_test": {
+  "id": "8R9_tvkju38",
+  "ok": true,
+  "seconds": 45,
+  "duration_sec": 89,
+  "title": "9월 23일 글로벌 1분 시황✅ #당잠사 #굿모닝한경글로벌마켓 #1분시황",
+  "chars": 727,
+  "file": "transcripts/8R9_tvkju38.audio-test.enc"
+ },
  "whisper_used": 0,
  "health": {
   "cookie": {
