@@ -14,6 +14,7 @@ name: fetch-hkgm-transcripts
 #       하나도 못 받아 음성 받아쓰기 폴백이 통째로 죽는다(09-23 ew5hq80sv9c 사례).
 #       런타임 상태와 EJS 실패 횟수를 status.json health 에 기록한다.
 #   ★13 오디오 다운로드 실패 원인을 클라이언트별로 요약해 남긴다(마지막 것만 남던 문제)
+#   ★14 workflow_dispatch 입력 audio_test=<videoId> 로 음성 받아쓰기 경로만 강제 실행(테스트)
 # ─────────────────────────────────────────────────────────────────────
  
 on:
@@ -31,6 +32,11 @@ on:
     - cron: '10 4 * * *'
     - cron: '20 12 * * *'
   workflow_dispatch:
+    inputs:
+      audio_test:
+        description: '★14 음성 받아쓰기 테스트 — videoId 11자. 자막 유무와 무관하게 오디오 경로만 돌리고 결과를 transcripts/<id>.audio-test.enc 로 남긴다'
+        required: false
+        default: ''
   push:
     branches: [main]
     paths-ignore:
@@ -120,6 +126,7 @@ jobs:
         env:
           YT_COOKIES: ${{ secrets.YT_COOKIES }}
           TRANSCRIPT_KEY: ${{ secrets.TRANSCRIPT_KEY }}
+          AUDIO_TEST: ${{ github.event.inputs.audio_test }}
         run: |
           set +e
           python - <<'PY'
@@ -504,6 +511,39 @@ jobs:
           ejs_hits = 0            # ★12 포맷 없음/EJS 로 오디오를 못 받은 횟수
           audio_disabled = False
  
+          # ★14 음성 받아쓰기 강제 테스트. 자막이 있는 영상이라도 오디오 경로만 돌려
+          #     Deno/EJS → yt-dlp 오디오 → Whisper 전 구간을 검증한다. 결과 본문은 암호화해
+          #     transcripts/<id>.audio-test.enc 로 남기고, 공개 로그·status.json 에는 평문을
+          #     쓰지 않는다(글자 수·소요 시간·오류만). 색인(index.json)에는 넣지 않는다.
+          AUDIO_TEST = os.environ.get("AUDIO_TEST", "").strip()
+          if AUDIO_TEST:
+              if not re.fullmatch(r"[A-Za-z0-9_-]{11}", AUDIO_TEST):
+                  status["audio_test"] = {"id": AUDIO_TEST, "ok": False,
+                                          "error": "videoId 형식이 아닙니다(영문·숫자·-_ 11자)"}
+              else:
+                  print(f"[i] ★14 음성 받아쓰기 테스트 시작: {AUDIO_TEST}")
+                  t0 = time.time()
+                  tbody, tinfo, terr = audio_to_text(AUDIO_TEST)
+                  took = int(time.time() - t0)
+                  rec = {"id": AUDIO_TEST, "ok": bool(tbody), "seconds": took,
+                         "duration_sec": (tinfo or {}).get("duration") or 0,
+                         "title": (tinfo or {}).get("title", "")}
+                  if tbody:
+                      hdr = (f"# videoId: {AUDIO_TEST}\n# title: {rec['title']}\n"
+                             f"# source: audio-test (음성 받아쓰기 테스트, whisper-{WHISPER_MODEL})\n"
+                             f"# duration_sec: {rec['duration_sec']}\n# took_sec: {took}\n"
+                             f"# note: 30초 단위 블록, [HH:MM:SS]는 영상 내 위치\n\n")
+                      encrypt_to(hdr + tbody + "\n", os.path.join(OUT, f"{AUDIO_TEST}.audio-test.enc"))
+                      rec["chars"] = len(tbody)
+                      rec["file"] = f"transcripts/{AUDIO_TEST}.audio-test.enc"
+                      print(f"[+] ★14 테스트 성공: {len(tbody)}자, {took}초 (오디오 {rec['duration_sec']}초)")
+                  else:
+                      rec["error"] = (terr or "")[-700:]
+                      if "wiki/EJS" in terr or "JavaScript runtime" in terr or "No video formats found" in terr:
+                          ejs_hits += 1
+                      print(f"[!] ★14 테스트 실패: {(terr or '')[-300:]}")
+                  status["audio_test"] = rec
+ 
           for _prio, vid, ckey, cname in targets:
               target = os.path.join(OUT, f"{vid}.enc")
               if os.path.exists(target) and index.get(vid, {}).get("ok"):
@@ -675,6 +715,10 @@ jobs:
           cutoff = time.time() - KEEP_DAYS * 86400
           for p in glob.glob(os.path.join(OUT, "*.enc")):
               vid = os.path.splitext(os.path.basename(p))[0]
+              if vid.endswith(".audio-test"):            # ★14 테스트 산출물은 7일 뒤 정리
+                  if os.path.getmtime(p) < time.time() - 7 * 86400:
+                      os.remove(p)
+                  continue
               ep = index.get(vid, {}).get("uploaded_epoch") or 0
               if ep and ep < cutoff:
                   os.remove(p)
@@ -741,4 +785,5 @@ jobs:
           done
           echo "::error::3회 시도 후에도 푸시하지 못했습니다. 원격 main이 계속 바뀌고 있거나 권한 문제입니다."
           exit 1
+
 
