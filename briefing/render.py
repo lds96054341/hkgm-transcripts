@@ -369,7 +369,7 @@ def email_visual(d):
     parts = []
     tk = d["tickers"]
     cells = "".join(
-        f'<td width="{100/min(4,len(tk)):.0f}%" style="padding:8px 10px;border:1px solid #e3e5e8;vertical-align:top;">'
+        f'<td width="{100/min(4,len(tk)):.0f}%" style="padding:8px 10px;border:1px solid #e0e2e5;vertical-align:top;">'
         f'<div style="font-size:11px;color:{EC["muted"]};">{E(t["name"])}</div>'
         f'<div style="font-size:16px;font-weight:bold;font-family:Menlo,Consolas,monospace;">{E(t["value"])}</div>'
         f'<div style="font-size:12px;font-family:Menlo,Consolas,monospace;color:{dircol(t)};">{E(t["delta"])}</div></td>'
