@@ -19,7 +19,10 @@ name: fetch-hkgm-transcripts
 #       mp3 변환(후처리)에서 "ffprobe and ffmpeg not found"로 죽었다(09-24 ★14 테스트로 발견).
 #   ★16 라이브 진행 중인 영상은 건너뛴다. 당잠사(06:10~06:55 라이브) 도중에 돌면 자막이 없어
 #       음성 경로로 가는데, 그때 받은 오디오는 방송 일부뿐이고 ok 로 캐시되어 다시 받지 않는다.
-#       라이브면 수집하지 않고 색인에 pending="live" 로만 남겨 다음 실행에서 다시 시도한다.
+#       라이브면 수집하지 않고 색인에 pending="live"(예약 전이면 "upcoming") 로만 남겨 다음 실행에서
+#       다시 시도한다. 방송 직후(post_live)는 yt-dlp 가 첫 조각부터 전부 받으므로 수집하되, 조각이
+#       빠지면 실패로 처리하고(--abort-on-unavailable-fragments) 받은 오디오 길이를 영상 길이와
+#       대조해 90% 미만이면(PARTIAL) 캐시하지 않는다.
 # ─────────────────────────────────────────────────────────────────────
  
 on:
@@ -420,6 +423,7 @@ jobs:
                   r = run(["yt-dlp", "-f", "bestaudio/best",
                            "-x", "--audio-format", "mp3", "--audio-quality", "5",
                            "--match-filter", "!is_live",          # ★16
+                           "--abort-on-unavailable-fragments",    # ★16 조각 누락 시 구멍 난 오디오 대신 실패
                            "--write-info-json", "--retries", "3", "--socket-timeout", "30",
                            "--extractor-args", f"youtube:player_client={client}",
                            "-o", os.path.join(TMP, "%(id)s.%(ext)s"), *base, url],
@@ -449,9 +453,14 @@ jobs:
  
               try:
                   t0 = time.time()
-                  segs, _ = whisper_model().transcribe(
+                  segs, winfo = whisper_model().transcribe(
                       apath, language="ko", vad_filter=True, beam_size=5,
                       initial_prompt=DOMAIN_PROMPT)
+                  # ★16 받은 오디오가 영상 길이보다 확연히 짧으면(방송 일부만 받음) 캐시하지 않는다.
+                  #     transcribe()는 디코딩·길이 계산만 하고 세그먼트는 지연 생성이라 여기서 끊으면 비용이 없다.
+                  adur = float(getattr(winfo, "duration", 0) or 0)
+                  if dur and adur and adur < dur * 0.9:
+                      return None, info, f"PARTIAL: 받은 오디오 {int(adur)}초 < 영상 길이 {int(dur)}초의 90% — 다음 실행에서 다시 시도"
                   pairs = [(s.start, s.text.strip()) for s in segs if s.text.strip()]
                   took = time.time() - t0
                   print(f"[i] {vid} 받아쓰기 {took:.0f}초 (오디오 {int(dur)}초)")
@@ -601,7 +610,7 @@ jobs:
                       info = cur_info          # 업로드 시각 등은 최신 것으로 보존(★7)
                   if cur_info and (cur_info.get("is_live")
                                    or cur_info.get("live_status") in ("is_live", "is_upcoming")):
-                      live = True              # ★16 방송 중이면 자막·음성 모두 건너뜀
+                      live = "upcoming" if cur_info.get("live_status") == "is_upcoming" else "live"   # ★16 방송 중·예약이면 자막·음성 모두 건너뜀
                       break
                   if pick:
                       got_sub, used_client = pick[0], client
@@ -625,7 +634,7 @@ jobs:
                   m = re.search(r"\.([A-Za-z\-]+)\.vtt$", os.path.basename(got_sub))
                   lang = m.group(1) if m else "?"
               elif live:
-                  last_err = LIVE_MSG
+                  last_err = LIVE_MSG if live == "live" else "UPCOMING: 예약된 라이브(아직 시작 전) — 방송이 끝난 뒤 다음 실행에서 다시 시도"
               elif audio_disabled:
                   last_err = (last_err + f" || 봇 차단 {bot_hits}회로 이번 회차 받아쓰기 중단")[-700:]
               elif whisper_used < WHISPER_MAX:
@@ -637,7 +646,7 @@ jobs:
                   if body:
                       source, lang, used_client = "audio", f"whisper-{WHISPER_MODEL}", "audio"
                   elif aerr == LIVE_MSG:
-                      live, last_err = True, LIVE_MSG
+                      live, last_err = "live", LIVE_MSG
                       whisper_used -= 1        # ★16 받아쓰기를 하지 않았으니 슬롯을 돌려준다
                   else:
                       last_err = (last_err + " || " + aerr)[-700:]
@@ -671,7 +680,7 @@ jobs:
                                 "uploaded_epoch": ts or prev.get("uploaded_epoch", 0),
                                 "duration_sec": dur or prev.get("duration_sec", 0)}
                   if live:
-                      index[vid]["pending"] = "live"      # ★16 리포트가 '방송 중'으로 표시
+                      index[vid]["pending"] = live        # ★16 "live"=방송 중(리포트가 '방송중'으로 표시), "upcoming"=예약(리포트 제외)
                   continue
  
               kst   = datetime.fromtimestamp(ts, KST).strftime("%Y-%m-%d %H:%M KST") if ts else "?"
