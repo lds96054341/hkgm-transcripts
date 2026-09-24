@@ -8,7 +8,7 @@
   email.txt    - 메일 평문 본문
 
 사용법:
-  python3 briefing/render.py <data.json> <출력폴더>
+  python3 briefing/render.py <data.json> <출력폴더> [--allow-old-date]
 
 데이터 형식은 briefing/README.md, 실제 예시는 briefing/examples/2026-09-24.json.
 검사에 실패하면 아무것도 쓰지 않고 종료 코드 1로 끝난다.
@@ -24,9 +24,15 @@ def check(d):
     errs = []
     def need(path, cond, msg):
         if not cond: errs.append(f"{path}: {msg}")
-    for k in ("date", "window", "headline", "subject_keywords", "conclusions", "tickers", "videos", "synthesis"):
+    for k in ("date", "window", "headline", "subject_keywords", "conclusions", "tickers", "synthesis"):
         need(k, k in d and d[k], "필수 항목이 비어 있음")
+    need("videos", isinstance(d.get("videos"), list), "배열이어야 함(영상이 없는 날은 빈 배열)")
     if errs: return errs
+    if not ALLOW_OLD_DATE:
+        import datetime
+        today = (datetime.datetime.utcnow() + datetime.timedelta(hours=9)).strftime("%Y-%m-%d")
+        need("date", d["date"] == today, f"{d['date']}는 오늘(KST {today})이 아님. 예시 파일을 그대로 쓰지 않았는지 확인. 테스트면 --allow-old-date")
+    need("visual_url", "83n4vubsTdwtuCBxHrzykh" not in d.get("visual_url", "") and "Kmz2XvjyY2NsWBrkPnfTk3" not in d.get("visual_url", ""), "테스트용 옛 비주얼 링크가 남아 있음. 오늘 게시한 URL로 바꾸거나 비운다")
     need("conclusions", len(d["conclusions"]) == 3, "결론은 정확히 3줄")
     for i, v in enumerate(d["videos"]):
         p = f"videos[{i}]"
@@ -246,7 +252,7 @@ def visual(d):
                   '<p>막대와 점에 마우스를 올리거나 탭하면 값과 출처를 볼 수 있습니다. 상승은 빨강, 하락은 파랑입니다.</p></div>'
                   '<div class="grid2">' + "".join(chart_panel(c) for c in d["charts"]) + '</div></section>')
     b_band = d.get("b_band", "한국경제TV 「당잠사」")
-    cardsA = "".join(vcard(v) for v in d["videos"] if v["channel"] == "A")
+    cardsA = "".join(vcard(v) for v in d["videos"] if v["channel"] == "A") or f'<p class="empty">{E(d.get("a_empty", "한경 글로벌마켓 신규 업로드 없음"))}</p>'
     cardsB = "".join(vcard(v) for v in d["videos"] if v["channel"] == "B") or f'<p class="empty">{E(d.get("b_empty", "당잠사 미업로드"))}</p>'
     syn = d["synthesis"]
     ul = lambda k: "<ul>" + "".join(f"<li>{E(i)}</li>" for i in syn[k]) + "</ul>"
@@ -429,7 +435,7 @@ def email_txt(d):
     for ch, name in (("A", "■■ 한경 글로벌마켓"), ("B", "■■ 한국경제TV 「당잠사」")):
         L += ["", name]
         vs = [v for v in d["videos"] if v["channel"] == ch]
-        if not vs: L.append("   " + d.get("b_empty", "당잠사 미업로드"))
+        if not vs: L.append("   " + (d.get("b_empty", "당잠사 미업로드") if ch == "B" else d.get("a_empty", "한경 글로벌마켓 신규 업로드 없음")))
         for v in vs:
             L += ["", f'▶ {v["title"]}', f'   https://www.youtube.com/watch?v={v["id"]}', f'   {v["meta"]} · {v["basis"]}',
                   "   [전체 요약]", "   " + v["summary"], "   [주요 내용]"] + [f"   • {h} {t}" for h, t in v["bullets"]]
@@ -464,7 +470,7 @@ def email_html(d):
     if d.get("visual_url"):
         vis = (f'<div style="margin:16px 0 0 0;"><a href="{E(d["visual_url"])}" style="display:inline-block;border:2px solid #1f4e79;color:#1f4e79;text-decoration:none;font-weight:bold;font-size:14px;padding:8px 16px;border-radius:4px;">📊 인터랙티브 비주얼 리포트 (claude.ai 소유자 계정 전용)</a>'
                f'<div style="font-size:12px;color:#666;margin:6px 0 0 0;">차트는 아래 메일 본문에도 모두 들어 있습니다. 링크는 claude.ai에 로그인한 소유자 계정에서만 열립니다.</div></div>')
-    A = "".join(card(v) for v in d["videos"] if v["channel"] == "A")
+    A = "".join(card(v) for v in d["videos"] if v["channel"] == "A") or f'<p style="color:#666;">{E(d.get("a_empty","한경 글로벌마켓 신규 업로드 없음"))}</p>'
     B = "".join(card(v) for v in d["videos"] if v["channel"] == "B") or f'<p style="color:#666;">{E(d.get("b_empty","당잠사 미업로드"))}</p>'
     s = d["synthesis"]
     nA = sum(v["channel"] == "A" for v in d["videos"])
@@ -493,7 +499,12 @@ def subject(d):
     return f'[한경 글로벌마켓+당잠사] {d["date"]} 아침 브리핑 — 영상 {len(d["videos"])}건 ({d["subject_keywords"]})'
 
 # ────────────────────────── main ──────────────────────────
+ALLOW_OLD_DATE = False
+
 def main():
+    global ALLOW_OLD_DATE
+    if "--allow-old-date" in sys.argv:
+        ALLOW_OLD_DATE = True; sys.argv.remove("--allow-old-date")
     if len(sys.argv) != 3:
         print(__doc__); sys.exit(2)
     d = json.load(open(sys.argv[1], encoding="utf-8"))
