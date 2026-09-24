@@ -385,8 +385,8 @@ def email_visual(d):
         res = dr.get("result")
         parts.append(f'<h2 style="font-size:18px;margin:24px 0 6px 0;">{E(dr["title"])}</h2>'
                      + _tbl(rows)
-                     + (f'<div style="background:#111;color:#fff;padding:12px 14px;margin:8px 0 0 0;"><span style="font-size:13px;">{E(res["label"])}</span> '
-                        f'<strong style="font-size:24px;font-family:Menlo,Consolas,monospace;">{E(res["big"])}</strong><br><span style="font-size:12px;color:#ddd;">{E(res["note"])}</span></div>' if res else ""))
+                     + (f'<div style="background:#fbf7f2;border:1px solid #e8d9c8;border-left:4px solid #d6453d;color:#111;padding:12px 14px;margin:8px 0 0 0;"><span style="font-size:13px;color:#111;">{E(res["label"])}</span> '
+                        f'<strong style="font-size:24px;font-family:Menlo,Consolas,monospace;color:#b3261e;">{E(res["big"])}</strong><br><span style="font-size:12px;color:#555;">{E(res["note"])}</span></div>' if res else ""))
     if d.get("charts"):
         parts.append(f'<h2 style="font-size:18px;margin:24px 0 8px 0;">{E(d.get("charts_title","숫자로 본 하루"))}</h2>' + "".join(email_chart(c) for c in d["charts"]))
     return "".join(parts)
@@ -453,14 +453,16 @@ def email_html(d):
                 f'<div style="background:#f7f8f9;border-radius:4px;padding:12px 14px;margin:0 0 12px 0;font-size:15px;line-height:1.7;color:#111;"><strong>전체 요약</strong><br>{E(v["summary"])}</div>'
                 f'<div style="font-size:14px;font-weight:bold;color:#666;margin:0 0 6px 0;">주요 내용</div>'
                 f'<ul style="margin:0;padding-left:20px;font-size:15px;">{b}</ul></div>')
-    def band(t, c): return f'<div style="background:{c};color:#fff;font-weight:bold;font-size:15px;padding:8px 14px;border-radius:4px;margin:24px 0 14px 0;">{E(t)}</div>'
+    def band(t, c):
+        tint = {"#111": "#f2f3f5", "#1f4e79": "#eaf1f8"}.get(c, "#f2f3f5")
+        return f'<div style="background:{tint};border-left:6px solid {c};color:{c};font-weight:bold;font-size:15px;padding:8px 14px;margin:24px 0 14px 0;">{E(t)}</div>'
     cnt = d.get("counts", {})
     badges = [("#111", "#fff", f'자막 기반 {cnt.get("caption",0)}건'), ("#e3e5e8", "#111", f'기사 기반 {cnt.get("article",0)}건')] + [("#1f4e79", "#fff", n) for n in d.get("notices", [])]
-    badge_html = "".join(f'<span style="display:inline-block;background:{bg};color:{fg};font-size:12px;padding:3px 9px;border-radius:12px;margin:0 6px 6px 0;">{E(t)}</span>' for bg, fg, t in badges)
+    badge_html = "".join(f'<span style="display:inline-block;border:1px solid {"#1f4e79" if bg == "#1f4e79" else "#8a919c"};color:{"#1f4e79" if bg == "#1f4e79" else "#111"};font-size:12px;padding:2px 9px;border-radius:12px;margin:0 6px 6px 0;">{E(t)}</span>' for bg, fg, t in badges)
     warn = "".join(f'<div style="background:#fff3f0;border:1px solid #f0c4b8;color:#8a2a1c;padding:8px 12px;margin:10px 0 0 0;font-size:14px;">⚠️ {E(w)}</div>' for w in d.get("health_warnings", []))
     vis = ""
     if d.get("visual_url"):
-        vis = (f'<div style="margin:16px 0 0 0;"><a href="{E(d["visual_url"])}" style="display:inline-block;background:#1f4e79;color:#fff;text-decoration:none;font-weight:bold;font-size:15px;padding:10px 18px;border-radius:4px;">📊 인터랙티브 비주얼 리포트 (claude.ai 소유자 계정 전용)</a>'
+        vis = (f'<div style="margin:16px 0 0 0;"><a href="{E(d["visual_url"])}" style="display:inline-block;border:2px solid #1f4e79;color:#1f4e79;text-decoration:none;font-weight:bold;font-size:14px;padding:8px 16px;border-radius:4px;">📊 인터랙티브 비주얼 리포트 (claude.ai 소유자 계정 전용)</a>'
                f'<div style="font-size:12px;color:#666;margin:6px 0 0 0;">차트는 아래 메일 본문에도 모두 들어 있습니다. 링크는 claude.ai에 로그인한 소유자 계정에서만 열립니다.</div></div>')
     A = "".join(card(v) for v in d["videos"] if v["channel"] == "A")
     B = "".join(card(v) for v in d["videos"] if v["channel"] == "B") or f'<p style="color:#666;">{E(d.get("b_empty","당잠사 미업로드"))}</p>'
