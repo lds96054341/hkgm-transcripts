@@ -18,6 +18,12 @@ name: fetch-hkgm-transcripts
 #   ★15 ffmpeg 를 명시적으로 설치한다. 러너 이미지에 없어서 오디오 다운로드는 되는데
 #       mp3 변환(후처리)에서 "ffprobe and ffmpeg not found"로 죽었다(09-24 ★14 테스트로 발견).
 #   ★17 캐시된 파일이 현재 TRANSCRIPT_KEY 로 열리지 않으면(키 교체) 다시 수집해 새 키로 저장한다.
+# 2026-09-25 추가
+#   ★18 checkout 을 ref: main 으로 받는다. ref 없이 받으면 실행이 '만들어진 시점'의 커밋을 받는데,
+#       concurrency 대기열에서 앞 실행을 기다린 실행은 앞 실행의 결과가 없는 옛 main 으로 시작한다.
+#       그러면 앞 실행이 받은 영상을 다시 받고(Whisper 슬롯·시간 낭비), 다시 받다 실패하면
+#       Commit 단계의 rebase -X theirs 가 앞 실행의 ok 항목을 ok:false 로 덮는다.
+#       브리핑 routine 이 자막 없는 영상이 있을 때 수집기를 수동 실행하면서 이런 겹침이 잦아졌다.
 #   ★16 라이브 진행 중인 영상은 건너뛴다. 당잠사(06:10~06:55 라이브) 도중에 돌면 자막이 없어
 #       음성 경로로 가는데, 그때 받은 오디오는 방송 일부뿐이고 ok 로 캐시되어 다시 받지 않는다.
 #       라이브면 수집하지 않고 색인에 pending="live"(예약 전이면 "upcoming") 로만 남겨 다음 실행에서
@@ -64,7 +70,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 150
     steps:
+      # ★18 대기열에서 기다린 실행도 시작 시점의 최신 main 에서 출발한다.
       - uses: actions/checkout@v4
+        with:
+          ref: main
  
       - uses: actions/setup-python@v5
         with:

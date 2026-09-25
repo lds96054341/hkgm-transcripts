@@ -11,11 +11,13 @@
 # 끝나는 조건은 셋 중 하나다.
 #   - 넘긴 영상 모두 transcripts/<id>.enc 가 있고 index.json 에서 ok 다.
 #   - status.json 의 last_run_utc 가 T0 이후다(수동 실행이 끝나 커밋까지 됐다).
-#   - GitHub API 에서 T0 이후 시작한 수집기 실행이 실패·취소로 끝났다(API 를 못 읽으면 이 조건은 건너뛴다).
+#   - GitHub API 에서 도는·대기 중인 수집기 실행이 하나도 없고, T0 이후 가장 나중 실행이 성공하지 못했다.
+#     (대기 중인 수동 실행이 새 예약 실행에 밀려 취소된 경우는 새 실행이 끝날 때까지 기다린다. API 를 못 읽으면 건너뛴다.)
 # 끝나면 /tmp/hkgm 를 그 최신 clone 으로 바꾸고 영상마다 한 줄씩 결과를 출력한다.
 #   <id> OK <caption|audio> <글자 수>자
-#   <id> MISSING <state> <오류 요약>
-# 종료 코드: 0 모두 확보, 1 수동 실행은 끝났지만 일부 없음, 2 마감 초과, 3 사용법·T0 오류, 4 수집기 실행 실패.
+#   <id> MISSING <state> retry=<yes|no> <오류 요약>   (yes = 방송 직후 준비 중, 10분 뒤 다시 돌릴 만하다)
+# 종료 코드: 0 모두 확보, 1 수동 실행은 끝났지만 일부 없음, 2 마감 초과, 3 사용법·T0 오류,
+#           4 T0 이후 실행이 모두 끝났는데 성공한 실행이 없음.
 #
 # 스크립트 전체를 { } 로 감싸 먼저 다 읽게 했다. 도중에 /tmp/hkgm 를 바꿔도 안전하다.
 {
@@ -85,8 +87,11 @@ for v in ids:
         print(f"{v} OK {e.get('source', '?')} {e.get('chars', 0)}자")
     else:
         r = res.get(v, {})
-        err = (r.get("error") or "")[-200:].replace("\n", " ")
-        print(f"{v} MISSING {r.get('state', '목록에 없음')} {err}")
+        full = r.get("error") or ""
+        # 방송 직후라 아직 준비되지 않은 경우: 10분 뒤 다시 돌리면 받을 가능성이 높다
+        retry = r.get("state") == "live_pending" or "PARTIAL" in full or "fragment" in full
+        err = full[-200:].replace("\n", " ")
+        print(f"{v} MISSING {r.get('state', '목록에 없음')} retry={'yes' if retry else 'no'} {err}")
 PY
 }
 
@@ -107,8 +112,13 @@ try:
 except Exception:
     runs = []
 mine = [r for r in runs if datetime.fromisoformat(r["created_at"].replace("Z", "+00:00")) >= t0]
-if mine:
-    r = mine[-1]   # T0 이후 가장 먼저 만들어진 실행 = 이번 수동 실행
+# 같은 concurrency 그룹이라 도는·대기 중인 실행이 하나라도 있으면 그 실행이 결과를 올린다.
+# 대기 중인 수동 실행은 새 예약 실행이 들어오면 취소되고 그 실행이 대신 돈다(취소 = 실패 아님).
+busy = [r for r in runs if r.get("status") != "completed"]
+if busy:
+    print("active", busy[0]["status"], busy[0]["html_url"])
+elif mine:
+    r = mine[0]   # T0 이후 가장 나중에 만들어진 실행
     print(r["status"], r.get("conclusion") or "-", r["html_url"])
 ' "$T0" 2>/dev/null)
   VERDICT=$(python3 - "$NEW" "$T0" $IDS <<'PY'
