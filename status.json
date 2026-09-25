@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-09-25T01:05:13+00:00",
- "last_run_kst": "2026-09-25 10:05:13 KST",
+ "last_run_utc": "2026-09-25T01:11:18+00:00",
+ "last_run_kst": "2026-09-25 10:11:18 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -32,10 +32,7 @@
   {
    "id": "KnrRaWWlVtY",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 6520
+   "state": "cached"
   },
   {
    "id": "_EzUGkZa_-I",
@@ -108,6 +105,15 @@
    "state": "cached"
   }
  ],
+ "audio_test": {
+  "id": "T8ybOKpvubQ",
+  "ok": true,
+  "seconds": 265,
+  "duration_sec": 723,
+  "title": "AI칩 경쟁 끝나도 엔비디아는 웃는다? 비밀은 ‘연결’ | 김인엽의 실리콘밸리나우",
+  "chars": 6589,
+  "file": "transcripts/T8ybOKpvubQ.audio-test.enc"
+ },
  "whisper_used": 0,
  "health": {
   "cookie": {
@@ -134,8 +140,8 @@
   "ejs_failures": 0,
   "bot_blocked": 0,
   "audio_disabled": false,
-  "fetched": 1,
-  "by_caption": 1,
+  "fetched": 0,
+  "by_caption": 0,
   "failed": 0,
   "live_pending": 0,
   "warnings": []
