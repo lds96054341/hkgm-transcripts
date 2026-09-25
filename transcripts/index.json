@@ -31,6 +31,16 @@
   "ok": false,
   "title": "NVIDIA's Margins Are Shrinking"
  },
+ "07AQ_BD48kg": {
+  "channel": "hkgm",
+  "chars": 13138,
+  "duration_sec": 1797,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "[박신영의 개장전요것만-9월25일] 국채 고금리? \"정상화 과정\"...AI기업 채권 “비중 축소”",
+  "uploaded_epoch": 1790344836
+ },
  "07gk3cngKx0": {
   "ok": false,
   "title": "[Kim Hyun-seok's Breaking News] July PCE Inflation Report! August 26, 9:30 PM L.I.V.E"
@@ -208,6 +218,16 @@
   "source": "caption",
   "title": "[김현석의 월나우-9월24일] 5% 성장 가리킨 PMI...10년 금리 5.1% 돌파...금리 주시하는 트럼프",
   "uploaded_epoch": 1790201783
+ },
+ "GpG_KHvk9As": {
+  "channel": "hkgm",
+  "chars": 33600,
+  "duration_sec": 3910,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "고금리보다 이게 더 문제...위기에 처한 구글? | 월가백브리핑",
+  "uploaded_epoch": 1790350650
  },
  "GuaJkS0PT4o": {
   "ok": false,
