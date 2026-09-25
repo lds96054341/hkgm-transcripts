@@ -15,7 +15,8 @@
 #     (대기 중인 수동 실행이 새 예약 실행에 밀려 취소된 경우는 새 실행이 끝날 때까지 기다린다. API 를 못 읽으면 건너뛴다.)
 # 끝나면 /tmp/hkgm 를 그 최신 clone 으로 바꾸고 영상마다 한 줄씩 결과를 출력한다.
 #   <id> OK <caption|audio> <글자 수>자
-#   <id> MISSING <state> retry=<yes|no> <오류 요약>   (yes = 방송 직후 준비 중, 10분 뒤 다시 돌릴 만하다)
+#   <id> MISSING <state> retry=<yes|no|stale> <오류 요약>
+#     yes = 방송 직후 준비 중이라 10분 뒤 다시 돌릴 만하다. stale = 상태가 T0 이전 것이라 판단 근거가 없다.
 # 종료 코드: 0 모두 확보, 1 수동 실행은 끝났지만 일부 없음, 2 마감 초과, 3 사용법·T0 오류,
 #           4 T0 이후 실행이 모두 끝났는데 성공한 실행이 없음.
 #
@@ -74,13 +75,20 @@ echo "T0=$T0, 최대 ${POLLS}회 확인(2분 간격)"
 
 report() {
   rm -rf /tmp/hkgm && mv "$NEW" /tmp/hkgm
-  python3 - /tmp/hkgm $IDS <<'PY'
+  python3 - /tmp/hkgm "$T0" $IDS <<'PY'
 import json, os, sys
-root, ids = sys.argv[1], sys.argv[2:]
+from datetime import datetime
+root, t0, ids = sys.argv[1], sys.argv[2], sys.argv[3:]
 st = json.load(open(os.path.join(root, "status.json"), encoding="utf-8"))
 idx = json.load(open(os.path.join(root, "transcripts", "index.json"), encoding="utf-8"))
 res = {r.get("id"): r for r in st.get("results", [])}
-print("last_run_utc:", st.get("last_run_utc"))
+last = st.get("last_run_utc") or ""
+p = lambda x: datetime.fromisoformat(x.replace("Z", "+00:00"))
+try:
+    fresh = bool(last) and p(last) > p(t0)   # T0 이후 실행이 쓴 상태인가
+except Exception:
+    fresh = False
+print("last_run_utc:", last)
 for v in ids:
     e = idx.get(v, {})
     if os.path.exists(os.path.join(root, "transcripts", f"{v}.enc")) and e.get("ok"):
@@ -90,8 +98,10 @@ for v in ids:
         full = r.get("error") or ""
         # 방송 직후라 아직 준비되지 않은 경우: 10분 뒤 다시 돌리면 받을 가능성이 높다
         retry = r.get("state") == "live_pending" or "PARTIAL" in full or "fragment" in full
+        # 상태가 T0 이전 것이면(수동 실행이 커밋하지 못하고 끝남) 재시도 판단 근거가 아니다
+        tag = ("yes" if retry else "no") if fresh else "stale"
         err = full[-200:].replace("\n", " ")
-        print(f"{v} MISSING {r.get('state', '목록에 없음')} retry={'yes' if retry else 'no'} {err}")
+        print(f"{v} MISSING {r.get('state', '목록에 없음')} retry={tag} {err}")
 PY
 }
 
