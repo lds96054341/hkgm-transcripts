@@ -355,11 +355,13 @@
  },
  "RSLFCX9puzI": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
-  "pending": "live",
-  "title": "[김현석의 월나우-9월26일] 이란과 협상 진전? 고금리+계절성 극복...시총 2조 앞둔 메타는 하락 2026-09-25 22:06",
-  "uploaded_epoch": 1790370251
+  "chars": 15656,
+  "duration_sec": 2122,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "[김현석의 월나우-9월26일] 이란과 협상 진전? 고금리+계절성 극복...시총 2조 앞둔 메타는 하락",
+  "uploaded_epoch": 1790374953
  },
  "RgO2vSLHR8M": {
   "channel": "hkgm",
