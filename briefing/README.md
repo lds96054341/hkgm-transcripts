@@ -12,7 +12,7 @@ python3 /tmp/hkgm/briefing/render.py data.json out/   # routine은 4절에서 �
 ```
 
 렌더러는 쓰기 전에 데이터와 출력물을 검사한다. 하나라도 걸리면 아무것도 쓰지 않고 종료 코드 1로 끝난다.
-검사 항목은 필수 항목 누락, `date`가 오늘(KST)이 아님(테스트는 `--allow-old-date`), 테스트용 옛 비주얼 링크, 결론이 3줄이 아님, 결론 한 줄이 130자(메일에서 약 3줄) 초과, 불릿 12개 초과, 타임스탬프 표기, 차트 값이 축 범위 밖,
+검사 항목은 필수 항목 누락, `date`가 오늘(KST)이 아님(테스트는 `--allow-old-date`), 테스트용 옛 비주얼 링크, 결론이 3줄이 아님, 결론 한 줄이 130자(메일에서 약 3줄) 초과, 영상 불릿 하나(결론+본문)가 130자 초과, 불릿 12개 초과, 타임스탬프 표기, 차트 값이 축 범위 밖,
 금지 문자열(PLACEHOLDER, TODO 등), HTML 태그 짝 불일치, 지나치게 짧은 본문이다.
 
 실제 예시: `examples/2026-09-24.json`
@@ -38,7 +38,7 @@ python3 /tmp/hkgm/briefing/render.py data.json out/   # routine은 4절에서 �
 | `b_band` | | 당잠사 띠 문구 |
 | `b_empty` | | 당잠사 영상이 없을 때 문구 |
 | `a_empty` | | 한경 글로벌마켓 영상이 없을 때 문구 |
-| `videos` | ✔ | `[{channel: "A"|"B", id, title, meta, basis, summary, bullets: [[결론, 본문], ...], series?}]` |
+| `videos` | ✔ | `[{channel: "A"|"B", id, title, meta, basis, summary, bullets: [[결론, 본문], ...], series?}]`. 불릿 하나는 결론+본문 130자 이하 |
 | `synthesis` | ✔ | `{common, diverge, only_b, critical, samsung, events}` 각각 문자열 배열 |
 | `footer` | | 하단 고지 (기본 문구 있음) |
 
