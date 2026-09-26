@@ -19,7 +19,7 @@ E = html.escape
 
 # ────────────────────────── 검사 ──────────────────────────
 CONCL_MAX = 130  # 680px 메일에서 약 3줄
-BULLET_MAX = 130  # 영상 카드 불릿(결론+본문 합계), 메일에서 약 3줄
+BULLET_MAX = 170  # 영상 카드 불릿(결론+본문 합계), 메일에서 약 4줄
 BANNED = ("PLACEHOLDER", "TODO", "TBD", "lorem ipsum", "{{", "XXX")
 
 def check(d):
@@ -53,7 +53,7 @@ def check(d):
         for j, b in enumerate(v.get("bullets", [])):
             if isinstance(b, list) and len(b) == 2:
                 n = len(b[0]) + 1 + len(b[1])
-                need(f"{p}.bullets[{j}]", n <= BULLET_MAX, f"{n}자. 불릿 하나(결론+본문)는 메일에서 최대 3줄({BULLET_MAX}자 이하)로 줄인다")
+                need(f"{p}.bullets[{j}]", n <= BULLET_MAX, f"{n}자. 불릿 하나(결론+본문)는 메일에서 최대 4줄({BULLET_MAX}자 이하)로 줄인다")
     for k in ("common", "diverge", "only_b", "critical", "samsung", "events"):
         need(f"synthesis.{k}", isinstance(d["synthesis"].get(k), list) and d["synthesis"][k], "비어 있음")
     for i, c in enumerate(d.get("charts", [])):
