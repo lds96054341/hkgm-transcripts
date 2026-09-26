@@ -18,6 +18,7 @@ import html, json, os, re, sys
 E = html.escape
 
 # ────────────────────────── 검사 ──────────────────────────
+CONCL_MAX = 85  # 680px 메일에서 약 2줄
 BANNED = ("PLACEHOLDER", "TODO", "TBD", "lorem ipsum", "{{", "XXX")
 
 def check(d):
@@ -34,6 +35,8 @@ def check(d):
         need("date", d["date"] == today, f"{d['date']}는 오늘(KST {today})이 아님. 예시 파일을 그대로 쓰지 않았는지 확인. 테스트면 --allow-old-date")
     need("visual_url", "83n4vubsTdwtuCBxHrzykh" not in d.get("visual_url", "") and "Kmz2XvjyY2NsWBrkPnfTk3" not in d.get("visual_url", ""), "테스트용 옛 비주얼 링크가 남아 있음. 오늘 게시한 URL로 바꾸거나 비운다")
     need("conclusions", len(d["conclusions"]) == 3, "결론은 정확히 3줄")
+    for i, c in enumerate(d["conclusions"]):
+        need(f"conclusions[{i}]", len(c) <= CONCL_MAX, f"{len(c)}자. 결론 한 줄은 메일에서 최대 2줄({CONCL_MAX}자 이하)로 줄인다")
     for i, v in enumerate(d["videos"]):
         p = f"videos[{i}]"
         for k in ("channel", "id", "title", "meta", "basis", "summary", "bullets"):
