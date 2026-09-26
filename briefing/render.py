@@ -20,6 +20,8 @@ E = html.escape
 # ────────────────────────── 검사 ──────────────────────────
 CONCL_MAX = 130  # 680px 메일에서 약 3줄
 BULLET_MAX = 170  # 영상 카드 불릿(결론+본문 합계), 메일에서 약 4줄
+# 요약 문장은 개조식(명사형) 종결. '~했다.' 대신 '~함.', '~기대.'처럼 끝낸다.
+DA_END = re.compile(r"다(\([^)]*\))?\.(?=\s|$)")
 BANNED = ("PLACEHOLDER", "TODO", "TBD", "lorem ipsum", "{{", "XXX")
 
 def check(d):
@@ -54,6 +56,21 @@ def check(d):
             if isinstance(b, list) and len(b) == 2:
                 n = len(b[0]) + 1 + len(b[1])
                 need(f"{p}.bullets[{j}]", n <= BULLET_MAX, f"{n}자. 불릿 하나(결론+본문)는 메일에서 최대 4줄({BULLET_MAX}자 이하)로 줄인다")
+    def gaejo(path, text):
+        m = DA_END.search(text or "")
+        need(path, not m, f"'~다.'로 끝나는 문장이 있음(…{(text or '')[max(0, m.start()-15):m.end()] if m else ''}). 개조식으로 끝낸다(예: ~함, ~됨, ~기대)")
+    for i, c in enumerate(d["conclusions"]):
+        gaejo(f"conclusions[{i}]", c)
+    for i, v in enumerate(d["videos"]):
+        gaejo(f"videos[{i}].summary", v.get("summary", ""))
+        for j, b in enumerate(v.get("bullets", [])):
+            if isinstance(b, list):
+                for x in b: gaejo(f"videos[{i}].bullets[{j}]", x)
+    for k, arr in (d.get("synthesis") or {}).items():
+        for j, x in enumerate(arr if isinstance(arr, list) else []):
+            gaejo(f"synthesis.{k}[{j}]", x)
+    for j, it in enumerate((d.get("drivers") or {}).get("items", [])):
+        gaejo(f"drivers.items[{j}]", it.get("text", ""))
     for k in ("common", "diverge", "only_b", "critical", "samsung", "events"):
         need(f"synthesis.{k}", isinstance(d["synthesis"].get(k), list) and d["synthesis"][k], "비어 있음")
     for i, c in enumerate(d.get("charts", [])):
