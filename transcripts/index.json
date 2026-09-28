@@ -211,14 +211,6 @@
   "ok": false,
   "title": "\"Hike\" said three times by Powell, and Wall Street ready to be fooled again | Wall Street Briefing"
  },
- "CGNc0PEfhUo": {
-  "chars": 11874,
-  "duration_sec": 1671,
-  "lang": "ko-orig",
-  "ok": true,
-  "title": "[박신영의 개장전요것만-8월14일] CPU 시장 10배 커진다 | 다시 탄력받는 인텔",
-  "uploaded_epoch": 1786715752
- },
  "FpEQkgZEGeA": {
   "channel": "hkgm",
   "chars": 15816,
@@ -362,6 +354,16 @@
   "ok": true,
   "title": "다가오는 중간선거..AI 상승 발목 잡게 될까 | 월가백브리핑",
   "uploaded_epoch": 1786849206
+ },
+ "PuD9QoT_goM": {
+  "channel": "hkgm",
+  "chars": 16791,
+  "duration_sec": 2243,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "[박신영의 개장전요것만-9월28일] 고금리, AI증시 체력 테스트에...생존력 1등은 엔비디아 | 뮤즈AI가 뱅크런 촉발?",
+  "uploaded_epoch": 1790605102
  },
  "Q5lThKLnPLM": {
   "channel": "hkgm",
@@ -798,6 +800,16 @@
   "source": "caption",
   "title": "[🔴09/16 #당잠사] 사우디, 유럽향 원유 선적 취소ㅣ美 상원, 클래리티 법안 절차 표결 부결ㅣ젠슨황 ”AI 안전 필요하지만 규제 법안 불필요“ㅣ#엔비디아 #오픈AI #앤트로픽",
   "uploaded_epoch": 1789506991
+ },
+ "pNGUtf6XNMY": {
+  "channel": "hkgm",
+  "chars": 516,
+  "duration_sec": 71,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "블리자드 팬덤 이 정도였어?",
+  "uploaded_epoch": 1790598628
  },
  "rTF7RDjJNSM": {
   "chars": 11443,
