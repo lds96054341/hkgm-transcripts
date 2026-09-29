@@ -97,7 +97,9 @@ for v in ids:
         r = res.get(v, {})
         full = r.get("error") or ""
         # 방송 직후라 아직 준비되지 않은 경우: 10분 뒤 다시 돌리면 받을 가능성이 높다
-        retry = r.get("state") == "live_pending" or "PARTIAL" in full or "fragment" in full
+        # 목록에 없던 영상(이번 실행이 시도조차 못 함)도 방송 직후 처리 중일 수 있어 다시 돌린다
+        retry = (not r or r.get("state") == "live_pending"
+                 or "PARTIAL" in full or "fragment" in full)
         # 상태가 T0 이전 것이면(수동 실행이 커밋하지 못하고 끝남) 재시도 판단 근거가 아니다
         tag = ("yes" if retry else "no") if fresh else "stale"
         err = full[-200:].replace("\n", " ")

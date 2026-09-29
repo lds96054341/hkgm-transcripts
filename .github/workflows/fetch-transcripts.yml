@@ -544,7 +544,24 @@ jobs:
                                                "list_error": err[:400]}
               for v in ids:
                   targets.append((ch.get("priority", 9), v, ch["key"], ch["name"]))
- 
+
+          # ★18 라이브 대기(pending) 영상은 목록에서 빠져도 다시 시도한다.
+          #     방송이 끝난 직후 유튜브가 처리하는 동안 업로드 재생목록에서 잠시 빠지는 일이 있어
+          #     (2026-09-30 월나우), 목록에만 기대면 자막·음성 어느 쪽도 시도하지 못한 채 끝난다.
+          listed_ids = {t[1] for t in targets}
+          ch_by_key = {c["key"]: c for c in CHANNELS}
+          for vid, e in index.items():
+              if vid in listed_ids or e.get("ok") or e.get("pending") not in ("live", "upcoming"):
+                  continue
+              ep = e.get("uploaded_epoch") or 0
+              if ep and time.time() - ep > 2 * 86400:
+                  continue
+              c = ch_by_key.get(e.get("channel"))
+              if not c:
+                  continue
+              print(f"[i] ★18 {vid} 목록에 없지만 라이브 대기 중이던 영상 → 다시 시도")
+              targets.append((c.get("priority", 9), vid, c["key"], c["name"]))
+
           # ★2 우선순위 채널이 받아쓰기 슬롯을 먼저 가져가도록 정렬.
           #    (같은 우선순위 안에서는 목록에 나온 순서 = 최신순 유지)
           targets.sort(key=lambda t: t[0])
