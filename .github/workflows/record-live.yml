@@ -1,0 +1,134 @@
+name: record-hkgm-live
+
+# ─────────────────────────────────────────────────────────────────────
+# ★19 2026-09-30 추가. 한경 글로벌마켓 라이브(월스트리트나우)를 방송 중에 녹음해 받아쓴다.
+#   월나우는 방송이 끝나면 채널 멤버십 전용으로 바뀌어 수집기(fetch-transcripts.yml)가
+#   자막도 오디오도 받지 못한다. 방송 중에는 공개라서 이 워크플로가 라이브 시작을 기다렸다가
+#   --live-from-start 로 처음부터 녹음하고, 방송이 끝나면 Whisper 로 받아쓴다.
+#   결과는 수집기와 같은 transcripts/<id>.enc + index.json 항목(source=audio, live_record=true)이고,
+#   색인이 수집기 커밋에 덮이지 않도록 transcripts/live/<id>.json 사이드카도 남긴다.
+#   코드: .github/scripts/record_live.py, .github/scripts/merge_live_index.py
+# ─────────────────────────────────────────────────────────────────────
+
+on:
+  schedule:
+    # 월나우는 미국 거래일 다음 날 아침(KST 화~토) 06:50~07:30 안팎.
+    #   21:35 UTC = 06:35 KST (월~금 UTC = 화~토 KST). 07:40 KST 까지 라이브를 찾는다.
+    #   21:50 UTC 는 예약 실행이 건너뛰어질 때를 대비한 보험(앞 실행이 돌고 있으면 대기열에서 기다렸다가
+    #   이미 받아 둔 영상은 건너뛴다).
+    - cron: '35 21 * * 1-5'
+    - cron: '50 21 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      video_id:
+        description: '이 라이브만 기다려 녹음(videoId 11자). 비우면 채널에서 라이브를 찾는다'
+        required: false
+        default: ''
+      poll_until_kst:
+        description: '라이브를 찾는 마감 HH:MM (KST, video_id 가 없을 때)'
+        required: false
+        default: '07:40'
+
+permissions:
+  contents: write
+
+# 수집기(hkgm-transcripts)와 다른 그룹이라 녹음하는 동안에도 수집기는 따로 돈다.
+concurrency:
+  group: hkgm-live
+  cancel-in-progress: false
+
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    timeout-minutes: 200
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Cache whisper model
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: whisper-small-v1
+
+      - name: Start PO token provider
+        run: |
+          set +e
+          docker run --name bgutil-provider -d --init -p 4416:4416 \
+            brainicism/bgutil-ytdlp-pot-provider
+          for i in $(seq 1 15); do
+            sleep 2
+            curl -s -m 5 http://127.0.0.1:4416/ping >/dev/null 2>&1 && { echo "[i] provider OK"; exit 0; }
+          done
+          echo "::warning::PO 토큰 프로바이더 응답 없음 — web 클라이언트 녹음이 실패할 수 있음"
+          exit 0
+
+      - name: Install tools
+        run: |
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq ffmpeg >/dev/null
+          python -m pip install --upgrade pip
+          pip install --upgrade "yt-dlp[default]" bgutil-ytdlp-pot-provider faster-whisper
+          yt-dlp --version
+
+      - name: Record and transcribe
+        env:
+          YT_COOKIES: ${{ secrets.YT_COOKIES }}
+          TRANSCRIPT_KEY: ${{ secrets.TRANSCRIPT_KEY }}
+          VIDEO_ID: ${{ github.event.inputs.video_id }}
+          POLL_UNTIL_KST: ${{ github.event.inputs.poll_until_kst || '07:40' }}
+        run: |
+          set +e
+          python .github/scripts/record_live.py
+          rc=$?
+          rm -f cookies.txt
+          echo "### 라이브 녹음: $(cat _out/result.txt 2>/dev/null || echo '결과 없음')" >> "$GITHUB_STEP_SUMMARY"
+          if grep -q '^failed' _out/result.txt 2>/dev/null; then
+            echo "::error::$(cat _out/result.txt)"
+          fi
+          exit $rc
+
+      - name: Commit
+        run: |
+          if ! ls _out/*.enc >/dev/null 2>&1; then
+            echo "올릴 결과 없음"; exit 0
+          fi
+          # 안전장치: 평문·음성·쿠키가 남아 있으면 커밋하지 않는다
+          if ls _out/*.txt _live_tmp/* 2>/dev/null | grep -v '^_out/result.txt$' | grep -q .; then
+            echo "평문 또는 음성 파일 발견 — 커밋 중단"; exit 1
+          fi
+          if [ -f cookies.txt ]; then
+            echo "cookies.txt 발견 — 커밋 중단"; exit 1
+          fi
+          git config user.name  "hkgm-bot"
+          git config user.email "actions@users.noreply.github.com"
+          # 수집기가 같은 시각에 main 에 올릴 수 있어서, 매번 최신 main 위에 결과를 다시 얹는다.
+          set +e
+          for i in 1 2 3 4 5; do
+            git fetch -q origin main && git reset -q --hard origin/main
+            mkdir -p transcripts/live
+            cp _out/*.enc transcripts/
+            cp _out/live/*.json transcripts/live/
+            python .github/scripts/merge_live_index.py
+            git add transcripts
+            if git diff --cached --quiet; then
+              echo "변경 없음(이미 올라가 있음)"; exit 0
+            fi
+            git commit -q -m "live: $(date -u +%Y-%m-%dT%H:%MZ)"
+            if git push -q origin HEAD:main; then
+              echo "푸시 성공 (시도 ${i})"; exit 0
+            fi
+            echo "푸시 실패 — ${i}회차, 잠시 후 재시도"
+            sleep $((i * 10))
+          done
+          echo "::error::5회 시도 후에도 푸시하지 못했습니다."
+          exit 1

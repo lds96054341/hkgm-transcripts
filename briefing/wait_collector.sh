@@ -11,6 +11,7 @@
 # 끝나는 조건은 셋 중 하나다.
 #   - 넘긴 영상 모두 transcripts/<id>.enc 가 있고 index.json 에서 ok 다.
 #   - status.json 의 last_run_utc 가 T0 이후다(수동 실행이 끝나 커밋까지 됐다).
+#     단, 라이브 녹음(record-live.yml) 실행이 도는 중이면 그 결과가 올라올 때까지 계속 기다린다.
 #   - GitHub API 에서 도는·대기 중인 수집기 실행이 하나도 없고, T0 이후 가장 나중 실행이 성공하지 못했다.
 #     (대기 중인 수동 실행이 새 예약 실행에 밀려 취소된 경우는 새 실행이 끝날 때까지 기다린다. API 를 못 읽으면 건너뛴다.)
 # 끝나면 /tmp/hkgm 를 그 최신 clone 으로 바꾸고 영상마다 한 줄씩 결과를 출력한다.
@@ -35,6 +36,7 @@ IDS="$*"
 T0_FILE="/tmp/hkgm_T0"
 REPO="https://github.com/lds96054341/hkgm-transcripts.git"
 API="${WAIT_API_URL:-https://api.github.com/repos/lds96054341/hkgm-transcripts/actions/workflows/fetch-transcripts.yml/runs?per_page=5}"
+LIVE_API="${WAIT_LIVE_API_URL:-https://api.github.com/repos/lds96054341/hkgm-transcripts/actions/workflows/record-live.yml/runs?per_page=3}"
 INTERVAL="${WAIT_INTERVAL:-120}"   # 테스트용 덮어쓰기(WAIT_INTERVAL, WAIT_API_URL)
 NEW="/tmp/hkgm_collector_check"
 
@@ -151,10 +153,22 @@ except Exception:
 print("DONE" if done else f"WAIT {len(have)}/{len(ids)} last_run_utc={last}")
 PY
 )
-  echo "[$i] $(date -u +%H:%M:%S) $VERDICT ${RUN:+(실행: $RUN)}"
+  # 라이브 녹음(record-live.yml)이 도는 중이면 방송 뒤 결과가 올라올 때까지 기다린다(읽지 못하면 빈 값)
+  LIVE=$(curl -sS --max-time 20 "$LIVE_API" 2>/dev/null | python3 -c '
+import json, sys
+try:
+    runs = json.load(sys.stdin).get("workflow_runs", [])
+except Exception:
+    runs = []
+busy = [r for r in runs if r.get("status") != "completed"]
+if busy:
+    print(busy[0]["status"], busy[0]["html_url"])
+' 2>/dev/null)
+  echo "[$i] $(date -u +%H:%M:%S) $VERDICT ${RUN:+(실행: $RUN)}${LIVE:+ (라이브 녹음: $LIVE)}"
   case "$VERDICT" in
     ALL)  report; exit 0 ;;
-    DONE) report; exit 1 ;;
+    DONE) if [ -z "$LIVE" ]; then report; exit 1; fi
+          echo "    수집기는 끝났지만 라이브 녹음이 도는 중 — 기다림" ;;
   esac
   case "$RUN" in
     "completed success"*|"") ;;

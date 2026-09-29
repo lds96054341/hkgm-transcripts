@@ -30,6 +30,10 @@ name: fetch-hkgm-transcripts
 #       그러면 앞 실행이 받은 영상을 다시 받고(Whisper 슬롯·시간 낭비), 다시 받다 실패하면
 #       Commit 단계의 rebase -X theirs 가 앞 실행의 ok 항목을 ok:false 로 덮는다.
 #       브리핑 routine 이 자막 없는 영상이 있을 때 수집기를 수동 실행하면서 이런 겹침이 잦아졌다.
+# 2026-09-30 추가
+#   ★20 index.json 에 라이브 대기(pending)로 남은 영상은 목록에서 빠져도 다시 시도한다.
+#   ★19 라이브 녹음(record-live.yml)이 올린 영상은 캐시로 보고, 커밋 전에 그 색인 항목
+#       (transcripts/live/<id>.json)을 index.json 에 다시 반영한다.
 # ─────────────────────────────────────────────────────────────────────
  
 on:
@@ -545,7 +549,7 @@ jobs:
               for v in ids:
                   targets.append((ch.get("priority", 9), v, ch["key"], ch["name"]))
 
-          # ★18 라이브 대기(pending) 영상은 목록에서 빠져도 다시 시도한다.
+          # ★20 라이브 대기(pending) 영상은 목록에서 빠져도 다시 시도한다.
           #     방송이 끝난 직후 유튜브가 처리하는 동안 업로드 재생목록에서 잠시 빠지는 일이 있어
           #     (2026-09-30 월나우), 목록에만 기대면 자막·음성 어느 쪽도 시도하지 못한 채 끝난다.
           listed_ids = {t[1] for t in targets}
@@ -559,7 +563,7 @@ jobs:
               c = ch_by_key.get(e.get("channel"))
               if not c:
                   continue
-              print(f"[i] ★18 {vid} 목록에 없지만 라이브 대기 중이던 영상 → 다시 시도")
+              print(f"[i] ★20 {vid} 목록에 없지만 라이브 대기 중이던 영상 → 다시 시도")
               targets.append((c.get("priority", 9), vid, c["key"], c["name"]))
 
           # ★2 우선순위 채널이 받아쓰기 슬롯을 먼저 가져가도록 정렬.
@@ -606,7 +610,9 @@ jobs:
  
           for _prio, vid, ckey, cname in targets:
               target = os.path.join(OUT, f"{vid}.enc")
-              if os.path.exists(target) and index.get(vid, {}).get("ok"):
+              # ★19 라이브 녹음(record-live.yml)이 받아 둔 영상도 캐시로 본다.
+              live_side = os.path.join(OUT, "live", f"{vid}.json")
+              if os.path.exists(target) and (index.get(vid, {}).get("ok") or os.path.exists(live_side)):
                   if key_ok(target):
                       status["results"].append({"id": vid, "channel": ckey, "state": "cached"})
                       continue
@@ -838,6 +844,8 @@ jobs:
           fi
           git config user.name  "hkgm-bot"
           git config user.email "actions@users.noreply.github.com"
+          # ★19 라이브 녹음 결과(사이드카)를 색인에 다시 반영한다(이번 실행이 ok:false 로 덮었을 수 있다).
+          python .github/scripts/merge_live_index.py
           git add -A transcripts status.json
           if git diff --cached --quiet; then
             echo "변경 없음"; exit 0
@@ -852,6 +860,10 @@ jobs:
           for i in 1 2 3; do
             git fetch origin main
             if git rebase -X theirs origin/main; then
+              # ★19 rebase 가 -X theirs 로 녹음 결과의 색인 항목을 덮었으면 되살린다.
+              if [ "$(python .github/scripts/merge_live_index.py)" = "changed" ]; then
+                git add transcripts/index.json && git commit -q --amend --no-edit
+              fi
               if git push origin HEAD:main; then
                 echo "푸시 성공 (시도 ${i})"; exit 0
               fi
