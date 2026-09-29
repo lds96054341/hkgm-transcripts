@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-09-29T23:33:46+00:00",
- "last_run_kst": "2026-09-30 08:33:46 KST",
+ "last_run_utc": "2026-09-29T23:37:31+00:00",
+ "last_run_kst": "2026-09-30 08:37:31 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -104,21 +104,9 @@
    "id": "67RT7rWa64A",
    "channel": "hkgm",
    "state": "cached"
-  },
-  {
-   "id": "TurrTr6nJjM",
-   "channel": "hkgm",
-   "state": "no_subtitle",
-   "error": "b_safari,mweb) → 음성 받아쓰기로 전환 || [audio/default] ERROR: [youtube] TurrTr6nJjM: This video is available to this channel's members on level: 뉴욕버거 사주기(유튜브 전용 멤버십) (or any higher level). Join this channe | [audio/tv] ERROR: [youtube] TurrTr6nJjM: This video is available to this channel's members on level: 뉴욕버거 사주기(유튜브 전용 멤버십) (or any higher level). Join this channe | [audio/web_safari] ERROR: [youtube] TurrTr6nJjM: This video is available to this channel's members on level: 뉴욕버거 사주기(유튜브 전용 멤버십) (or any higher level). Join this channe | [audio/mweb] ERROR: [youtube] TurrTr6nJjM: This video is available to this channel's members on level: 뉴욕버거 사주기(유튜브 전용 멤버십) (or any higher level). Join this channe"
-  },
-  {
-   "id": "kHMTjObqSoE",
-   "channel": "hkgm",
-   "state": "no_subtitle",
-   "error": "b_safari,mweb) → 음성 받아쓰기로 전환 || [audio/default] ERROR: [youtube] kHMTjObqSoE: This video is available to this channel's members on level: 뉴욕버거 사주기(유튜브 전용 멤버십) (or any higher level). Join this channe | [audio/tv] ERROR: [youtube] kHMTjObqSoE: This video is available to this channel's members on level: 뉴욕버거 사주기(유튜브 전용 멤버십) (or any higher level). Join this channe | [audio/web_safari] ERROR: [youtube] kHMTjObqSoE: This video is available to this channel's members on level: 뉴욕버거 사주기(유튜브 전용 멤버십) (or any higher level). Join this channe | [audio/mweb] ERROR: [youtube] kHMTjObqSoE: This video is available to this channel's members on level: 뉴욕버거 사주기(유튜브 전용 멤버십) (or any higher level). Join this channe"
   }
  ],
- "whisper_used": 2,
+ "whisper_used": 0,
  "health": {
   "cookie": {
    "status": "ok",
@@ -146,10 +134,8 @@
   "audio_disabled": false,
   "fetched": 0,
   "by_caption": 0,
-  "failed": 2,
+  "failed": 0,
   "live_pending": 1,
-  "warnings": [
-   "이번 회차 신규 수집 0건(실패 2건) — 리포트는 기사 기반으로 작성해야 합니다."
-  ]
+  "warnings": []
  }
 }
