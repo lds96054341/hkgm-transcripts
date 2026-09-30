@@ -1,10 +1,10 @@
 {
- "last_run_utc": "2026-09-30T10:26:54+00:00",
- "last_run_kst": "2026-09-30 19:26:54 KST",
+ "last_run_utc": "2026-09-30T18:15:15+00:00",
+ "last_run_kst": "2026-10-01 03:15:15 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
-   "listed": 4,
+   "listed": 3,
    "list_error": ""
   },
   "hkgm": {
@@ -30,20 +30,23 @@
    "state": "cached"
   },
   {
-   "id": "XZZe-WfIM-A",
-   "channel": "hkwowtv",
-   "state": "cached"
+   "id": "WMoYRatt-wM",
+   "channel": "hkgm",
+   "state": "no_subtitle",
+   "error": "[mweb] t via bgutil HTTP server\n[youtube] Sleeping 1.5 seconds ...\n[youtube] WMoYRatt-wM: Downloading player 57bae81f-main\n[youtube] [jsc:deno] Solving JS challenges using deno\n[info] WMoYRatt-wM: Downloading 1 format(s): 248+251\n[info] There are no subtitles for the requested languages\n[info] Writing video metadata as JSON to: _tmp/WMoYRatt-wM.info.json\n || whisper 실패: open() got an unexpected keyword argument 'metadata_errors'"
+  },
+  {
+   "id": "pVqQ3m0lkWE",
+   "channel": "hkgm",
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 4511
   },
   {
    "id": "hSf0LLTgdU0",
    "channel": "hkgm",
    "state": "cached"
-  },
-  {
-   "id": "pVqQ3m0lkWE",
-   "channel": "hkgm",
-   "state": "live_pending",
-   "error": "UPCOMING: 예약된 라이브(아직 시작 전) — 방송이 끝난 뒤 다음 실행에서 다시 시도"
   },
   {
    "id": "piTWHhyT3y8",
@@ -104,14 +107,9 @@
    "id": "KnrRaWWlVtY",
    "channel": "hkgm",
    "state": "cached"
-  },
-  {
-   "id": "_EzUGkZa_-I",
-   "channel": "hkgm",
-   "state": "cached"
   }
  ],
- "whisper_used": 0,
+ "whisper_used": 1,
  "health": {
   "cookie": {
    "status": "ok",
@@ -129,7 +127,7 @@
     "__Secure-3PSID"
    ],
    "nearest_expiry_kst": "2027-10-23 21:54 KST",
-   "days_left": 388.1,
+   "days_left": 387.8,
    "note": ""
   },
   "pot_provider": "ok",
@@ -137,10 +135,10 @@
   "ejs_failures": 0,
   "bot_blocked": 0,
   "audio_disabled": false,
-  "fetched": 0,
-  "by_caption": 0,
-  "failed": 0,
-  "live_pending": 1,
+  "fetched": 1,
+  "by_caption": 1,
+  "failed": 1,
+  "live_pending": 0,
   "warnings": []
  }
 }
