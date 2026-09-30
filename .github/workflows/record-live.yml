@@ -88,7 +88,7 @@ jobs:
           POLL_UNTIL_KST: ${{ github.event.inputs.poll_until_kst || '07:40' }}
         run: |
           set +e
-          python .github/scripts/record_live.py
+          python -u .github/scripts/record_live.py
           rc=$?
           rm -f cookies.txt
           echo "### 라이브 녹음: $(cat _out/result.txt 2>/dev/null || echo '결과 없음')" >> "$GITHUB_STEP_SUMMARY"

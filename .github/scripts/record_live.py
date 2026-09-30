@@ -127,6 +127,7 @@ def find_live():
     finished = set()          # 이미 끝났거나 라이브가 아닌 영상은 다시 묻지 않는다
     while True:
         ids = [want] if want else ([None] + candidates())
+        seen = []
         for vid in ids:
             if vid in finished:
                 continue
@@ -136,6 +137,7 @@ def find_live():
             if not p:
                 continue
             pid, status, title, rts = p
+            seen.append(f"{pid}:{status}")
             if status == "is_live":
                 if already_done(pid):
                     print(f"[i] {pid} 이미 받아 둠 — 건너뜀")
@@ -148,6 +150,7 @@ def find_live():
                     return pid, title, rts
             elif status in ("was_live", "not_live", "post_live") and vid:
                 finished.add(vid)
+        print(f"[i] {datetime.now(KST):%H:%M:%S} 확인 {len(ids)}건 → {' '.join(seen) or '응답 없음'}")
         if datetime.now(KST) >= until:
             return None
         time.sleep(POLL_SEC)
