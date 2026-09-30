@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-09-30T22:06:03+00:00",
- "last_run_kst": "2026-10-01 07:06:03 KST",
+ "last_run_utc": "2026-09-30T23:10:46+00:00",
+ "last_run_kst": "2026-10-01 08:10:46 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -17,10 +17,7 @@
   {
    "id": "ZPLdZ8uxAVY",
    "channel": "hkwowtv",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 17015
+   "state": "cached"
   },
   {
    "id": "0riIOoRgkN0",
@@ -36,12 +33,6 @@
    "id": "mSTnyePeTjo",
    "channel": "hkwowtv",
    "state": "cached"
-  },
-  {
-   "id": "kxMfEz85lf4",
-   "channel": "hkgm",
-   "state": "live_pending",
-   "error": "LIVE: 라이브 진행 중 — 방송이 끝난 뒤 다음 실행에서 다시 시도"
   },
   {
    "id": "WMoYRatt-wM",
@@ -113,9 +104,20 @@
    "id": "07AQ_BD48kg",
    "channel": "hkgm",
    "state": "cached"
+  },
+  {
+   "id": "KnrRaWWlVtY",
+   "channel": "hkgm",
+   "state": "cached"
+  },
+  {
+   "id": "kxMfEz85lf4",
+   "channel": "hkgm",
+   "state": "no_subtitle",
+   "error": "b_safari,mweb) → 음성 받아쓰기로 전환 || [audio/default] ERROR: [youtube] kxMfEz85lf4: This video is available to this channel's members on level: 뉴욕버거 사주기(유튜브 전용 멤버십) (or any higher level). Join this channe | [audio/tv] ERROR: [youtube] kxMfEz85lf4: This video is available to this channel's members on level: 뉴욕버거 사주기(유튜브 전용 멤버십) (or any higher level). Join this channe | [audio/web_safari] ERROR: [youtube] kxMfEz85lf4: This video is available to this channel's members on level: 뉴욕버거 사주기(유튜브 전용 멤버십) (or any higher level). Join this channe | [audio/mweb] ERROR: [youtube] kxMfEz85lf4: This video is available to this channel's members on level: 뉴욕버거 사주기(유튜브 전용 멤버십) (or any higher level). Join this channe"
   }
  ],
- "whisper_used": 1,
+ "whisper_used": 2,
  "health": {
   "cookie": {
    "status": "ok",
@@ -141,10 +143,12 @@
   "ejs_failures": 0,
   "bot_blocked": 0,
   "audio_disabled": false,
-  "fetched": 1,
-  "by_caption": 1,
-  "failed": 1,
-  "live_pending": 1,
-  "warnings": []
+  "fetched": 0,
+  "by_caption": 0,
+  "failed": 2,
+  "live_pending": 0,
+  "warnings": [
+   "이번 회차 신규 수집 0건(실패 2건) — 리포트는 기사 기반으로 작성해야 합니다."
+  ]
  }
 }
