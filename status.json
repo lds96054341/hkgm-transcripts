@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-09-30T23:10:46+00:00",
- "last_run_kst": "2026-10-01 08:10:46 KST",
+ "last_run_utc": "2026-09-30T23:42:24+00:00",
+ "last_run_kst": "2026-10-01 08:42:24 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -14,6 +14,14 @@
   }
  },
  "results": [
+  {
+   "id": "0mLk1tvUz0o",
+   "channel": "hkwowtv",
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 846
+  },
   {
    "id": "ZPLdZ8uxAVY",
    "channel": "hkwowtv",
@@ -30,15 +38,12 @@
    "state": "cached"
   },
   {
-   "id": "mSTnyePeTjo",
-   "channel": "hkwowtv",
-   "state": "cached"
-  },
-  {
    "id": "WMoYRatt-wM",
    "channel": "hkgm",
-   "state": "no_subtitle",
-   "error": "[mweb] t via bgutil HTTP server\n[youtube] Sleeping 1.5 seconds ...\n[youtube] WMoYRatt-wM: Downloading player 57bae81f-main\n[youtube] [jsc:deno] Solving JS challenges using deno\n[info] WMoYRatt-wM: Downloading 1 format(s): 248+251\n[info] There are no subtitles for the requested languages\n[info] Writing video metadata as JSON to: _tmp/WMoYRatt-wM.info.json\n || whisper 실패: open() got an unexpected keyword argument 'metadata_errors'"
+   "state": "fetched",
+   "source": "audio",
+   "lang": "whisper-small",
+   "chars": 19130
   },
   {
    "id": "pVqQ3m0lkWE",
@@ -109,15 +114,9 @@
    "id": "KnrRaWWlVtY",
    "channel": "hkgm",
    "state": "cached"
-  },
-  {
-   "id": "kxMfEz85lf4",
-   "channel": "hkgm",
-   "state": "no_subtitle",
-   "error": "b_safari,mweb) → 음성 받아쓰기로 전환 || [audio/default] ERROR: [youtube] kxMfEz85lf4: This video is available to this channel's members on level: 뉴욕버거 사주기(유튜브 전용 멤버십) (or any higher level). Join this channe | [audio/tv] ERROR: [youtube] kxMfEz85lf4: This video is available to this channel's members on level: 뉴욕버거 사주기(유튜브 전용 멤버십) (or any higher level). Join this channe | [audio/web_safari] ERROR: [youtube] kxMfEz85lf4: This video is available to this channel's members on level: 뉴욕버거 사주기(유튜브 전용 멤버십) (or any higher level). Join this channe | [audio/mweb] ERROR: [youtube] kxMfEz85lf4: This video is available to this channel's members on level: 뉴욕버거 사주기(유튜브 전용 멤버십) (or any higher level). Join this channe"
   }
  ],
- "whisper_used": 2,
+ "whisper_used": 1,
  "health": {
   "cookie": {
    "status": "ok",
@@ -135,7 +134,7 @@
     "__Secure-3PSID"
    ],
    "nearest_expiry_kst": "2027-10-23 21:54 KST",
-   "days_left": 387.6,
+   "days_left": 387.5,
    "note": ""
   },
   "pot_provider": "ok",
@@ -143,12 +142,10 @@
   "ejs_failures": 0,
   "bot_blocked": 0,
   "audio_disabled": false,
-  "fetched": 0,
-  "by_caption": 0,
-  "failed": 2,
+  "fetched": 2,
+  "by_caption": 1,
+  "failed": 0,
   "live_pending": 0,
-  "warnings": [
-   "이번 회차 신규 수집 0건(실패 2건) — 리포트는 기사 기반으로 작성해야 합니다."
-  ]
+  "warnings": []
  }
 }

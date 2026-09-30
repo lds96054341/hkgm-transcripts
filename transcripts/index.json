@@ -53,6 +53,16 @@
   "title": "[김현석의 브레이킹 뉴스] 8월 고용보고서 발표! 9월 4일 오후 9시 30분 L.I.V.E",
   "uploaded_epoch": 1788526089
  },
+ "0mLk1tvUz0o": {
+  "channel": "hkwowtv",
+  "chars": 846,
+  "duration_sec": 102,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "10월 1일 글로벌 1분 시황✅ #당잠사 #굿모닝한경글로벌마켓 #1분시황",
+  "uploaded_epoch": 1790811281
+ },
  "0riIOoRgkN0": {
   "channel": "hkwowtv",
   "chars": 715,
@@ -452,8 +462,11 @@
  },
  "WMoYRatt-wM": {
   "channel": "hkgm",
+  "chars": 19130,
   "duration_sec": 2700,
-  "ok": false,
+  "lang": "whisper-small",
+  "ok": true,
+  "source": "audio",
   "title": "[박신영의 개장전요것만-9월30일] 앤트로픽 목줄 쥔 기업은 어디?...국채금리에도 레버리지 효과 | 머스크와 젠슨황의 전력 민심 달래기",
   "uploaded_epoch": 1790778397
  },
