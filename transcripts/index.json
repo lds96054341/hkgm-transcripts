@@ -493,6 +493,16 @@
   "title": "반도체 모멘텀은 꺾어진 걸까 | 월가백브리핑",
   "uploaded_epoch": 1788663627
  },
+ "ZPLdZ8uxAVY": {
+  "channel": "hkwowtv",
+  "chars": 17015,
+  "duration_sec": 2448,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "[🔴10/01 #당잠사] 마이크론 실적 발표 | 예상 밑돈 8월 PCE…10월 금리인상 확률 ‘뚝’ | FTC, 오픈AI·앤트로픽 전면 조사 | #엔비디아 #마이크론 #구글",
+  "uploaded_epoch": 1790802778
+ },
  "ZegvKEBDjfI": {
   "chars": 5883,
   "duration_sec": 685,
@@ -745,6 +755,14 @@
   "ok": true,
   "title": "[박신영의 개장전요것만-9월9일] 베선트, 금리는 “나에게 베팅”..엔화 강세에 발목잡힌 반도체",
   "uploaded_epoch": 1788963346
+ },
+ "kxMfEz85lf4": {
+  "channel": "hkgm",
+  "duration_sec": 0,
+  "ok": false,
+  "pending": "live",
+  "title": "[김현석의 월나우-10월1일] 물가 둔화했는데 멈추지 않는 금리(10년 5.3%) | 마이크론 실적 좋지만... 2026-09-30 22:06",
+  "uploaded_epoch": 1790799595
  },
  "lDnnv-k_XqM": {
   "channel": "hkwowtv",
