@@ -77,7 +77,9 @@ jobs:
           sudo apt-get update -qq >/dev/null
           sudo apt-get install -y -qq ffmpeg >/dev/null
           python -m pip install --upgrade pip
-          pip install --upgrade "yt-dlp[default]" bgutil-ytdlp-pot-provider faster-whisper
+          # ★21 PyAV 19 는 av.open(metadata_errors=) 를 없애 faster-whisper 1.2.1 의 decode_audio 가 죽는다.
+          #     (whisper 실패: open() got an unexpected keyword argument \'metadata_errors\', 2026-10-01)
+          pip install --upgrade "yt-dlp[default]" bgutil-ytdlp-pot-provider faster-whisper "av<19"
           yt-dlp --version
 
       - name: Record and transcribe

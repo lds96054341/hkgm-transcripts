@@ -131,7 +131,9 @@ jobs:
           python -m pip install --upgrade pip
           # ★12 "yt-dlp[default]" 라야 챌린지 해결 스크립트(yt-dlp-ejs)가 같이 깔린다.
           #     맨 yt-dlp 만 깔면 Deno 가 있어도 스크립트가 없어 EJS 가 동작하지 않는다.
-          pip install --upgrade "yt-dlp[default]" bgutil-ytdlp-pot-provider faster-whisper
+          # ★21 PyAV 19 는 av.open(metadata_errors=) 를 없애 faster-whisper 1.2.1 의 decode_audio 가 죽는다.
+          #     (whisper 실패: open() got an unexpected keyword argument \'metadata_errors\', 2026-10-01)
+          pip install --upgrade "yt-dlp[default]" bgutil-ytdlp-pot-provider faster-whisper "av<19"
           yt-dlp --version
           # ★12/★15 런타임·ffmpeg 상태를 js_status.txt 에 남겨 status.json 에 싣는다(★3 과 같은 방식).
           #   (예전의 `ffmpeg -version | head -1` 은 파이프 때문에 ffmpeg 가 없어도 통과했다)
