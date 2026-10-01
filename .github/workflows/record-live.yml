@@ -12,10 +12,16 @@ name: record-hkgm-live
 
 on:
   schedule:
-    # 월나우는 미국 거래일 다음 날 아침(KST 화~토) 06:50~07:30 안팎.
-    #   21:35 UTC = 06:35 KST (월~금 UTC = 화~토 KST). 07:40 KST 까지 라이브를 찾는다.
-    #   21:50 UTC 는 예약 실행이 건너뛰어질 때를 대비한 보험(앞 실행이 돌고 있으면 대기열에서 기다렸다가
-    #   이미 받아 둔 영상은 건너뛴다).
+    # 월나우는 미국 거래일 다음 날 아침(KST 화~토) 06:30~07:20 안팎 (10/1은 06:37~07:17).
+    # ★22 GitHub 예약 실행은 몇 시간씩 늦게 뜬다. 10/1에는 21:35·21:50 UTC 예약이 00:42·00:50 UTC
+    #   (09:42·09:50 KST)에야 떠서 방송을 통째로 놓쳤다. 그래서 03:47~05:47 KST 에 일찍 여러 번 걸어
+    #   3시간 늦어도 방송 전에 하나는 뜨게 하고, 일찍 뜬 실행은 아래 첫 단계에서 06:25 KST 까지 잔다.
+    #   concurrency(hkgm-live) 때문에 한 번에 하나만 돌고 나머지는 대기열에서 기다렸다가,
+    #   이미 받아 둔 영상은 건너뛰고 07:40 KST 가 지났으면 한 번만 확인하고 끝난다.
+    #   18:47 UTC = 03:47 KST (월~금 UTC = 화~토 KST)
+    - cron: '47 18 * * 1-5'
+    - cron: '47 19 * * 1-5'
+    - cron: '47 20 * * 1-5'
     - cron: '35 21 * * 1-5'
     - cron: '50 21 * * 1-5'
   workflow_dispatch:
@@ -40,8 +46,25 @@ concurrency:
 jobs:
   record:
     runs-on: ubuntu-latest
-    timeout-minutes: 200
+    # ★22 03:47 KST 에 제때 뜨면 06:25 까지 약 160분을 자고, 라이브 대기·녹음(40분 안팎)·받아쓰기를 더한다.
+    #   GitHub 호스트 러너 상한은 360분.
+    timeout-minutes: 330
     steps:
+      # ★22 일찍 뜬 예약 실행은 방송 직전까지 잔다. 몇 시간 동안 유튜브를 조회하면 봇 차단 위험이 있어서
+      #   잠은 checkout·설치보다 먼저 자고, 깨어난 뒤에 최신 main 과 최신 도구로 시작한다.
+      - name: Wait until 06:25 KST (early scheduled runs)
+        if: github.event_name == 'schedule'
+        run: |
+          now=$(TZ=Asia/Seoul date +%s)
+          target=$(TZ=Asia/Seoul date -d 'today 06:25' +%s)
+          hour=$(TZ=Asia/Seoul date +%-H)
+          if [ "$hour" -ge 2 ] && [ "$now" -lt "$target" ]; then
+            echo "[i] $(TZ=Asia/Seoul date +%H:%M) KST — 06:25 KST 까지 $(( (target - now) / 60 ))분 대기"
+            sleep $(( target - now ))
+          else
+            echo "[i] $(TZ=Asia/Seoul date +%H:%M) KST — 대기 없이 시작"
+          fi
+
       - uses: actions/checkout@v4
         with:
           ref: main
