@@ -331,11 +331,10 @@
  },
  "LrV9OuVW0HE": {
   "channel": "hkgm",
-  "duration_sec": 0,
+  "duration_sec": 2296,
   "ok": false,
-  "pending": "live",
-  "title": "[김현석의 월나우-10월2일] 금리 깜짝 반전…이유는? | 이란 향하는 세 번째 항모 | 결국 3% 오른 마이크론 2026-10-01 22:07",
-  "uploaded_epoch": 1790888859
+  "title": "[김현석의 월나우-10월2일] 금리 깜짝 반전…이유는? | 이란 향하는 세 번째 항모 | 결국 3% 오른 마이크론",
+  "uploaded_epoch": 1790893984
  },
  "N5ATdKss8Pw": {
   "ok": false,
@@ -404,6 +403,14 @@
   "source": "caption",
   "title": "10월 증시 반등할까ㅣ김현석의 월나우 위클리Q",
   "uploaded_epoch": 1789939829
+ },
+ "QRAUVOBcGgA": {
+  "channel": "hkgm",
+  "duration_sec": 0,
+  "ok": false,
+  "pending": "upcoming",
+  "title": "[김현석의 브레이킹 뉴스] 9월 고용보고서 발표! 10월 2일 21시 30분 L.I.V.E",
+  "uploaded_epoch": 1790893316
  },
  "RSLFCX9puzI": {
   "channel": "hkgm",
