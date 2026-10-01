@@ -66,6 +66,7 @@ on:
  
 permissions:
   contents: write
+  actions: write   # ★23 마지막 단계에서 live-relay.yml 을 다시 건다
  
 concurrency:
   group: hkgm-transcripts
@@ -888,6 +889,18 @@ jobs:
           done
           echo "::error::3회 시도 후에도 푸시하지 못했습니다. 원격 main이 계속 바뀌고 있거나 권한 문제입니다."
           exit 1
+
+      # ★23 월나우 녹음 릴레이(live-relay.yml)를 다시 건다. 예약이든 수동이든 수집기가 돌 때마다
+      #     사슬을 새로 이어서, 릴레이가 끊겨도 다음 수집기 실행에서 되살아난다.
+      #     06시대 KST 에 걸어도 릴레이가 오늘 record-live 실행 여부를 확인하므로 녹음이 겹치지 않는다.
+      - name: Re-arm live relay
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh workflow run live-relay.yml --ref main && echo "[i] 릴레이 재시작" || echo "::warning::live-relay.yml 실행 실패"
+          exit 0
 
 
 

@@ -19,6 +19,8 @@ on:
     #   concurrency(hkgm-live) 때문에 한 번에 하나만 돌고 나머지는 대기열에서 기다렸다가,
     #   이미 받아 둔 영상은 건너뛰고 07:40 KST 가 지났으면 한 번만 확인하고 끝난다.
     #   18:47 UTC = 03:47 KST (월~금 UTC = 화~토 KST)
+    # ★23 10/2에는 이 예약 5개 중 4개가 아예 안 떴다. 이제 주 경로는 live-relay.yml 의 릴레이 실행이고
+    #   아래 예약은 보험으로만 남긴다.
     - cron: '47 18 * * 1-5'
     - cron: '47 19 * * 1-5'
     - cron: '47 20 * * 1-5'
@@ -34,6 +36,10 @@ on:
         description: '라이브를 찾는 마감 HH:MM (KST, video_id 가 없을 때)'
         required: false
         default: '07:40'
+      wait_0625:
+        description: 'true 면 06:25 KST 까지 자고 시작한다(★23 live-relay.yml 이 넘긴다)'
+        required: false
+        default: 'false'
 
 permissions:
   contents: write
@@ -52,8 +58,9 @@ jobs:
     steps:
       # ★22 일찍 뜬 예약 실행은 방송 직전까지 잔다. 몇 시간 동안 유튜브를 조회하면 봇 차단 위험이 있어서
       #   잠은 checkout·설치보다 먼저 자고, 깨어난 뒤에 최신 main 과 최신 도구로 시작한다.
+      # ★23 live-relay.yml 이 06:05 KST 무렵 wait_0625=true 로 실행한 것도 같이 잔다.
       - name: Wait until 06:25 KST (early scheduled runs)
-        if: github.event_name == 'schedule'
+        if: github.event_name == 'schedule' || github.event.inputs.wait_0625 == 'true'
         run: |
           now=$(TZ=Asia/Seoul date +%s)
           target=$(TZ=Asia/Seoul date -d 'today 06:25' +%s)
