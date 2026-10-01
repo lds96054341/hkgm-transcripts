@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-10-01T23:10:55+00:00",
- "last_run_kst": "2026-10-02 08:10:55 KST",
+ "last_run_utc": "2026-10-01T23:36:23+00:00",
+ "last_run_kst": "2026-10-02 08:36:23 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -109,15 +109,9 @@
    "id": "RSLFCX9puzI",
    "channel": "hkgm",
    "state": "cached"
-  },
-  {
-   "id": "LrV9OuVW0HE",
-   "channel": "hkgm",
-   "state": "no_subtitle",
-   "error": "b_safari,mweb) → 음성 받아쓰기로 전환 || [audio/default] ERROR: [youtube] LrV9OuVW0HE: This video is available to this channel's members on level: 뉴욕버거 사주기(유튜브 전용 멤버십) (or any higher level). Join this channe | [audio/tv] ERROR: [youtube] LrV9OuVW0HE: This video is available to this channel's members on level: 뉴욕버거 사주기(유튜브 전용 멤버십) (or any higher level). Join this channe | [audio/web_safari] ERROR: [youtube] LrV9OuVW0HE: This video is available to this channel's members on level: 뉴욕버거 사주기(유튜브 전용 멤버십) (or any higher level). Join this channe | [audio/mweb] ERROR: [youtube] LrV9OuVW0HE: This video is available to this channel's members on level: 뉴욕버거 사주기(유튜브 전용 멤버십) (or any higher level). Join this channe"
   }
  ],
- "whisper_used": 1,
+ "whisper_used": 0,
  "health": {
   "cookie": {
    "status": "ok",
@@ -145,11 +139,9 @@
   "audio_disabled": false,
   "fetched": 0,
   "by_caption": 0,
-  "failed": 1,
+  "failed": 0,
   "live_pending": 1,
   "whisper_errors": 0,
-  "warnings": [
-   "이번 회차 신규 수집 0건(실패 1건) — 리포트는 기사 기반으로 작성해야 합니다."
-  ]
+  "warnings": []
  }
 }
