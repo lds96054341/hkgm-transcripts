@@ -34,6 +34,8 @@ name: fetch-hkgm-transcripts
 #   ★20 index.json 에 라이브 대기(pending)로 남은 영상은 목록에서 빠져도 다시 시도한다.
 #   ★19 라이브 녹음(record-live.yml)이 올린 영상은 캐시로 보고, 커밋 전에 그 색인 항목
 #       (transcripts/live/<id>.json)을 index.json 에 다시 반영한다.
+# 2026-10-01 추가
+#   ★22 Whisper 가 예외로 죽은 영상(error 에 "whisper 실패")을 세어 health.warnings 에 올린다.
 # ─────────────────────────────────────────────────────────────────────
  
 on:
@@ -781,6 +783,13 @@ jobs:
               warnings.append(f"음성용 오디오 다운로드 실패 {ejs_hits}회(포맷 없음/EJS) — yt-dlp·Deno·yt-dlp-ejs 버전을 확인하세요.")
           if n_failed and n_fetched == 0:
               warnings.append(f"이번 회차 신규 수집 0건(실패 {n_failed}건) — 리포트는 기사 기반으로 작성해야 합니다.")
+          # ★22 Whisper 자체가 예외로 죽은 건(라이브러리·환경 문제)은 영상 실패와 따로 경고한다.
+          #     10-01 WMoYRatt-wM 이 PyAV 19 비호환(★21)으로 죽었는데 경고가 비어 일반 수집 실패로 보였다.
+          #     "받아쓰기 상한 초과"·PARTIAL 같은 건너뜀은 이 문구가 없어 세지 않는다.
+          whisper_errs = [r["error"] for r in status["results"] if "whisper 실패" in (r.get("error") or "")]
+          if whisper_errs:
+              first = whisper_errs[0].split("whisper 실패:", 1)[-1].strip().replace("\n", " ")[:80]
+              warnings.append(f"음성 받아쓰기(Whisper) 오류 {len(whisper_errs)}건 — 라이브러리/환경 문제일 수 있음: {first}")
  
           status["health"] = {
               "cookie": cookie_info,
@@ -793,6 +802,7 @@ jobs:
               "by_caption": n_caption,
               "failed": n_failed,
               "live_pending": n_live,          # ★16
+              "whisper_errors": len(whisper_errs),   # ★22
               "warnings": warnings,
           }
           for w in warnings:
