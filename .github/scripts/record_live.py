@@ -15,7 +15,14 @@
   VIDEO_ID                    이 영상만 기다려 녹음(수동 실행용). 없으면 채널에서 찾는다.
   POLL_UNTIL_KST              라이브를 찾는 마감(HH:MM, 기본 07:40). VIDEO_ID 가 있으면 시작 후 90분.
   TITLE_FILTER                제목 정규식(비우면 채널의 모든 라이브)
-결과는 _out/result.txt 에 한 줄로 남긴다(recorded / no_live / failed: …).
+  CAPTION_WAIT_MIN            ★23 녹음이 실패했을 때 유튜브 자막을 기다리는 시간(분, 기본 60)
+결과는 _out/result.txt 에 한 줄로 남긴다(recorded / caption / no_live / failed: …).
+
+★23 녹음 실패 시 자막 대체
+  녹음을 못 했거나(라이브를 놓침·녹음 오류·포함률 부족·받아쓰기 빈 결과) 하면, 방송이 끝난 직후
+  멤버십 전용으로 바뀌기 전에 유튜브 자막(자동 자막 포함)을 몇 분 간격으로 받아 본다.
+  받으면 수집기와 같은 30초 블록으로 저장하고 색인에 source=caption, caption_fallback=true 로 남긴다.
+  멤버십 전용 오류가 나면 더 기다려도 받을 수 없으므로 바로 끝낸다.
 """
 import glob
 import json
@@ -34,6 +41,9 @@ POLL_SEC = 90
 REC_TIMEOUT = 130 * 60        # 녹음 한 번의 최대 시간(월나우는 40분 안팎)
 MIN_COVERAGE = 0.5            # 받은 오디오가 방송 길이의 절반도 안 되면 버린다
 WHISPER_MODEL = "small"
+CAPTION_POLL_SEC = 180         # ★23 자막 대체: 확인 간격
+CAPTION_CAP_KST = (9, 30)      # ★23 자막 대체: 이 시각(KST)이 지나면 한 번만 확인
+MEMBERS = re.compile(r"members|Join this channel|멤버십", re.I)
 DOMAIN_PROMPT = (
     "미국 증시와 반도체 시장 브리핑입니다. "
     "엔비디아, 삼성전자, SK하이닉스, 마이크론, 브로드컴, TSMC, 인텔, AMD, "
@@ -235,16 +245,132 @@ def encrypt_to(text, dest):
         raise SystemExit("[!] 암호화 실패: " + (r.stderr or "")[-300:])
 
 
+def vtt_to_pairs(path):
+    """★23 VTT → [(초, 텍스트)] (수집기 vtt_to_text 와 같은 규칙)"""
+    tag = re.compile(r"<[^>]+>")
+    cues, cur_t = [], None
+    for raw in open(path, encoding="utf-8", errors="ignore"):
+        line = raw.rstrip("\n")
+        m = re.match(r"(\d{2}):(\d{2}):(\d{2})\.\d{3}\s+-->", line)
+        if m:
+            cur_t = int(m.group(1)) * 3600 + int(m.group(2)) * 60 + int(m.group(3))
+            continue
+        if not line.strip() or line.startswith(("WEBVTT", "Kind:", "Language:", "NOTE")):
+            continue
+        if cur_t is None:
+            continue
+        txt = tag.sub("", line).strip()
+        if txt:
+            cues.append((cur_t, txt))
+    return cues
+
+
+def recent_broadcast():
+    """★23 라이브를 놓쳤을 때: 채널 /streams 에서 최근 6시간 안에 끝난 방송 하나 (id, title, ts) 또는 None"""
+    # 놓친 방송을 고를 때는 다른 라이브(브레이킹 뉴스 등)를 잘못 고르지 않도록 기본으로 월나우만 본다.
+    pat = re.compile(os.environ.get("TITLE_FILTER", "").strip() or r"월나우|월스트리트나우|월스트리트 나우")
+    want = os.environ.get("VIDEO_ID", "").strip()
+    for vid in ([want] if want else candidates()):
+        p = probe(f"https://www.youtube.com/watch?v={vid}")
+        if not p:
+            continue
+        pid, status, title, rts = p
+        if status not in ("was_live", "post_live", "is_live"):
+            continue
+        if rts and rts < time.time() - 6 * 3600:
+            continue
+        if already_done(pid) or not pat.search(title):
+            continue
+        return pid, title, rts
+    return None
+
+
+def caption_fallback(vid):
+    """★23 녹음 대신 유튜브 자막을 받는다. (pairs, lang, 오류)"""
+    url = f"https://www.youtube.com/watch?v={vid}"
+    now = datetime.now(KST)
+    cap = now.replace(hour=CAPTION_CAP_KST[0], minute=CAPTION_CAP_KST[1], second=0, microsecond=0)
+    wait_min = int(os.environ.get("CAPTION_WAIT_MIN") or 60)
+    until = min(now + timedelta(minutes=wait_min), max(cap, now))
+    print(f"[i] 자막 대체 시도: {vid} — {until:%H:%M} KST까지 {CAPTION_POLL_SEC // 60}분 간격")
+    last = ""
+    while True:
+        for client in CLIENTS:
+            shutil.rmtree(TMP, ignore_errors=True)
+            os.makedirs(TMP, exist_ok=True)
+            r = run(["yt-dlp", "--skip-download", "--ignore-no-formats-error", "--no-abort-on-error",
+                     "--write-auto-subs", "--write-subs", "--sub-langs", "ko.*,ko",
+                     "--sub-format", "vtt/best", "--retries", "3", "--socket-timeout", "30",
+                     "--extractor-args", f"youtube:player_client={client}",
+                     "-o", os.path.join(TMP, "%(id)s"), *base, url], timeout=300)
+            vtts = sorted(glob.glob(os.path.join(TMP, "*.vtt")))
+            if vtts:
+                pick = vtts[0]
+                m = re.search(r"\.([A-Za-z\-]+)\.vtt$", os.path.basename(pick))
+                pairs = vtt_to_pairs(pick)
+                if pairs:
+                    print(f"[+] 자막 받음: client={client} {os.path.basename(pick)}")
+                    return pairs, (m.group(1) if m else "ko"), ""
+            err = r.stderr or r.stdout or ""
+            if MEMBERS.search(err):
+                return None, None, f"멤버십 전용으로 바뀌어 자막도 받을 수 없음 [{client}]"
+            last = f"[{client}] {last_error(err) if err.strip() else '자막 트랙 없음(아직 처리 중일 수 있음)'}"
+            time.sleep(2)
+        print(f"[i] {datetime.now(KST):%H:%M:%S} 자막 아직 없음 — {last}")
+        if datetime.now(KST) >= until:
+            return None, None, f"{until:%H:%M} KST까지 자막 없음 — {last}"[:400]
+        time.sleep(CAPTION_POLL_SEC)
+
+
+def save(vid, title, ts, dur, body, source_note, lang, client, extra):
+    """수집기와 같은 형식으로 _out/<id>.enc 와 _out/live/<id>.json 을 남긴다."""
+    header = (f"# videoId: {vid}\n# channel: {CHANNEL['name']}\n# title: {title}\n"
+              f"# uploaded_kst: {datetime.fromtimestamp(ts, KST):%Y-%m-%d %H:%M KST}\n"
+              f"# uploaded_epoch: {ts}\n# duration_sec: {dur}\n"
+              f"# source: {source_note}\n"
+              f"# lang: {lang}\n# client: {client}\n"
+              + "".join(f"# {k}: {v}\n" for k, v in extra.get("header", {}).items())
+              + "# note: 30초 단위 블록, [HH:MM:SS]는 영상 내 위치\n\n")
+    encrypt_to(header + body + "\n", os.path.join(STAGE, f"{vid}.enc"))
+    entry = {"ok": True, "channel": CHANNEL["key"], "title": title,
+             "uploaded_epoch": ts, "duration_sec": dur, "lang": lang,
+             "chars": len(body), "live_record": True, **extra.get("entry", {})}
+    json.dump(entry, open(os.path.join(STAGE, "live", f"{vid}.json"), "w", encoding="utf-8"),
+              ensure_ascii=False, indent=1, sort_keys=True)
+
+
+def fallback(vid, title, rts, why):
+    """★23 녹음 실패 → 자막 대체. 결과 한 줄을 남긴다."""
+    print(f"[!] 녹음 실패({why}) → 자막 대체")
+    pairs, lang, err = caption_fallback(vid)
+    if not pairs:
+        result(f"failed: {vid} 녹음 실패({why}), 자막 대체도 실패 — {err}")
+        return
+    body = bucketize(pairs)
+    ts = rts or int(time.time())
+    dur = int(pairs[-1][0]) + 30
+    save(vid, title, ts, dur, body, "caption (라이브 녹음 실패 → 유튜브 자막으로 대체)", lang,
+         "live-record-caption",
+         {"header": {"record_failed": why[:120]},
+          "entry": {"source": "caption", "caption_fallback": True}})
+    result(f"caption: {vid} {len(body)}자 (녹음 실패 → 자막 대체: {why[:80]})")
+
+
 def main():
     found = find_live()
     if not found:
-        result("no_live: 마감까지 라이브가 시작되지 않음")
+        # ★23 늦게 떠서 방송을 놓쳤을 수 있다 → 최근에 끝난 방송이 있으면 자막으로 대체
+        late = recent_broadcast()
+        if not late:
+            result("no_live: 마감까지 라이브가 시작되지 않음")
+            return
+        fallback(*late, "라이브를 놓침(실행이 방송 뒤에 시작)")
         return
     vid, title, rts = found
     rec_start = time.time()
     apath, rec_end, err = record(vid)
     if not apath:
-        result(f"failed: {vid} 녹음 실패 — {err}")
+        fallback(vid, title, rts, f"녹음 오류 — {err[-150:]}")
         return
 
     adur = audio_seconds(apath)
@@ -254,39 +380,34 @@ def main():
     print(f"[i] 오디오 {int(adur)}초 / 방송 추정 {int(expect)}초 → 포함률 {coverage}")
     if coverage < MIN_COVERAGE:
         os.remove(apath)
-        result(f"failed: {vid} 받은 오디오가 방송의 {int(coverage * 100)}%뿐 — 버림")
+        fallback(vid, title, rts, f"받은 오디오가 방송의 {int(coverage * 100)}%뿐")
         return
 
     from faster_whisper import WhisperModel
     t0 = time.time()
-    model = WhisperModel(WHISPER_MODEL, device="cpu", compute_type="int8")
     try:
+        model = WhisperModel(WHISPER_MODEL, device="cpu", compute_type="int8")
         segs, _ = model.transcribe(apath, language="ko", vad_filter=True, beam_size=5,
                                    initial_prompt=DOMAIN_PROMPT)
         pairs = [(s.start, s.text.strip()) for s in segs if s.text.strip()]
+    except Exception as e:        # ★23 받아쓰기가 죽어도 자막 대체로 넘어간다
+        os.remove(apath)
+        fallback(vid, title, rts, f"받아쓰기 오류 — {type(e).__name__}: {str(e)[-120:]}")
+        return
     finally:
-        os.remove(apath)          # 음성 파일은 즉시 삭제
+        if os.path.exists(apath):
+            os.remove(apath)      # 음성 파일은 즉시 삭제
     print(f"[i] 받아쓰기 {int(time.time() - t0)}초")
     if not pairs:
-        result(f"failed: {vid} 받아쓰기 결과가 비어 있음")
+        fallback(vid, title, rts, "받아쓰기 결과가 비어 있음")
         return
 
     body = bucketize(pairs)
     ts = rts or int(rec_start)
-    dur = int(adur)
-    lang = f"whisper-{WHISPER_MODEL}"
-    header = (f"# videoId: {vid}\n# channel: {CHANNEL['name']}\n# title: {title}\n"
-              f"# uploaded_kst: {datetime.fromtimestamp(ts, KST):%Y-%m-%d %H:%M KST}\n"
-              f"# uploaded_epoch: {ts}\n# duration_sec: {dur}\n"
-              f"# source: audio (라이브 녹음 후 음성 받아쓰기(Whisper))\n"
-              f"# lang: {lang}\n# client: live-record\n# live_coverage: {coverage}\n"
-              f"# note: 30초 단위 블록, [HH:MM:SS]는 영상 내 위치\n\n")
-    encrypt_to(header + body + "\n", os.path.join(STAGE, f"{vid}.enc"))
-    entry = {"ok": True, "channel": CHANNEL["key"], "title": title,
-             "uploaded_epoch": ts, "duration_sec": dur, "source": "audio",
-             "lang": lang, "chars": len(body), "live_record": True, "coverage": coverage}
-    json.dump(entry, open(os.path.join(STAGE, "live", f"{vid}.json"), "w", encoding="utf-8"),
-              ensure_ascii=False, indent=1, sort_keys=True)
+    save(vid, title, ts, int(adur), body, "audio (라이브 녹음 후 음성 받아쓰기(Whisper))",
+         f"whisper-{WHISPER_MODEL}", "live-record",
+         {"header": {"live_coverage": coverage},
+          "entry": {"source": "audio", "coverage": coverage}})
     result(f"recorded: {vid} {len(body)}자, 포함률 {coverage}")
 
 
