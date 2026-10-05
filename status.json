@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-10-05T23:10:07+00:00",
- "last_run_kst": "2026-10-06 08:10:07 KST",
+ "last_run_utc": "2026-10-05T23:39:41+00:00",
+ "last_run_kst": "2026-10-06 08:39:41 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -103,15 +103,9 @@
    "id": "pVqQ3m0lkWE",
    "channel": "hkgm",
    "state": "cached"
-  },
-  {
-   "id": "njLtgiwcr7g",
-   "channel": "hkgm",
-   "state": "no_subtitle",
-   "error": "자막 트랙 없음(default,tv,web_safari,mweb) → 음성 받아쓰기로 전환 || [audio/default] ERROR: [youtube] njLtgiwcr7g: Join this channel to get access to members-only content like this video, and other exclusive perks. | [audio/tv] ERROR: [youtube] njLtgiwcr7g: Join this channel to get access to members-only content like this video, and other exclusive perks. | [audio/web_safari] ERROR: [youtube] njLtgiwcr7g: We are experiencing problems with our servers. Please try again later. | [audio/mweb] ERROR: [youtube] njLtgiwcr7g: Join this channel to get access to members-only content like this video, and other exclusive perks."
   }
  ],
- "whisper_used": 1,
+ "whisper_used": 0,
  "health": {
   "cookie": {
    "status": "ok",
@@ -139,11 +133,12 @@
   "audio_disabled": false,
   "fetched": 0,
   "by_caption": 0,
-  "failed": 1,
+  "failed": 0,
   "live_pending": 0,
+  "live_record": "월나우 라이브 녹음 미실행 — 오늘 03:00 KST 이후 record-live 실행이 없습니다(live-relay 확인).",
   "whisper_errors": 0,
   "warnings": [
-   "이번 회차 신규 수집 0건(실패 1건) — 리포트는 기사 기반으로 작성해야 합니다."
+   "월나우 라이브 녹음 미실행 — 오늘 03:00 KST 이후 record-live 실행이 없습니다(live-relay 확인)."
   ]
  }
 }
