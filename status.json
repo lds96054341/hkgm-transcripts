@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-10-05T22:06:15+00:00",
- "last_run_kst": "2026-10-06 07:06:15 KST",
+ "last_run_utc": "2026-10-05T23:10:07+00:00",
+ "last_run_kst": "2026-10-06 08:10:07 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -17,10 +17,7 @@
   {
    "id": "8s4kFJ6eXs4",
    "channel": "hkwowtv",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 20487
+   "state": "cached"
   },
   {
    "id": "nCVhaAzPr1A",
@@ -31,12 +28,6 @@
    "id": "t1U2KUddac8",
    "channel": "hkwowtv",
    "state": "cached"
-  },
-  {
-   "id": "njLtgiwcr7g",
-   "channel": "hkgm",
-   "state": "live_pending",
-   "error": "LIVE: 라이브 진행 중 — 방송이 끝난 뒤 다음 실행에서 다시 시도"
   },
   {
    "id": "-4V9HpvXs44",
@@ -107,9 +98,20 @@
    "id": "WMoYRatt-wM",
    "channel": "hkgm",
    "state": "cached"
+  },
+  {
+   "id": "pVqQ3m0lkWE",
+   "channel": "hkgm",
+   "state": "cached"
+  },
+  {
+   "id": "njLtgiwcr7g",
+   "channel": "hkgm",
+   "state": "no_subtitle",
+   "error": "자막 트랙 없음(default,tv,web_safari,mweb) → 음성 받아쓰기로 전환 || [audio/default] ERROR: [youtube] njLtgiwcr7g: Join this channel to get access to members-only content like this video, and other exclusive perks. | [audio/tv] ERROR: [youtube] njLtgiwcr7g: Join this channel to get access to members-only content like this video, and other exclusive perks. | [audio/web_safari] ERROR: [youtube] njLtgiwcr7g: We are experiencing problems with our servers. Please try again later. | [audio/mweb] ERROR: [youtube] njLtgiwcr7g: Join this channel to get access to members-only content like this video, and other exclusive perks."
   }
  ],
- "whisper_used": 0,
+ "whisper_used": 1,
  "health": {
   "cookie": {
    "status": "ok",
@@ -135,11 +137,13 @@
   "ejs_failures": 0,
   "bot_blocked": 0,
   "audio_disabled": false,
-  "fetched": 1,
-  "by_caption": 1,
-  "failed": 0,
-  "live_pending": 1,
+  "fetched": 0,
+  "by_caption": 0,
+  "failed": 1,
+  "live_pending": 0,
   "whisper_errors": 0,
-  "warnings": []
+  "warnings": [
+   "이번 회차 신규 수집 0건(실패 1건) — 리포트는 기사 기반으로 작성해야 합니다."
+  ]
  }
 }
