@@ -225,11 +225,13 @@
  },
  "8s4kFJ6eXs4": {
   "channel": "hkwowtv",
-  "duration_sec": 0,
-  "ok": false,
-  "pending": "live",
-  "title": "[🔴10/06 #당잠사] 미 장기채 금리 상승에도 기술주 강세 | 서비스업 PMI 54.9 | 머스크 “TSMC와 테라팹 협력 논의” | #엔비디아 #TSMC #스페이스X 2026-10-05 20:45",
-  "uploaded_epoch": 1791229375
+  "chars": 20487,
+  "duration_sec": 2726,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "[🔴10/06 #당잠사] 미 장기채 금리 상승에도 기술주 강세 | 서비스업 PMI 54.9 | 머스크 “TSMC와 테라팹 협력 논의” | #엔비디아 #TSMC #스페이스X",
+  "uploaded_epoch": 1791235163
  },
  "9BqeV8e-X-U": {
   "chars": 15485,
@@ -935,8 +937,8 @@
   "channel": "hkgm",
   "duration_sec": 0,
   "ok": false,
-  "pending": "upcoming",
-  "title": "[김현석의 월나우-10월6일] 한국 시간 기준 오전 6시 30분 LIVE",
+  "pending": "live",
+  "title": "[김현석의 월나우-10월6일] 기록적 금리에도 나스닥, 엔비디아 신고가...\"더 오르겠지만 변동성\" 2026-10-05 22:06",
   "uploaded_epoch": 1791233077
  },
  "ntp1vmn6798": {
