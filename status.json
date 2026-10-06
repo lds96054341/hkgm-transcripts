@@ -1,10 +1,10 @@
 {
- "last_run_utc": "2026-10-05T23:39:41+00:00",
- "last_run_kst": "2026-10-06 08:39:41 KST",
+ "last_run_utc": "2026-10-06T01:52:03+00:00",
+ "last_run_kst": "2026-10-06 10:52:03 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
-   "listed": 3,
+   "listed": 4,
    "list_error": ""
   },
   "hkgm": {
@@ -14,6 +14,14 @@
   }
  },
  "results": [
+  {
+   "id": "-Hg8r9fdEE8",
+   "channel": "hkwowtv",
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 849
+  },
   {
    "id": "8s4kFJ6eXs4",
    "channel": "hkwowtv",
@@ -123,7 +131,7 @@
     "__Secure-3PSID"
    ],
    "nearest_expiry_kst": "2027-10-23 21:54 KST",
-   "days_left": 382.6,
+   "days_left": 382.5,
    "note": ""
   },
   "pot_provider": "ok",
@@ -131,14 +139,14 @@
   "ejs_failures": 0,
   "bot_blocked": 0,
   "audio_disabled": false,
-  "fetched": 0,
-  "by_caption": 0,
+  "fetched": 1,
+  "by_caption": 1,
   "failed": 0,
   "live_pending": 0,
-  "live_record": "월나우 라이브 녹음 미실행 — 오늘 03:00 KST 이후 record-live 실행이 없습니다(live-relay 확인).",
+  "live_record": "월나우 라이브 녹음 실패 — record-live success (https://github.com/lds96054341/hkgm-transcripts/actions/runs/37401144079)",
   "whisper_errors": 0,
   "warnings": [
-   "월나우 라이브 녹음 미실행 — 오늘 03:00 KST 이후 record-live 실행이 없습니다(live-relay 확인)."
+   "월나우 라이브 녹음 실패 — record-live success (https://github.com/lds96054341/hkgm-transcripts/actions/runs/37401144079)"
   ]
  }
 }
