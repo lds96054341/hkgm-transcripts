@@ -1104,11 +1104,15 @@
  },
  "ovY3N4j4J5Q": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
-  "pending": "live",
-  "title": "[김현석의 월나우-10월10일] AI 수요 오해 풀렸지만, S&P 신기록 다가섰지만, 오늘도 떨어진 반도체...왜 2026-10-09 22:06",
-  "uploaded_epoch": 1791579019
+  "chars": 17872,
+  "coverage": 0.98,
+  "duration_sec": 2480,
+  "lang": "whisper-small",
+  "live_record": true,
+  "ok": true,
+  "source": "audio",
+  "title": "[김현석의 월나우-10월10일] AI 수요 오해 풀렸지만, S&P 신기록 다가섰지만, 오늘도 떨어진 반도체...왜 2026-10-09 21:39",
+  "uploaded_epoch": 1791581950
  },
  "oyrOdL7aPBo": {
   "chars": 328,
