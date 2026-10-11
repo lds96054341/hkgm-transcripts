@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-10-10T22:06:09+00:00",
- "last_run_kst": "2026-10-11 07:06:09 KST",
+ "last_run_utc": "2026-10-11T00:25:02+00:00",
+ "last_run_kst": "2026-10-11 09:25:02 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -113,7 +113,7 @@
     "__Secure-3PSID"
    ],
    "nearest_expiry_kst": "2027-10-23 21:54 KST",
-   "days_left": 377.6,
+   "days_left": 377.5,
    "note": ""
   },
   "pot_provider": "ok",
