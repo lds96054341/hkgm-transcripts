@@ -566,6 +566,14 @@
   "title": "[김현석의 브레이킹 뉴스] 9월 고용보고서 발표! 10월 2일 21시 30분 L.I.V.E",
   "uploaded_epoch": 1790945038
  },
+ "QoLqSsmwCB8": {
+  "channel": "hkgm",
+  "duration_sec": 0,
+  "ok": false,
+  "pending": "upcoming",
+  "title": "[김현석의 월나우-10월13일] \"메모리 부족, 1년 내 완화 자금 조달이 가장 큰 문제\" | 반도체 급락…혹 탄의 작심 발언",
+  "uploaded_epoch": 1791838238
+ },
  "RSLFCX9puzI": {
   "channel": "hkgm",
   "chars": 15656,
@@ -760,6 +768,16 @@
  "_FuiApUkxWI": {
   "ok": false,
   "title": "[박신영의 개장전요것만-8월25일] 비트코인 8만달러 돌파...\"추가 상승 여력 있어\" | 채권시장, 브로드컴 위험 경고"
+ },
+ "_cgq6oojx4k": {
+  "channel": "hkwowtv",
+  "chars": 18527,
+  "duration_sec": 2614,
+  "lang": "whisper-small",
+  "ok": true,
+  "source": "audio",
+  "title": "[🔴10/13 #당잠사] 中 CXMT, 차세대 D램 기술 공개 | 유가 급등…브렌트유 106달러 돌파 | 美 달러화 18개월래 최고 수준 | #메타 #마이크로소프트 #마이크론",
+  "uploaded_epoch": 1791839884
  },
  "a9bwBy9G0BU": {
   "channel": "hkgm",
