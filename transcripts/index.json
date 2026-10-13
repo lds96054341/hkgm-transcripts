@@ -267,11 +267,15 @@
  },
  "8f9XaqOcBUo": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
-  "pending": "live",
-  "title": "[김현석의 월나우-10월14일] 메모리, 제2 소프트웨어? \"내년 정말, 정말 힘들 것\"...폴 튜더 존스의 경고 2026-10-13 22:07",
-  "uploaded_epoch": 1791925772
+  "chars": 17603,
+  "coverage": 0.98,
+  "duration_sec": 2385,
+  "lang": "whisper-small",
+  "live_record": true,
+  "ok": true,
+  "source": "audio",
+  "title": "[김현석의 월나우-10월14일] 메모리, 제2 소프트웨어? \"내년 정말, 정말 힘들 것\"...폴 튜더 존스의 경고 2026-10-13 21:39",
+  "uploaded_epoch": 1791927536
  },
  "8lmlcgQBtvQ": {
   "channel": "hkwowtv",
