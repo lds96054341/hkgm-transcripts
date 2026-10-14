@@ -133,6 +133,14 @@
   "title": "The Current Mindset of US Investors",
   "uploaded_epoch": 0
  },
+ "1JJFCPpmD_Q": {
+  "channel": "hkgm",
+  "duration_sec": 0,
+  "ok": false,
+  "pending": "live",
+  "title": "[김현석의 월나우-10월15일] 너무 뜨거운 CPI, 녹아버린 코어위브...금리 급락했지만→악재 2026-10-14 22:07",
+  "uploaded_epoch": 1792009729
+ },
  "1tDIcQq-rf8": {
   "channel": "hkgm",
   "chars": 15086,
@@ -511,6 +519,16 @@
  "N5ATdKss8Pw": {
   "ok": false,
   "title": "Is Samsung a Rival or a Partner to Nvidia?"
+ },
+ "NCiGpCCS3So": {
+  "channel": "hkwowtv",
+  "chars": 17475,
+  "duration_sec": 2502,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "[🔴10/15 #당잠사]예상 웃돈 미 9월 CPI…금리인상 확률 커져 | 기술주 급락 | 연준 베이지북 “전 지역 물가 상승” | #ASML #애플 #코어위브",
+  "uploaded_epoch": 1792012432
  },
  "NP16rOD8A5g": {
   "chars": 6492,
