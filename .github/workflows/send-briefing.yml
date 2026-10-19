@@ -1,0 +1,92 @@
+name: send-briefing
+
+# ─────────────────────────────────────────────────────────────────────
+# 2026-10-20 추가. 아침 브리핑 메일을 GitHub Actions 에서 SMTP 로 보낸다.
+# routine 이 메일 도구에 email.html(6만 자 안팎)을 옮겨 적다 응답이 끊겨 HTML 이 잘린 채 나간 일이 있었다.
+# 이제 routine 은 데이터 JSON 만 자기 작업 브랜치(claude/...)의 briefing/outbox/<date>.json 에 푸시하고
+# 이 워크플로를 ref: main 으로 실행한다. 렌더러와 발송 코드는 항상 main 의 것을 쓰고,
+# 브랜치에서는 JSON 파일 하나만 읽는다.
+# 필요한 Secrets: GMAIL_USER(보내는 Gmail 주소), GMAIL_APP_PASSWORD(Google 앱 비밀번호)
+# 선택 Variables: BRIEFING_TO(받는 사람, 쉼표 구분. 없으면 dongsik.lee@samsung.com)
+# ─────────────────────────────────────────────────────────────────────
+
+run-name: "briefing ${{ inputs.date }}${{ inputs.test && ' [test]' || '' }}"
+
+on:
+  workflow_dispatch:
+    inputs:
+      date:
+        description: '브리핑 날짜 YYYY-MM-DD (KST)'
+        required: true
+      data_ref:
+        description: 'briefing/outbox/<date>.json 이 있는 브랜치 (claude/...)'
+        required: true
+      test:
+        description: '테스트 발송 — 제목 앞에 [테스트], 날짜 검사 생략, 중복 검사 생략'
+        type: boolean
+        default: false
+      force:
+        description: '같은 날짜로 이미 성공한 발송이 있어도 다시 보낸다'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: send-briefing
+  cancel-in-progress: false
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      DATE: ${{ inputs.date }}
+      DATA_REF: ${{ inputs.data_ref }}
+      IS_TEST: ${{ inputs.test }}
+      FORCE: ${{ inputs.force }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Validate inputs
+        run: |
+          [[ "$DATE" =~ ^20[0-9]{2}-[0-9]{2}-[0-9]{2}$ ]] || { echo "date 형식 오류: $DATE"; exit 1; }
+          [[ "$DATA_REF" =~ ^claude/[A-Za-z0-9._/-]+$ && "$DATA_REF" != *..* ]] || { echo "data_ref 는 claude/... 브랜치만 받는다: $DATA_REF"; exit 1; }
+
+      - name: Refuse duplicate send
+        if: ${{ !inputs.test && !inputs.force }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          n=$(gh api "repos/${{ github.repository }}/actions/workflows/send-briefing.yml/runs?status=success&per_page=50" \
+                --jq "[.workflow_runs[] | select(.display_title == \"briefing $DATE\")] | length")
+          if [ "$n" != "0" ]; then echo "이미 $DATE 브리핑을 보낸 성공 실행이 있음. 다시 보내려면 force=true"; exit 1; fi
+
+      - name: Fetch data JSON
+        run: |
+          git fetch --depth 1 origin "refs/heads/$DATA_REF"
+          git show "FETCH_HEAD:briefing/outbox/$DATE.json" > "$RUNNER_TEMP/data.json"
+          python3 - "$RUNNER_TEMP/data.json" "$DATE" <<'PY'
+          import json, sys
+          d = json.load(open(sys.argv[1], encoding="utf-8"))
+          if d.get("date") != sys.argv[2]:
+              sys.exit(f"JSON date {d.get('date')} 가 입력 date {sys.argv[2]} 와 다름")
+          print("data OK", d["date"], len(d.get("videos", [])), "videos")
+          PY
+
+      - name: Render
+        run: |
+          extra=""; [ "$IS_TEST" = "true" ] && extra="--allow-old-date"
+          python3 briefing/render.py "$RUNNER_TEMP/data.json" "$RUNNER_TEMP/out" $extra
+
+      - name: Send
+        env:
+          SMTP_USER: ${{ secrets.GMAIL_USER }}
+          SMTP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          MAIL_TO: ${{ vars.BRIEFING_TO || 'dongsik.lee@samsung.com' }}
+          SUBJECT_PREFIX: ${{ inputs.test && '[테스트] ' || '' }}
+        run: python3 briefing/send_mail.py "$RUNNER_TEMP/out"
