@@ -79,14 +79,6 @@
   "ok": false,
   "title": "[Kim Hyun-seok's Breaking News] July PCE Inflation Report! August 26, 9:30 PM L.I.V.E"
  },
- "0PcrGAduHKk": {
-  "chars": 5817,
-  "duration_sec": 818,
-  "lang": "ko-orig",
-  "ok": true,
-  "title": "[김현석의 브레이킹 뉴스] 8월 고용보고서 발표! 9월 4일 오후 9시 30분 L.I.V.E",
-  "uploaded_epoch": 1788526089
- },
  "0eG5Ga8j8Mw": {
   "channel": "hkgm",
   "chars": 10905,
@@ -821,6 +813,16 @@
   "title": "반도체 모멘텀은 꺾어진 걸까 | 월가백브리핑",
   "uploaded_epoch": 1788663627
  },
+ "Ytd52XDFj84": {
+  "channel": "hkgm",
+  "chars": 16576,
+  "duration_sec": 2295,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "[박신영의 개장전요것만-10월19일] \"저가매수 황금 기회\" vs \"내년까지 하락\"...현금 탄탄한 방어주 어디?",
+  "uploaded_epoch": 1792418494
+ },
  "ZPLdZ8uxAVY": {
   "channel": "hkwowtv",
   "chars": 17015,
@@ -1098,14 +1100,6 @@
   "ok": true,
   "title": "베센트 '하우스'는 불탔다...코너에 몰린 워시의 탈출법은 | 월가백브리핑",
   "uploaded_epoch": 1789182033
- },
- "gOJntPlIIUM": {
-  "chars": 12539,
-  "duration_sec": 1762,
-  "lang": "ko-orig",
-  "ok": true,
-  "title": "[박신영의 개장전요것만-9월4일] 美 국채서 떠나는 세계 1위 큰손 | 주가 부진, 메모리는 죄가 없다",
-  "uploaded_epoch": 1788530146
  },
  "gSbNBssBaaE": {
   "channel": "hkwowtv",
