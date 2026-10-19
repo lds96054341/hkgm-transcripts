@@ -64,3 +64,16 @@ python3 /tmp/hkgm/briefing/render.py data.json out/   # routine은 4절에서 �
 ## 스타일
 
 `visual.css`에 색과 글꼴 토큰이 있다. 라이트·다크 모드를 모두 정의했고, 상승·하락 색은 두 모드 모두 색각 이상 검사를 통과했다.
+
+## 발송 (2026-10-20부터)
+
+메일은 `.github/workflows/send-briefing.yml`이 보낸다. routine은 메일 도구에 본문을 옮겨 적지 않는다.
+
+1. routine이 데이터 JSON을 자기 작업 브랜치(`claude/...`)의 `briefing/outbox/<date>.json`에 푸시한다.
+2. `send-briefing.yml`을 `ref: main`, `inputs: {date, data_ref}`로 실행한다.
+3. 워크플로가 브랜치에서 JSON 한 파일만 읽어 main의 `render.py`로 렌더링하고 `send_mail.py`로 SMTP 발송한다.
+4. routine은 `wait_send.sh <date>`로 결과를 기다린다(`SENT`/`FAILED`/`TIMEOUT`).
+
+`send_mail.py <출력폴더> --dry-run`은 보내지 않고 `message.eml`만 쓴다.
+필요한 Secrets는 `GMAIL_USER`, `GMAIL_APP_PASSWORD`(Google 앱 비밀번호), 선택 Variables는 `BRIEFING_TO`.
+같은 날짜로 이미 성공한 발송이 있으면 워크플로가 멈춘다(`force: true`로 다시 보냄, `test: true`는 제목에 `[테스트]`).

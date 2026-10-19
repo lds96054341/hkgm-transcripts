@@ -130,14 +130,28 @@ routine 컨테이너는 youtube.com에 못 가므로 음성 받아쓰기는 GitH
    `icon`은 `chart`, `description`은 "M월 D일 한경 글로벌마켓·당잠사 아침 브리핑 비주얼 리포트".
    유튜브 썸네일(i.ytimg.com)은 Artifact에서 차단되므로 이 페이지는 텍스트 타일을 쓴다. 이미지를 넣으려 하지 않는다.
 4. **URL을 넣고 다시 렌더링한다.** 게시 결과의 URL을 JSON `visual_url`에 넣고 2번을 다시 돌린다.
-5. **메일을 한 번 보낸다.** `mcp__Gmail__send_message`
-   - `subject`: `subject.txt` 내용 그대로
-   - `body`: `email.txt` 전체, `htmlBody`: `email.html` 전체. 파일을 읽어 **한 글자도 줄이거나 생략하지 않고** 그대로 넣는다.
-     `email.html`은 6만 자 안팎이다. 파일이 길어 도구 출력이 잘리면 여러 번 나눠 읽어 전부 확인한 뒤 넣는다.
-   - 첨부 파일은 넣지 않는다. 메일 도구는 첨부를 base64 문자열로만 받아서 10만 자 안팎을 옮겨 적어야 하고,
-     한 글자만 틀려도 파일이 깨진다.
-   - 렌더러가 "OK"를 출력한 뒤에만 보낸다.
-6. **9절 한 줄 보고**에 비주얼 리포트 URL을 덧붙인다.
+5. **메일은 발송 워크플로로 한 번 보낸다 (2026-10-20부터).** 렌더러가 "OK"를 출력한 뒤에만 한다.
+   메일 도구에 `email.html`(6만 자 안팎)을 옮겨 적다 응답이 끊겨 HTML이 앞 1만 자만 남은 채 나간 일이 있었다(10/20).
+   그래서 **`email.html`·`email.txt`를 `mcp__Gmail__send_message`에 옮겨 적지 않는다.** 본문은 `send-briefing.yml`이
+   main의 렌더러로 다시 만들어 SMTP로 보낸다. routine이 넘기는 것은 데이터 JSON 파일과 짧은 입력값뿐이다.
+   1. **데이터 JSON을 푸시한다.** 작업 폴더 저장소(`/home/user/hkgm-transcripts`)의 지정 작업 브랜치(`claude/...`)에
+      `briefing/outbox/<date>.json` 하나만 커밋해 푸시한다. 다른 파일은 커밋하지 않는다.
+      ```bash
+      cd /home/user/hkgm-transcripts && BR=$(git branch --show-current) && echo "$BR"   # claude/... 여야 한다
+      mkdir -p briefing/outbox && cp <data.json> briefing/outbox/<date>.json
+      git add briefing/outbox/<date>.json && git commit -m "briefing data <date>" && git push -u origin "$BR"
+      ```
+   2. **발송을 요청한다.** 먼저 `date -u +%Y-%m-%dT%H:%M:%SZ > /tmp/hkgm_S0`를 적고 바로 `mcp__github__actions_run_trigger`를 부른다.
+      `method`: `run_workflow`, `workflow_id`: `send-briefing.yml`, `ref`: `main`, `inputs`: `{"date": "<date>", "data_ref": "<BR>"}`.
+      `test`·`force`는 넣지 않는다. 같은 날짜로 이미 성공한 발송이 있으면 워크플로가 스스로 멈춘다(중복 발송 방지).
+   3. **결과를 기다린다.** `bash /tmp/hkgm/briefing/wait_send.sh <date>`를 백그라운드로 돌린다(최대 15분).
+      `SENT`(종료 0)이면 Gmail `in:sent subject:당잠사 newer_than:1d`로 보낸편지함에 들어갔는지 확인한다.
+   4. **실패하면** (`FAILED`·`TIMEOUT`, 푸시 실패, 작업 폴더 저장소 없음, 도구 권한 오류)
+      `mcp__github__get_job_logs`로 실패 단계를 본다. Fetch·Render 단계면 JSON을 고쳐 1~3을 한 번 더 한다.
+      Send 단계(Secrets 없음·SMTP 인증 오류)이거나 두 번째도 실패하면 `mcp__Gmail__send_message`로 **축약본**을 보낸다.
+      축약본: 제목은 `subject.txt` 앞에 `[축약본] `, 본문은 평문 `body`만(`htmlBody` 없음)으로 결론 3줄과 영상별 전체 요약만 적는다.
+      3,000자를 넘기지 않는다. 그리고 상단 "작업을 멈출 때는 항상 알린다" 절대로 `PushNotification`을 보낸다.
+6. **9절 한 줄 보고**에 비주얼 리포트 URL과 발송 경로(워크플로·축약본)를 덧붙인다.
 
 ### 게시가 실패하면
 
@@ -145,15 +159,19 @@ Artifact 게시가 실패해도 메일은 보낸다. `visual_url` 없이 렌더�
 
 ### 렌더러가 실패하면
 
-JSON을 고쳐도 렌더러가 계속 실패하면(파이썬 오류 등), 프롬프트 8절 방식대로 HTML을 직접 써서 보낸다.
-이때도 위의 "바뀐 스타일"을 지킨다(채운 어두운 배경·흰 글씨 금지). 보고에 렌더러 실패 사실과 오류 메시지를 적는다.
+JSON을 고쳐도 렌더러가 계속 실패하면(파이썬 오류 등) 발송 워크플로도 같은 렌더러를 쓰므로 실패한다.
+이때는 5-4번의 축약본을 보낸다(긴 HTML을 손으로 쓰지 않는다). 보고에 렌더러 실패 사실과 오류 메시지를 적는다.
 
 ## 저장소 쓰기 규칙
 
-- 브리핑 routine은 이 저장소에 푸시하지 않는다. 데이터 JSON과 출력물은 스크래치패드에만 둔다.
-  위 "자막이 없을 때" 절의 수집기 수동 실행(`actions_run_trigger`의 `run_workflow`, `ref: main`)만 허용한다.
-  저장소에 쓰는 것은 수집기이고 routine은 실행만 요청한다. 실행 재시도·취소·로그 삭제 등 다른 Actions 조작은 하지 않는다.
+- 브리핑 routine은 main에 푸시하지 않는다. 출력물은 스크래치패드에만 둔다.
+  푸시는 "리포트 형식" 절차 5-1번의 `briefing/outbox/<date>.json` 한 파일을 자기 지정 작업 브랜치(`claude/...`)에 올리는 것만 허용한다.
+  Actions 조작은 두 가지만 허용한다. "자막이 없을 때" 절의 수집기 수동 실행과 5-2번의 발송 워크플로 실행이다
+  (둘 다 `actions_run_trigger`의 `run_workflow`, `ref: main`). 실행 재시도·취소·로그 삭제 등 다른 Actions 조작은 하지 않는다.
+- 발송 워크플로에는 저장소 Secrets `GMAIL_USER`(보내는 Gmail 주소)와 `GMAIL_APP_PASSWORD`(Google 앱 비밀번호)가 필요하다.
+  받는 사람은 저장소 Variables `BRIEFING_TO`(쉼표 구분)이고, 없으면 dongsik.lee@samsung.com이다.
 - `briefing/`의 렌더러와 스타일을 바꾸는 작업은 브리핑과 별개의 작업으로 한다.
 - 대화형 세션에서 사용자가 요청한 규칙·렌더러 변경 작업은 끝나면 **main에 병합**한다(사용자 지시, 2026-09-26).
   작업 브랜치에서 검사를 통과시킨 뒤 병합하고, 새로 clone한 main에서 반영을 확인한다. 이어서 테스트 메일을 한 통 보내 확인한다.
-  테스트 메일 제목 앞에는 `[테스트]`를 붙인다. 이 규칙은 예약 브리핑 routine에는 해당하지 않는다(routine은 푸시하지 않는다).
+  테스트 메일 제목 앞에는 `[테스트]`를 붙인다. 테스트 메일은 발송 워크플로를 `test: true`로 실행해 보낸다.
+  이 규칙은 예약 브리핑 routine에는 해당하지 않는다(routine은 main에 푸시하지 않는다).
