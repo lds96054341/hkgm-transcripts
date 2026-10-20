@@ -449,11 +449,15 @@
  },
  "HdoESAOWVDA": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
-  "pending": "live",
-  "title": "[김현석의 월나우-10월21일] '가짜뉴스'에 유턴한 주가...강세장 속 일반적 조정? | 스페이스X 매출 161% 급등 2026-10-20 22:16",
-  "uploaded_epoch": 1792530023
+  "chars": 15345,
+  "coverage": 0.98,
+  "duration_sec": 2153,
+  "lang": "whisper-small",
+  "live_record": true,
+  "ok": true,
+  "source": "audio",
+  "title": "[김현석의 월나우-10월21일] '가짜뉴스'에 유턴한 주가...강세장 속 일반적 조정? | 스페이스X 매출 161% 급등 2026-10-20 21:41",
+  "uploaded_epoch": 1792532478
  },
  "HlH1bY_NPbc": {
   "channel": "hkwowtv",
