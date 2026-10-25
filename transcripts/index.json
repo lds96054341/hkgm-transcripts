@@ -495,14 +495,6 @@
   "title": "지는 뉴욕, 뜨는 텍사스ㅣ김인엽의 실리콘밸리나우",
   "uploaded_epoch": 1790845224
  },
- "HXHDZcwXtXg": {
-  "chars": 17852,
-  "duration_sec": 2537,
-  "lang": "ko-orig",
-  "ok": true,
-  "title": "[박신영의 개장전요것만-9월10일] 고유가 2029년까지 간다? | 엔비디아&팔란티어 연합군 | 오픈AI&앤트로픽 위협",
-  "uploaded_epoch": 1789049854
- },
  "HdoESAOWVDA": {
   "channel": "hkgm",
   "chars": 15345,
@@ -1724,6 +1716,16 @@
   "ok": true,
   "title": "[2026 잭슨홀 생중계] 워시 의장 연설 집중분석 | 해설 박신영·황정수 뉴욕특파원",
   "uploaded_epoch": 0
+ },
+ "zPHo12Jn4pA": {
+  "channel": "hkgm",
+  "chars": 538,
+  "duration_sec": 54,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "금리보다 중요한 연준의 한마디",
+  "uploaded_epoch": 1792931439
  },
  "zhv6pUO9Xz4": {
   "channel": "hkgm",
