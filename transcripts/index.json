@@ -301,14 +301,6 @@
   "title": "머스크, 삼전닉스 저격 이어 중국 메모리 플러팅? | 월가백브리핑",
   "uploaded_epoch": 1792234833
  },
- "8FkN7shZ8kw": {
-  "chars": 11690,
-  "duration_sec": 1511,
-  "lang": "ko-orig",
-  "ok": true,
-  "title": "일본 엔화와 엔캐리 트레이드가 어떻게 미국 국채금리와 증시를 흔드는지 살펴봅니다 | 박신영의 월가아나토미",
-  "uploaded_epoch": 1789088417
- },
  "8R9_tvkju38": {
   "channel": "hkwowtv",
   "chars": 758,
@@ -827,6 +819,16 @@
  "TF3F2WxyISA": {
   "ok": false,
   "title": "Does the September correction start here? | Wall Street Backbriefing"
+ },
+ "TNcwiTZtCb0": {
+  "channel": "hkgm",
+  "chars": 12260,
+  "duration_sec": 1321,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "조촐한 미국의 ‘대잔치’…미국 경제, 정말 좋은 걸까ㅣ이상은의 워싱턴나우",
+  "uploaded_epoch": 1792984804
  },
  "TurrTr6nJjM": {
   "channel": "hkgm",
