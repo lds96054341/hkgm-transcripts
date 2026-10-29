@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-10-29T02:02:23+00:00",
- "last_run_kst": "2026-10-29 11:02:23 KST",
+ "last_run_utc": "2026-10-29T10:51:22+00:00",
+ "last_run_kst": "2026-10-29 19:51:22 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -15,6 +15,18 @@
  },
  "results": [
   {
+   "id": "y_YEJ_uTzTc",
+   "channel": "hkgm",
+   "state": "no_subtitle",
+   "error": "b_safari,mweb) → 음성 받아쓰기로 전환 || [audio/default] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] y_YEJ_uTzTc: Sign in to confirm you’re not a bot. This helps protect o | [audio/tv] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] y_YEJ_uTzTc: Sign in to confirm you’re not a bot. This helps protect o | [audio/web_safari] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] y_YEJ_uTzTc: Sign in to confirm you’re not a bot. This helps protect o | [audio/mweb] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] y_YEJ_uTzTc: Sign in to confirm you’re not a bot. This helps protect o"
+  },
+  {
+   "id": "RC4G1yrucKA",
+   "channel": "hkgm",
+   "state": "no_subtitle",
+   "error": "b_safari,mweb) → 음성 받아쓰기로 전환 || [audio/default] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] RC4G1yrucKA: Sign in to confirm you’re not a bot. This helps protect o | [audio/tv] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] RC4G1yrucKA: Sign in to confirm you’re not a bot. This helps protect o | [audio/web_safari] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] RC4G1yrucKA: Sign in to confirm you’re not a bot. This helps protect o | [audio/mweb] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] RC4G1yrucKA: Sign in to confirm you’re not a bot. This helps protect o"
+  },
+  {
    "id": "ifvYaVuNId8",
    "channel": "hkgm",
    "state": "live_pending",
@@ -24,7 +36,7 @@
    "id": "mAGzUse1pBI",
    "channel": "hkgm",
    "state": "no_subtitle",
-   "error": "b_safari,mweb) → 음성 받아쓰기로 전환 || [audio/default] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] mAGzUse1pBI: Sign in to confirm you’re not a bot. This helps protect o | [audio/tv] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] mAGzUse1pBI: Sign in to confirm you’re not a bot. This helps protect o | [audio/web_safari] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] mAGzUse1pBI: Sign in to confirm you’re not a bot. This helps protect o | [audio/mweb] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] mAGzUse1pBI: Sign in to confirm you’re not a bot. This helps protect o"
+   "error": "자막 트랙 없음(default,tv,web_safari,mweb) → 음성 받아쓰기로 전환 || 봇 차단 2회로 이번 회차 받아쓰기 중단"
   },
   {
    "id": "7dZAzfY5PB4",
@@ -80,19 +92,9 @@
    "id": "3g6V0Pbts2I",
    "channel": "hkgm",
    "state": "cached"
-  },
-  {
-   "id": "R8JkAUoV0cE",
-   "channel": "hkgm",
-   "state": "cached"
-  },
-  {
-   "id": "lN4c3XgcFS4",
-   "channel": "hkgm",
-   "state": "cached"
   }
  ],
- "whisper_used": 1,
+ "whisper_used": 2,
  "health": {
   "cookie": {
    "status": "ok",
@@ -110,24 +112,24 @@
     "__Secure-3PSID"
    ],
    "nearest_expiry_kst": "2027-10-23 21:54 KST",
-   "days_left": 359.5,
+   "days_left": 359.1,
    "note": ""
   },
   "pot_provider": "ok",
   "js_runtime": "ok deno=2.9.8 ejs=0.8.0 ffmpeg=6.1.1-3ubuntu5",
   "ejs_failures": 0,
-  "bot_blocked": 1,
-  "audio_disabled": false,
+  "bot_blocked": 2,
+  "audio_disabled": true,
   "fetched": 0,
   "by_caption": 0,
-  "failed": 1,
+  "failed": 3,
   "live_pending": 1,
   "live_record": "월나우 라이브 녹음 실패 — record-live success (https://github.com/lds96054341/hkgm-transcripts/actions/runs/40799204852)",
   "whisper_errors": 0,
   "warnings": [
    "월나우 라이브 녹음 실패 — record-live success (https://github.com/lds96054341/hkgm-transcripts/actions/runs/40799204852)",
-   "YouTube 봇 차단 1회 — GitHub Actions의 데이터센터 IP는 차단 대상입니다. 자막 경로로만 수집됩니다.",
-   "이번 회차 신규 수집 0건(실패 1건) — 리포트는 기사 기반으로 작성해야 합니다."
+   "YouTube 봇 차단 2회 — GitHub Actions의 데이터센터 IP는 차단 대상입니다. 자막 경로로만 수집됩니다.",
+   "이번 회차 신규 수집 0건(실패 3건) — 리포트는 기사 기반으로 작성해야 합니다."
   ]
  }
 }

@@ -627,14 +627,6 @@
   "title": "[김현석의 월나우-10월28일] 반도체 이틀째 급반등...\"연말 랠리 시작됐다\" vs \"조정 아직 안 끝나\" 2026-10-27 21:39",
   "uploaded_epoch": 1793137156
  },
- "Jl-igqPuNGY": {
-  "chars": 13492,
-  "duration_sec": 1470,
-  "lang": "ko-orig",
-  "ok": true,
-  "title": "경유 정제마진 사상최대…불붙은 기름값ㅣ이상은의 워싱턴나우",
-  "uploaded_epoch": 1789354810
- },
  "KW5i4ZExcyM": {
   "channel": "hkgm",
   "chars": 16873,
@@ -827,6 +819,13 @@
   "source": "caption",
   "title": "AI 기술주가 불안할때 돌아볼 곳 | 박신영의 월가아나토미",
   "uploaded_epoch": 1792796423
+ },
+ "RC4G1yrucKA": {
+  "channel": "hkgm",
+  "duration_sec": 0,
+  "ok": false,
+  "title": "\"I am very interested in the Korean economy\": Warsh's changed demeanor",
+  "uploaded_epoch": 0
  },
  "RSLFCX9puzI": {
   "channel": "hkgm",
@@ -1817,6 +1816,13 @@
   "source": "caption",
   "title": "[김현석의 브레이킹 뉴스] 9월 CPI 발표...폭등하는 금리",
   "uploaded_epoch": 1791981792
+ },
+ "y_YEJ_uTzTc": {
+  "channel": "hkgm",
+  "duration_sec": 0,
+  "ok": false,
+  "title": "Why Google Bet $10 Million on a Bankrupt Airline's Data | In-yeop Kim's Silicon Valley Now",
+  "uploaded_epoch": 0
  },
  "ybN74LY7b-M": {
   "chars": 13288,
