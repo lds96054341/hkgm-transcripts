@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-10-29T11:21:43+00:00",
- "last_run_kst": "2026-10-29 20:21:43 KST",
+ "last_run_utc": "2026-10-29T11:35:03+00:00",
+ "last_run_kst": "2026-10-29 20:35:03 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -17,18 +17,12 @@
   {
    "id": "KzpzJxIEiR0",
    "channel": "hkwowtv",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 1109
+   "state": "cached"
   },
   {
    "id": "6TeOB8Kiv20",
    "channel": "hkwowtv",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 18031
+   "state": "cached"
   },
   {
    "id": "zJpiWkFXTyA",
@@ -43,18 +37,12 @@
   {
    "id": "y_YEJ_uTzTc",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 10591
+   "state": "cached"
   },
   {
    "id": "RC4G1yrucKA",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko",
-   "chars": 896
+   "state": "cached"
   },
   {
    "id": "ifvYaVuNId8",
@@ -65,10 +53,7 @@
   {
    "id": "mAGzUse1pBI",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 57196
+   "state": "cached"
   },
   {
    "id": "7dZAzfY5PB4",
@@ -152,8 +137,8 @@
   "ejs_failures": 0,
   "bot_blocked": 0,
   "audio_disabled": false,
-  "fetched": 5,
-  "by_caption": 5,
+  "fetched": 0,
+  "by_caption": 0,
   "failed": 0,
   "live_pending": 1,
   "live_record": "월나우 라이브 녹음 실패 — record-live success (https://github.com/lds96054341/hkgm-transcripts/actions/runs/40799204852)",
