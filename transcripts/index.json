@@ -612,11 +612,15 @@
  },
  "J-J5zsGk8FI": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
-  "pending": "live",
-  "title": "[김현석의 월나우-10월30일] 알파벳 13% 추락...아마존, 인텔도 '어닝 쇼크' | 안전자산 선호→금리 급락 2026-10-29 22:16",
-  "uploaded_epoch": 1793305736
+  "chars": 16523,
+  "coverage": 0.98,
+  "duration_sec": 2409,
+  "lang": "whisper-small",
+  "live_record": true,
+  "ok": true,
+  "source": "audio",
+  "title": "[김현석의 월나우-10월30일] 알파벳 13% 추락...아마존, 인텔도 '어닝 쇼크' | 안전자산 선호→금리 급락 2026-10-29 21:41",
+  "uploaded_epoch": 1793310093
  },
  "JVX4xO3zD8g": {
   "channel": "hkgm",
