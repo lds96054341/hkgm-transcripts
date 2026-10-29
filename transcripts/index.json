@@ -610,6 +610,14 @@
   "title": "[김현석의 월나우-10월20일] \"빅테크 실적, 반등 계기\"...단기 기술적 반등이냐, 연말 랠리 시작이냐 2026-10-19 21:36",
   "uploaded_epoch": 1792445755
  },
+ "J-J5zsGk8FI": {
+  "channel": "hkgm",
+  "duration_sec": 0,
+  "ok": false,
+  "pending": "live",
+  "title": "[김현석의 월나우-10월30일] 알파벳 13% 추락...아마존, 인텔도 '어닝 쇼크' | 안전자산 선호→금리 급락 2026-10-29 22:16",
+  "uploaded_epoch": 1793305736
+ },
  "JVX4xO3zD8g": {
   "channel": "hkgm",
   "chars": 14892,
@@ -621,6 +629,16 @@
   "source": "audio",
   "title": "[김현석의 월나우-10월28일] 반도체 이틀째 급반등...\"연말 랠리 시작됐다\" vs \"조정 아직 안 끝나\" 2026-10-27 21:39",
   "uploaded_epoch": 1793137156
+ },
+ "JnAMGLw_JkQ": {
+  "channel": "hkwowtv",
+  "chars": 17405,
+  "duration_sec": 2542,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "[🔴10/30 #당잠사] 아마존·인텔·샌디스크 실적발표뜨거운 PCE·GDP·고용…인플레 압박ㅣECB 금리 동결ㅣ엔비디아 정보수집 中스파이 논란ㅣ#엔비디아 #아마존 #알파벳",
+  "uploaded_epoch": 1793308465
  },
  "KW5i4ZExcyM": {
   "channel": "hkgm",
@@ -977,16 +995,6 @@
   "source": "audio",
   "title": "[김현석의 월나우-10월9일] 갑자기 터진 'AI 수요' 걱정...사실 아니라는데 기술주 발작 | 금리는 급락...고점 쳤다? 2026-10-08 21:41",
   "uploaded_epoch": 1791495593
- },
- "Vjx3Lr7lSQ0": {
-  "channel": "hkwowtv",
-  "chars": 17670,
-  "duration_sec": 2596,
-  "lang": "ko-orig",
-  "ok": true,
-  "source": "caption",
-  "title": "[🔴09/15 #당잠사] 사우디 송유관 공격에 국제유가 급등ㅣ美 10년물 금리 장중 5% 돌파ㅣ오픈AI, 연내 IPO 추진 중단…AI 안전 우려 부각ㅣ#엔비디아 #오픈AI #애플",
-  "uploaded_epoch": 1789420529
  },
  "VriNuQw8d6s": {
   "channel": "hkgm",
