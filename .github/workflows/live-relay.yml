@@ -8,7 +8,7 @@ name: live-relay
 #
 #   그래서 이 워크플로는 자기 자신을 이어서 실행한다(GITHUB_TOKEN 으로 보낸 workflow_dispatch 는
 #   예외적으로 새 실행을 만든다). 한 번 돌 때:
-#     1) 지금이 KST 화~토 03:00~06:59(★24, 예전엔 06시대만)이고 오늘 03:00 KST 이후 record-live 실행(새벽 예약 포함)이 없으면 record-live 를 실행한다
+#     1) 지금이 KST 화~토 03:00~06:59(★24, 예전엔 06시대만)이고 오늘 03:00 KST 이후 실패하지 않은(★25) record-live 실행(새벽 예약 포함)이 없으면 record-live 를 실행한다
 #        (wait_0625=true — record-live 가 06:25 KST 까지 자고 나서 라이브를 찾는다).
 #     2) 다음 목표(다음 KST 화~토 06:05)까지 자되, 러너 상한(360분) 때문에 최대 330분만 잔다.
 #     3) 깨어나면 자기 자신을 다시 실행한다. 다음 실행이 1)부터 반복한다.
@@ -71,7 +71,8 @@ jobs:
           if air_day(now) and 3 <= now.hour < 7:
               since = now.replace(hour=3, minute=0, second=0, microsecond=0)
               out = subprocess.run(
-                  ["gh", "run", "list", "-w", "record-live.yml", "-L", "10", "--json", "createdAt"],
+                  ["gh", "run", "list", "-w", "record-live.yml", "-L", "10",
+                   "--json", "createdAt,status,conclusion"],
                   capture_output=True, text=True)
               if out.returncode != 0:
                   print(f"[!] gh run list 실패 — 그래도 실행한다: {out.stderr.strip()}", file=sys.stderr)
@@ -80,8 +81,12 @@ jobs:
                   runs = json.loads(out.stdout or "[]")
                   recent = [r for r in runs
                             if dt.datetime.fromisoformat(r["createdAt"].replace("Z", "+00:00")) >= since]
-                  dispatch = not recent
-                  print(f"[i] 오늘 03:00 KST 이후 record-live 실행 {len(recent)}건", file=sys.stderr)
+                  # ★25 실패로 끝난 실행은 세지 않는다(record-live 는 녹음 실패 시 이제 빨간색으로 끝난다)
+                  alive = [r for r in recent
+                           if r.get("status") != "completed" or r.get("conclusion") == "success"]
+                  dispatch = not alive
+                  print(f"[i] 오늘 03:00 KST 이후 record-live 실행 {len(recent)}건 "
+                        f"(실패 제외 {len(alive)}건)", file=sys.stderr)
 
           # 2) 다음 목표 시각
           t = now.replace(hour=TARGET_H, minute=TARGET_M, second=0, microsecond=0)

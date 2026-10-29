@@ -40,9 +40,14 @@ on:
         description: 'true 면 06:25 KST 까지 자고 시작한다(★23 live-relay.yml 이 넘긴다)'
         required: false
         default: 'false'
+      attempt:
+        description: '★25 몇 번째 러너인지(녹음 실패 시 record_live.py 가 다음 러너를 띄우며 넘긴다)'
+        required: false
+        default: '1'
 
 permissions:
   contents: write
+  actions: write     # ★25 녹음 실패 시 다음 러너(record-live)를 실행한다
 
 # 수집기(hkgm-transcripts)와 다른 그룹이라 녹음하는 동안에도 수집기는 따로 돈다.
 concurrency:
@@ -118,14 +123,20 @@ jobs:
           TRANSCRIPT_KEY: ${{ secrets.TRANSCRIPT_KEY }}
           VIDEO_ID: ${{ github.event.inputs.video_id }}
           POLL_UNTIL_KST: ${{ github.event.inputs.poll_until_kst || '07:40' }}
+          RETRY_ATTEMPT: ${{ github.event.inputs.attempt || '1' }}
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
         run: |
           set +e
           python -u .github/scripts/record_live.py
           rc=$?
           rm -f cookies.txt
           echo "### 라이브 녹음: $(cat _out/result.txt 2>/dev/null || echo '결과 없음')" >> "$GITHUB_STEP_SUMMARY"
+          # ★25 녹음·자막 대체가 모두 실패하면 실행을 실패(빨간색)로 끝낸다. 예전엔 초록으로 끝나 실패를 놓쳤다.
+          #     Commit 단계는 건너뛰지만 failed 면 올릴 결과도 없다.
           if grep -q '^failed' _out/result.txt 2>/dev/null; then
             echo "::error::$(cat _out/result.txt)"
+            exit 1
           fi
           exit $rc
 

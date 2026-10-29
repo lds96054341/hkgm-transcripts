@@ -16,6 +16,8 @@
   POLL_UNTIL_KST              라이브를 찾는 마감(HH:MM, 기본 07:40). VIDEO_ID 가 있으면 시작 후 90분.
   TITLE_FILTER                제목 정규식(비우면 채널의 모든 라이브)
   CAPTION_WAIT_MIN            ★23 녹음이 실패했을 때 유튜브 자막을 기다리는 시간(분, 기본 60)
+  RETRY_ATTEMPT               ★25 몇 번째 러너인지(첫 실행 1). 녹음이 실패하면 다음 러너로 넘긴다.
+  GH_TOKEN, GH_REPO           ★25 다음 러너를 띄울 때 쓴다(gh workflow run)
 결과는 _out/result.txt 에 한 줄로 남긴다(recorded / caption / no_live / failed: …).
 
 ★23 녹음 실패 시 자막 대체
@@ -23,6 +25,13 @@
   멤버십 전용으로 바뀌기 전에 유튜브 자막(자동 자막 포함)을 몇 분 간격으로 받아 본다.
   받으면 수집기와 같은 30초 블록으로 저장하고 색인에 source=caption, caption_fallback=true 로 남긴다.
   멤버십 전용 오류가 나면 더 기다려도 받을 수 없으므로 바로 끝낸다.
+
+★25 녹음 재시도·다른 러너로 넘기기 (2026-10-29)
+  10/29 에는 라이브를 찾고도 4가지 방식이 2분 안에 모두 실패(빈 파일·봇 확인)하고 바로 자막 대체로 넘어가
+  아무것도 받지 못했다. 코드·도구·쿠키는 성공한 10/28 과 같았으니 유튜브가 그 러너 IP 를 막은 것으로 본다.
+  그래서 같은 러너에서 REC_RETRY_MIN 분 동안 REC_RETRY_GAP 초 간격으로 방식 묶음을 되풀이하고,
+  그래도 안 되고 방송이 아직 중이면 새 러너(다른 IP)로 record-live 를 다시 실행해 넘긴다(최대 MAX_RUNNERS 대).
+  마지막 러너만 자막 대체를 한다. --live-from-start 라 늦게 붙은 러너도 처음부터 받는다.
 """
 import glob
 import json
@@ -43,6 +52,10 @@ MIN_COVERAGE = 0.5            # 받은 오디오가 방송 길이의 절반도 �
 WHISPER_MODEL = "small"
 CAPTION_POLL_SEC = 180         # ★23 자막 대체: 확인 간격
 CAPTION_CAP_KST = (9, 30)      # ★23 자막 대체: 이 시각(KST)이 지나면 한 번만 확인
+REC_RETRY_MIN = 12             # ★25 같은 러너에서 녹음을 되풀이하는 시간(분)
+REC_RETRY_GAP = 60             # ★25 방식 묶음 사이 쉬는 시간(초)
+MAX_RUNNERS = 3                # ★25 첫 러너 포함 최대 몇 대까지 넘기나
+ATTEMPT = int(os.environ.get("RETRY_ATTEMPT") or 1)
 MEMBERS = re.compile(r"members|Join this channel|멤버십", re.I)
 DOMAIN_PROMPT = (
     "미국 증시와 반도체 시장 브리핑입니다. "
@@ -160,6 +173,10 @@ def find_live():
                     return pid, title, rts
             elif status in ("was_live", "not_live", "post_live") and vid:
                 finished.add(vid)
+        # ★25 지정한 영상이 이미 끝났으면 90분을 기다리지 않는다(넘겨받은 러너가 방송 뒤에 뜬 경우)
+        if want and want in finished:
+            print(f"[i] {want} 방송이 이미 끝남")
+            return None
         print(f"[i] {datetime.now(KST):%H:%M:%S} 확인 {len(ids)}건 → {' '.join(seen) or '응답 없음'}")
         if datetime.now(KST) >= until:
             return None
@@ -171,6 +188,25 @@ def record(vid):
     url = f"https://www.youtube.com/watch?v={vid}"
     errs = []
     attempts = [(c, True) for c in ("default", "web_safari", "tv")] + [("default", False)]
+    # ★25 한 묶음이 다 실패해도 방송 중이면 REC_RETRY_MIN 분 동안 되풀이한다
+    deadline = time.time() + REC_RETRY_MIN * 60
+    rnd = 0
+    while True:
+        rnd += 1
+        res, live = _record_round(vid, url, attempts, errs)
+        if res:
+            return res, time.time(), ""
+        if not live:
+            break
+        if time.time() + REC_RETRY_GAP >= deadline:
+            break
+        print(f"[i] 녹음 {rnd}회차 실패 — {REC_RETRY_GAP}초 뒤 다시 시도")
+        time.sleep(REC_RETRY_GAP)
+    return None, time.time(), " | ".join(errs)[-600:]
+
+
+def _record_round(vid, url, attempts, errs):
+    """방식 묶음을 한 번 돈다. (파일 경로 또는 None, 아직 방송 중인지)"""
     for client, from_start in attempts:
         shutil.rmtree(TMP, ignore_errors=True)
         os.makedirs(TMP, exist_ok=True)
@@ -188,15 +224,32 @@ def record(vid):
         took = int(time.time() - t0)
         if files:
             print(f"[i] 녹음 끝: {took}초, {os.path.getsize(files[0]) // 1_000_000}MB")
-            return max(files, key=os.path.getsize), time.time(), ""
+            return max(files, key=os.path.getsize), True
         errs.append(f"[{client}/{'start' if from_start else 'now'}] {last_error(r.stderr)}")
         print("[!] " + errs[-1])
         # 방송이 이미 끝났으면(멤버십 전환 등) 더 시도해도 소용없다
         p = probe(url)
         if not p or p[1] != "is_live":
-            break
+            return None, False
         time.sleep(5)
-    return None, time.time(), " | ".join(errs)[-600:]
+    return None, True
+
+
+def still_live(vid):
+    p = probe(f"https://www.youtube.com/watch?v={vid}")
+    return bool(p and p[1] == "is_live")
+
+
+def hand_off(vid):
+    """★25 새 러너(다른 IP)로 record-live 를 다시 실행한다. 성공하면 True"""
+    nxt = ATTEMPT + 1
+    r = run(["gh", "workflow", "run", "record-live.yml", "--ref", "main",
+             "-f", f"video_id={vid}", "-f", f"attempt={nxt}"], timeout=60)
+    if r.returncode != 0:
+        print(f"[!] 다음 러너 실행 실패: {last_error(r.stderr)}")
+        return False
+    print(f"[i] 다음 러너({nxt}/{MAX_RUNNERS}) 실행 요청")
+    return True
 
 
 def audio_seconds(path):
@@ -370,7 +423,11 @@ def main():
     rec_start = time.time()
     apath, rec_end, err = record(vid)
     if not apath:
-        fallback(vid, title, rts, f"녹음 오류 — {err[-150:]}")
+        # ★25 방송 중이고 넘길 러너가 남았으면 자막 대체 대신 다음 러너에 맡긴다
+        if ATTEMPT < MAX_RUNNERS and still_live(vid) and hand_off(vid):
+            result(f"handoff: {vid} 러너 {ATTEMPT}/{MAX_RUNNERS} 녹음 실패 → 다음 러너로 넘김 — {err[-150:]}")
+            return
+        fallback(vid, title, rts, f"녹음 오류(러너 {ATTEMPT}/{MAX_RUNNERS}) — {err[-150:]}")
         return
 
     adur = audio_seconds(apath)
