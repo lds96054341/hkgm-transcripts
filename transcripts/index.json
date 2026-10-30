@@ -1729,11 +1729,15 @@
  },
  "sQq-MJkDE1E": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
-  "pending": "live",
-  "title": "[김현석의 월나우-10월31일] 공포 부른 인텔의 30% 추락...메모리의 복수, 애플도 쇼크? \"선거 뒤를 기다려라\" 2026-10-30 22:15",
-  "uploaded_epoch": 1793392198
+  "chars": 20638,
+  "coverage": 0.98,
+  "duration_sec": 2771,
+  "lang": "whisper-small",
+  "live_record": true,
+  "ok": true,
+  "source": "audio",
+  "title": "[김현석의 월나우-10월31일] 공포 부른 인텔의 30% 추락...메모리의 복수, 애플도 쇼크? \"선거 뒤를 기다려라\" 2026-10-30 21:45",
+  "uploaded_epoch": 1793396681
  },
  "t1U2KUddac8": {
   "channel": "hkwowtv",
