@@ -1,10 +1,10 @@
 {
- "last_run_utc": "2026-10-31T01:57:54+00:00",
- "last_run_kst": "2026-10-31 10:57:54 KST",
+ "last_run_utc": "2026-10-31T10:19:30+00:00",
+ "last_run_kst": "2026-10-31 19:19:30 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
-   "listed": 4,
+   "listed": 2,
    "list_error": ""
   },
   "hkgm": {
@@ -25,14 +25,12 @@
    "state": "cached"
   },
   {
-   "id": "KzpzJxIEiR0",
-   "channel": "hkwowtv",
-   "state": "cached"
-  },
-  {
-   "id": "6TeOB8Kiv20",
-   "channel": "hkwowtv",
-   "state": "cached"
+   "id": "xIQFdrHGaqo",
+   "channel": "hkgm",
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 18540
   },
   {
    "id": "jMPtE2UQR0Y",
@@ -103,11 +101,6 @@
    "id": "TNcwiTZtCb0",
    "channel": "hkgm",
    "state": "cached"
-  },
-  {
-   "id": "dRvE3GG9GBM",
-   "channel": "hkgm",
-   "state": "cached"
   }
  ],
  "whisper_used": 0,
@@ -128,16 +121,16 @@
     "__Secure-3PSID"
    ],
    "nearest_expiry_kst": "2027-12-03 20:15 KST",
-   "days_left": 398.4,
+   "days_left": 398.0,
    "note": ""
   },
   "pot_provider": "ok",
-  "js_runtime": "ok deno=2.9.8 ejs=0.8.0 ffmpeg=6.1.1-3ubuntu5",
+  "js_runtime": "ok deno=2.9.8 ejs=0.8.0 ffmpeg=8.0.1-3ubuntu2",
   "ejs_failures": 0,
   "bot_blocked": 0,
   "audio_disabled": false,
-  "fetched": 0,
-  "by_caption": 0,
+  "fetched": 1,
+  "by_caption": 1,
   "failed": 0,
   "live_pending": 0,
   "live_record": "ok",
