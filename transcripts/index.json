@@ -273,16 +273,6 @@
   "title": "[🔴10/28 #당잠사] 필라델피아반도체 3.6% 상승 | 이란 최고지도자 “종전 조건 실현해 상황 끝내야” | 엔비디아·AMD, 메타에 투자 | #엔비디아 #메타 #오라클",
   "uploaded_epoch": 1793135661
  },
- "6Wljggm-qTE": {
-  "channel": "hkwowtv",
-  "chars": 15815,
-  "duration_sec": 2245,
-  "lang": "ko-orig",
-  "ok": true,
-  "source": "caption",
-  "title": "[🔴09/18 #당잠사] 美 증시 3대지수 상승ㅣ美 주간 신규 실업수당 19만6천건…예상치 하회ㅣ네비우스 “엔비디아 GPU 임대료 20% 인상”ㅣ#엔비디아 #아마존 #알파벳",
-  "uploaded_epoch": 1789679518
- },
  "6u6nIqka_Mw": {
   "channel": "hkwowtv",
   "chars": 1078,
@@ -1044,6 +1034,16 @@
   "title": "[🔴09/29 #당잠사] 엔비디아 역대급 자사주 매입ㅣ뉴욕증시, 치솟는 국채금리에 투심 위축ㅣ사우디, 동서 송유관 가동 재개…국제유가 변동성 커져ㅣ#엔비디아 #스페이스X #메타",
   "uploaded_epoch": 1790630519
  },
+ "Y6EgLH6uagc": {
+  "channel": "hkgm",
+  "chars": 4029,
+  "duration_sec": 459,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "애플의 실적발표가 과거와 다른 점ㅣ김현석의 월나우 위클리Q",
+  "uploaded_epoch": 1793570435
+ },
  "Ytd52XDFj84": {
   "channel": "hkgm",
   "chars": 16576,
@@ -1151,6 +1151,16 @@
  "aig2WN5150s": {
   "ok": false,
   "title": "[박신영의 개장전요것만-9월1일] 글로벌 국채금리, 금융위기 후 최고치..반도체, 유탄맞고 9월 조정 시작﻿? | 엔비디아 스페이스X의 1등 수혜주"
+ },
+ "bIAXjjkKGR4": {
+  "channel": "hkwowtv",
+  "chars": 19253,
+  "duration_sec": 2779,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "[🔴11/02 #당잠사] 뉴욕증시 하락…기술주 매도 확대 | 바이낸스 해킹…美 FBI “배후에 北” | 필·반 급락…애플 시총 1위 탈환 | #엔비디아 #애플 #비트코인",
+  "uploaded_epoch": 1793569842
  },
  "bPordRoqBuU": {
   "channel": "hkgm",
