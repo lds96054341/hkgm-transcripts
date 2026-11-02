@@ -698,8 +698,8 @@
   "channel": "hkgm",
   "duration_sec": 0,
   "ok": false,
-  "pending": "upcoming",
-  "title": "[김현석의 월나우-11월3일] 한국 시간 기준 오전 7시 30분 LIVE",
+  "pending": "live",
+  "title": "[김현석의 월나우-11월3일] 유가 8% 급락에도 반등에 동참 못한 반도체...국채 발행도 쏟아진다 2026-11-02 23:12",
   "uploaded_epoch": 1793655337
  },
  "LrV9OuVW0HE": {
@@ -1770,6 +1770,16 @@
   "source": "audio",
   "title": "[김현석의 월나우-10월8일] \"네가 안 사면 남들이 산다\"→마이크론 급등 이유 | 해외 채권 수요…베센트의 손? 2026-10-07 21:36",
   "uploaded_epoch": 1791408885
+ },
+ "uXrhKxVBlwM": {
+  "channel": "hkwowtv",
+  "chars": 1012,
+  "duration_sec": 114,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "11월 3일 글로벌 1분 시황✅ #당잠사 #굿모닝한경글로벌마켓 #1분시황",
+  "uploaded_epoch": 1793658800
  },
  "ugFWgZTMmco": {
   "ok": false,
