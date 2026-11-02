@@ -694,6 +694,14 @@
   "title": "10월 바닥 기다리는 월가...닷컴버블때도 그랬다는데 | 월가백브리핑",
   "uploaded_epoch": 1791025238
  },
+ "L_SslyBpb_c": {
+  "channel": "hkgm",
+  "duration_sec": 0,
+  "ok": false,
+  "pending": "upcoming",
+  "title": "[김현석의 월나우-11월3일] 한국 시간 기준 오전 7시 LIVE",
+  "uploaded_epoch": 1793655337
+ },
  "LrV9OuVW0HE": {
   "channel": "hkgm",
   "duration_sec": 2296,
@@ -1418,6 +1426,16 @@
   "ok": false,
   "title": "[Park Shin-young's Pre-market Brief - August 27] They said AI would consume us, but... Salesforce..."
  },
+ "jmQolgkrx_g": {
+  "channel": "hkwowtv",
+  "chars": 21801,
+  "duration_sec": 3086,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "[🔴11/03 #당잠사] 애플·팔란티어 실적발표 | 이란 대통령 “美 협상 권한 부여받아”…국제유가 7%대 급락 | 앤트로픽, 분기 매출 12배 급증 | #메타 #앤트로픽 #오라클",
+  "uploaded_epoch": 1793654615
+ },
  "jprajFiODyE": {
   "channel": "hkgm",
   "chars": 16205,
@@ -1604,6 +1622,16 @@
   "source": "audio",
   "title": "[김현석의 월나우-10월10일] AI 수요 오해 풀렸지만, S&P 신기록 다가섰지만, 오늘도 떨어진 반도체...왜 2026-10-09 21:39",
   "uploaded_epoch": 1791581950
+ },
+ "ozMJS8ChedM": {
+  "channel": "hkgm",
+  "chars": 18256,
+  "duration_sec": 2407,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "[박신영의 개장전요것만-11월2일] \"인텔 저가매수 신중해야\" | 팔란티어, 월가는 긍정 vs 개인 심리 '약세'",
+  "uploaded_epoch": 1793631843
  },
  "pNGUtf6XNMY": {
   "channel": "hkgm",
