@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-11-02T01:00:12+00:00",
- "last_run_kst": "2026-11-02 10:00:12 KST",
+ "last_run_utc": "2026-11-02T01:27:26+00:00",
+ "last_run_kst": "2026-11-02 10:27:26 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -17,10 +17,7 @@
   {
    "id": "17aIDW7Qz4k",
    "channel": "hkwowtv",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 1010
+   "state": "cached"
   },
   {
    "id": "bIAXjjkKGR4",
@@ -139,8 +136,8 @@
   "ejs_failures": 0,
   "bot_blocked": 0,
   "audio_disabled": false,
-  "fetched": 1,
-  "by_caption": 1,
+  "fetched": 0,
+  "by_caption": 0,
   "failed": 0,
   "live_pending": 0,
   "live_record": "ok",
