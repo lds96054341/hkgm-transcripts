@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-11-02T23:22:21+00:00",
- "last_run_kst": "2026-11-03 08:22:21 KST",
+ "last_run_utc": "2026-11-03T03:02:26+00:00",
+ "last_run_kst": "2026-11-03 12:02:26 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -33,12 +33,6 @@
    "id": "bIAXjjkKGR4",
    "channel": "hkwowtv",
    "state": "cached"
-  },
-  {
-   "id": "L_SslyBpb_c",
-   "channel": "hkgm",
-   "state": "no_subtitle",
-   "error": "자막 트랙 없음(default,tv,web_safari,mweb) → 음성 받아쓰기로 전환 || [audio/default] ERROR: The downloaded file is empty | [audio/tv] ERROR: [youtube] L_SslyBpb_c: The page needs to be reloaded. | [audio/web_safari] WARNING: Unable to download format 95. Skipping... / ERROR: | [audio/mweb] ERROR:"
   },
   {
    "id": "qMIF3dfOBCo",
@@ -109,9 +103,14 @@
    "id": "y_YEJ_uTzTc",
    "channel": "hkgm",
    "state": "cached"
+  },
+  {
+   "id": "RC4G1yrucKA",
+   "channel": "hkgm",
+   "state": "cached"
   }
  ],
- "whisper_used": 1,
+ "whisper_used": 0,
  "health": {
   "cookie": {
    "status": "ok",
@@ -129,7 +128,7 @@
     "__Secure-3PSID"
    ],
    "nearest_expiry_kst": "2027-12-03 20:15 KST",
-   "days_left": 395.5,
+   "days_left": 395.3,
    "note": ""
   },
   "pot_provider": "ok",
@@ -139,12 +138,10 @@
   "audio_disabled": false,
   "fetched": 0,
   "by_caption": 0,
-  "failed": 1,
+  "failed": 0,
   "live_pending": 0,
   "live_record": "ok",
   "whisper_errors": 0,
-  "warnings": [
-   "이번 회차 신규 수집 0건(실패 1건) — 리포트는 기사 기반으로 작성해야 합니다."
-  ]
+  "warnings": []
  }
 }
