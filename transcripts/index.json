@@ -153,6 +153,16 @@
   "title": "[박신영의 개장전요것만-10월7일] 메타는 골든크로스 효과 | “마이크론 200% 오를 것”",
   "uploaded_epoch": 1791381833
  },
+ "2Czv_NadWsQ": {
+  "channel": "hkwowtv",
+  "chars": 23296,
+  "duration_sec": 3352,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "[🔴11/05 #당잠사] 美 덮친 ‘블루쓰나미’…상하원 압승 | 뉴욕증시 상승…빅테크 강세 속 반도체는 하락 | 종전 기대에 유가 급락 | #엔비디아 #테슬라 #알파벳",
+  "uploaded_epoch": 1793827870
+ },
  "2IfdeWrNkcw": {
   "channel": "hkgm",
   "chars": 7256,
@@ -440,6 +450,16 @@
   "source": "caption",
   "title": "[박신영의 개장전요것만-10월30일] 다가오는 앤트로픽 IPO...AI주 사려고 AI주 판다?",
   "uploaded_epoch": 1793368252
+ },
+ "ESla1WSxaCA": {
+  "channel": "hkgm",
+  "chars": 5730,
+  "duration_sec": 756,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "[박신영의 클로징벨 요것만-11월5일] 민주당 압승에 MS 아마존 구글 급등...데이터센터 건설 지연 우려에 반도체주 일제히 하락",
+  "uploaded_epoch": 1793829049
  },
  "EhXi8vLNJek": {
   "channel": "hkgm",
@@ -784,6 +804,14 @@
   "title": "[김현석의 월나우-11월4일] 어떤 결과라도 안도 랠리?...'인텔 망령' 떨쳐낸 AMD, 월마트가 떨어진 이유 2026-11-03 22:07",
   "uploaded_epoch": 1793743611
  },
+ "OrodpdmZpT0": {
+  "channel": "hkgm",
+  "duration_sec": 0,
+  "ok": false,
+  "pending": "live",
+  "title": "[김현석의 월나우-11월5일] 블루쓰나미에도 \"불확실성 청산\"...반도체만 빼고 폭등, 연말 랠리 or 불트랩? 2026-11-04 22:16",
+  "uploaded_epoch": 1793828310
+ },
  "PC-toIUYe_I": {
   "channel": "hkwowtv",
   "chars": 856,
@@ -823,16 +851,6 @@
   "source": "caption",
   "title": "유가 100달러 시대, 미국 경제에 벌어지는 일",
   "uploaded_epoch": 1792359039
- },
- "Q5lThKLnPLM": {
-  "channel": "hkgm",
-  "chars": 4014,
-  "duration_sec": 451,
-  "lang": "ko-orig",
-  "ok": true,
-  "source": "caption",
-  "title": "10월 증시 반등할까ㅣ김현석의 월나우 위클리Q",
-  "uploaded_epoch": 1789939829
  },
  "QRAUVOBcGgA": {
   "channel": "hkgm",
@@ -1591,16 +1609,6 @@
  "oddhu5wf7M8": {
   "ok": false,
   "title": "Examining the Role of GPUs in the AI Era and the Power of NVIDIA | Park Shin-young's Wall Street ..."
- },
- "ofJq1qwJ1qk": {
-  "channel": "hkwowtv",
-  "chars": 17477,
-  "duration_sec": 2430,
-  "lang": "ko-orig",
-  "ok": true,
-  "source": "caption",
-  "title": "[🔴09/21 #당잠사] 美 10년물 5% 재돌파ㅣ트럼프 “AI군 창설할 것”ㅣ앤트로픽·오픈AI 잇단 IPO 연기ㅣ필라델피아 반도체 2.7% 상승ㅣ#엔비디아 #브로드컴 #앤트로픽",
-  "uploaded_epoch": 1789938776
  },
  "oqJ3hZsycus": {
   "channel": "hkgm",
