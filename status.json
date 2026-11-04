@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-11-04T22:16:13+00:00",
- "last_run_kst": "2026-11-05 07:16:13 KST",
+ "last_run_utc": "2026-11-04T23:12:32+00:00",
+ "last_run_kst": "2026-11-05 08:12:32 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -15,12 +15,17 @@
  },
  "results": [
   {
-   "id": "2Czv_NadWsQ",
+   "id": "EZzzP6E2B2U",
    "channel": "hkwowtv",
    "state": "fetched",
    "source": "caption",
    "lang": "ko-orig",
-   "chars": 23296
+   "chars": 903
+  },
+  {
+   "id": "2Czv_NadWsQ",
+   "channel": "hkwowtv",
+   "state": "cached"
   },
   {
    "id": "o9dNvi1VDiQ",
@@ -33,23 +38,17 @@
    "state": "cached"
   },
   {
-   "id": "uXrhKxVBlwM",
-   "channel": "hkwowtv",
-   "state": "cached"
-  },
-  {
    "id": "OrodpdmZpT0",
    "channel": "hkgm",
-   "state": "live_pending",
-   "error": "LIVE: 라이브 진행 중 — 방송이 끝난 뒤 다음 실행에서 다시 시도"
+   "state": "fetched",
+   "source": "audio",
+   "lang": "whisper-small",
+   "chars": 17750
   },
   {
    "id": "ESla1WSxaCA",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 5730
+   "state": "cached"
   },
   {
    "id": "GHT2uEfRoz8",
@@ -117,7 +116,7 @@
    "state": "cached"
   }
  ],
- "whisper_used": 0,
+ "whisper_used": 1,
  "health": {
   "cookie": {
    "status": "ok",
@@ -144,11 +143,13 @@
   "bot_blocked": 0,
   "audio_disabled": false,
   "fetched": 2,
-  "by_caption": 2,
+  "by_caption": 1,
   "failed": 0,
-  "live_pending": 1,
-  "live_record": "ok",
+  "live_pending": 0,
+  "live_record": "월나우 라이브 녹음 실패 — record-live failure (https://github.com/lds96054341/hkgm-transcripts/actions/runs/41900935865)",
   "whisper_errors": 0,
-  "warnings": []
+  "warnings": [
+   "월나우 라이브 녹음 실패 — record-live failure (https://github.com/lds96054341/hkgm-transcripts/actions/runs/41900935865)"
+  ]
  }
 }
