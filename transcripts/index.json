@@ -223,6 +223,16 @@
   "title": "앤트로픽과 구글의 AI 뒤에 숨은 강자, 브로드컴을 알아봤습니다 | 박신영의 월가아나토미",
   "uploaded_epoch": 1793149236
  },
+ "4yb-QgodD30": {
+  "channel": "hkwowtv",
+  "chars": 22086,
+  "duration_sec": 3144,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "[🔴11/06 #당잠사] 중간선거발 AI 규제 공포…나스닥 조정국면 진입 | 미 3대지수·필라델피아반도체 모두 급락 | #엔비디아 #알파벳 #애플",
+  "uploaded_epoch": 1793913907
+ },
  "5hrxzHh5evk": {
   "channel": "hkgm",
   "chars": 5982,
@@ -1083,6 +1093,14 @@
   "title": "[박신영의 개장전요것만-9월30일] 앤트로픽 목줄 쥔 기업은 어디?...국채금리에도 레버리지 효과 | 머스크와 젠슨황의 전력 민심 달래기",
   "uploaded_epoch": 1790778397
  },
+ "XMhf4Y-qmWs": {
+  "channel": "hkgm",
+  "duration_sec": 0,
+  "ok": false,
+  "pending": "live",
+  "title": "[김현석의 월나우-11월6일] 투매, 패닉...나스닥 -5.5%...골드만 \"매수세 안 보여\" | 반도체 고점 6월이었다? 2026-11-05 22:15",
+  "uploaded_epoch": 1793915159
+ },
  "XTimReAM6rw": {
   "channel": "hkgm",
   "chars": 18631,
@@ -1102,6 +1120,16 @@
   "source": "caption",
   "title": "[🔴09/29 #당잠사] 엔비디아 역대급 자사주 매입ㅣ뉴욕증시, 치솟는 국채금리에 투심 위축ㅣ사우디, 동서 송유관 가동 재개…국제유가 변동성 커져ㅣ#엔비디아 #스페이스X #메타",
   "uploaded_epoch": 1790630519
+ },
+ "Xr-xw6KaThk": {
+  "channel": "hkgm",
+  "chars": 6798,
+  "duration_sec": 880,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "[박신영의 클로징벨 요것만-11월6일] 뉴욕증시 대폭락...나스닥 5.5%, S&P 4.3% 급락 | AI 투자 버블의 청구서",
+  "uploaded_epoch": 1793915181
  },
  "Y6EgLH6uagc": {
   "channel": "hkgm",
@@ -1280,16 +1308,6 @@
   "source": "caption",
   "title": "AI 폭락 시그널? 닷컴버블 때와 '이게' 같고, '이게' 다릅니다 | 박신영의 월가아나토미",
   "uploaded_epoch": 1792544409
- },
- "cyYv1nozkZ0": {
-  "channel": "hkwowtv",
-  "chars": 16652,
-  "duration_sec": 2378,
-  "lang": "ko-orig",
-  "ok": true,
-  "source": "caption",
-  "title": "[🔴09/22 #당잠사] 뉴욕증시 급등…필라델피아 반도체 4%대 상승 | AMD, 시총 1조 달러 돌파 | 비트코인 86000달러 돌파 | #메타 #AMD #스페이스X",
-  "uploaded_epoch": 1790025149
  },
  "dRvE3GG9GBM": {
   "channel": "hkgm",
