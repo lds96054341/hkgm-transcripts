@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-11-05T01:44:18+00:00",
- "last_run_kst": "2026-11-05 10:44:18 KST",
+ "last_run_utc": "2026-11-05T02:12:14+00:00",
+ "last_run_kst": "2026-11-05 11:12:14 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -37,10 +37,7 @@
   {
    "id": "jb_V0AW3qBQ",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 7732
+   "state": "cached"
   },
   {
    "id": "ESla1WSxaCA",
@@ -139,14 +136,14 @@
   "ejs_failures": 0,
   "bot_blocked": 0,
   "audio_disabled": false,
-  "fetched": 1,
-  "by_caption": 1,
+  "fetched": 0,
+  "by_caption": 0,
   "failed": 0,
   "live_pending": 0,
-  "live_record": "월나우 라이브 녹음 실패 — record-live success (https://github.com/lds96054341/hkgm-transcripts/actions/runs/41950116899)",
+  "live_record": "월나우 라이브 녹음 실패 — record-live success (https://github.com/lds96054341/hkgm-transcripts/actions/runs/41951006141)",
   "whisper_errors": 0,
   "warnings": [
-   "월나우 라이브 녹음 실패 — record-live success (https://github.com/lds96054341/hkgm-transcripts/actions/runs/41950116899)"
+   "월나우 라이브 녹음 실패 — record-live success (https://github.com/lds96054341/hkgm-transcripts/actions/runs/41951006141)"
   ]
  }
 }
