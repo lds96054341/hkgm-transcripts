@@ -155,6 +155,9 @@ jobs:
  
       # ★24 월나우 라이브 녹음 점검. KST 화~토 06:40 이후인데 오늘 녹음 결과가 없으면 경고 문구를 남긴다.
       #     (10/6 에는 녹음이 아예 실행되지 않았는데 브리핑에는 '멤버십 전용'으로만 보였다)
+      # ★26 '오늘 결과'는 제목이 월나우인 항목만 센다(11/3 클로징벨 녹음을 월나우 녹음으로 잘못 셌다).
+      #     월나우를 수집기가 따로 받았으면 경고하지 않는다. 실패 문구는 실패한 실행을 가리킨다
+      #     (11/5 에는 뒤늦게 뜬 예약 실행의 'success' 를 집어 "녹음 실패 — record-live success" 로 나왔다).
       - name: Check live recording
         continue-on-error: true
         env:
@@ -162,7 +165,8 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           python3 - <<'PY' > live_rec_status.txt
-          import datetime as dt, json, os, subprocess
+          import datetime as dt, json, os, re, subprocess
+          WALLNOW = re.compile(r"월나우|월스트리트나우|월스트리트 나우")
           KST = dt.timezone(dt.timedelta(hours=9))
           now = dt.datetime.now(KST)
           since = now.replace(hour=3, minute=0, second=0, microsecond=0)
@@ -172,8 +176,9 @@ jobs:
               idx = json.load(open("transcripts/index.json", encoding="utf-8"))
           except Exception:
               idx = {}
-          if any(e.get("live_record") and (e.get("uploaded_epoch") or 0) >= since.timestamp() for e in idx.values()):
-              raise SystemExit          # 오늘 녹음 완료
+          if any(e.get("ok") and WALLNOW.search(e.get("title", ""))
+                 and (e.get("uploaded_epoch") or 0) >= since.timestamp() for e in idx.values()):
+              raise SystemExit          # 오늘 월나우 확보(녹음 또는 수집기)
           out = subprocess.run(["gh", "run", "list", "-w", "record-live.yml", "-L", "10",
                                 "--json", "createdAt,status,conclusion,url"],
                                capture_output=True, text=True)
@@ -187,8 +192,13 @@ jobs:
           elif any(r["status"] != "completed" for r in runs):
               pass                      # 아직 녹음·받아쓰기 중
           else:
-              r = runs[0]
-              print(f"월나우 라이브 녹음 실패 — record-live {r['conclusion']} ({r['url']})")
+              bad = [r for r in runs if r["conclusion"] not in ("success", "skipped")]
+              if bad:
+                  r = bad[0]              # 가장 최근의 실패한 실행
+                  print(f"월나우 라이브 녹음 실패 — record-live {r['conclusion']} ({r['url']})")
+              else:
+                  r = runs[-1]            # 오늘 가장 먼저 뜬 실행(녹음 담당)
+                  print(f"월나우 라이브 녹음 실패 — 월나우 라이브를 찾지 못함(record-live 는 성공으로 끝남, {r['url']})")
           PY
           cat live_rec_status.txt
 

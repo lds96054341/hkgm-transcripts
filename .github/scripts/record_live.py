@@ -13,8 +13,8 @@
 환경변수
   YT_COOKIES, TRANSCRIPT_KEY  수집기와 같은 시크릿
   VIDEO_ID                    이 영상만 기다려 녹음(수동 실행용). 없으면 채널에서 찾는다.
-  POLL_UNTIL_KST              라이브를 찾는 마감(HH:MM, 기본 07:40). VIDEO_ID 가 있으면 시작 후 90분.
-  TITLE_FILTER                제목 정규식(비우면 채널의 모든 라이브)
+  POLL_UNTIL_KST              라이브를 찾는 마감(HH:MM, 기본 09:00). VIDEO_ID 가 있으면 시작 후 90분.
+  TITLE_FILTER                제목 정규식(비우면 월나우만: WALLNOW_PAT). VIDEO_ID 가 있으면 쓰지 않는다.
   CAPTION_WAIT_MIN            ★23 녹음이 실패했을 때 유튜브 자막을 기다리는 시간(분, 기본 60)
   RETRY_ATTEMPT               ★25 몇 번째 러너인지(첫 실행 1). 녹음이 실패하면 다음 러너로 넘긴다.
   GH_TOKEN, GH_REPO           ★25 다음 러너를 띄울 때 쓴다(gh workflow run)
@@ -32,6 +32,11 @@
   그래서 같은 러너에서 REC_RETRY_MIN 분 동안 REC_RETRY_GAP 초 간격으로 방식 묶음을 되풀이하고,
   그래도 안 되고 방송이 아직 중이면 새 러너(다른 IP)로 record-live 를 다시 실행해 넘긴다(최대 MAX_RUNNERS 대).
   마지막 러너만 자막 대체를 한다. --live-from-start 라 늦게 붙은 러너도 처음부터 받는다.
+
+★26 월나우만 녹음·마감 09:00 (2026-11-05)
+  11/1 미국 서머타임 해제 뒤 06:30 무렵 「박신영의 클로징벨 요것만」 라이브가 새로 생기고
+  월나우는 07:00~08:30 으로 늦어졌다. 예전에는 처음 발견한 라이브를 녹음하고 07:40 까지만 기다려서
+  11/3·11/5 에 클로징벨을 잘못 녹음하고 월나우를 놓쳤다. 이제 제목이 월나우인 라이브만 녹음하고 09:00 KST 까지 기다린다.
 """
 import glob
 import json
@@ -57,6 +62,8 @@ REC_RETRY_GAP = 60             # ★25 방식 묶음 사이 쉬는 시간(초)
 MAX_RUNNERS = 3                # ★25 첫 러너 포함 최대 몇 대까지 넘기나
 ATTEMPT = int(os.environ.get("RETRY_ATTEMPT") or 1)
 MEMBERS = re.compile(r"members|Join this channel|멤버십", re.I)
+WALLNOW_PAT = r"월나우|월스트리트나우|월스트리트 나우"   # ★26 녹음 대상(TITLE_FILTER 기본값)
+DEFAULT_POLL_UNTIL = "09:00"                          # ★26 라이브를 찾는 마감(KST)
 DOMAIN_PROMPT = (
     "미국 증시와 반도체 시장 브리핑입니다. "
     "엔비디아, 삼성전자, SK하이닉스, 마이크론, 브로드컴, TSMC, 인텔, AMD, "
@@ -138,16 +145,17 @@ def already_done(vid):
 def find_live():
     """라이브가 시작될 때까지 기다린다. (id, title, release_ts) 또는 None"""
     want = os.environ.get("VIDEO_ID", "").strip()
-    pat = os.environ.get("TITLE_FILTER", "").strip()
-    pat = re.compile(pat) if pat else None
+    # ★26 videoId 를 지정하지 않으면 월나우만 녹음한다(클로징벨 등 다른 라이브는 건너뜀)
+    pat = None if want else re.compile(os.environ.get("TITLE_FILTER", "").strip() or WALLNOW_PAT)
     now = datetime.now(KST)
     if want:
         until = now + timedelta(minutes=90)
     else:
-        hh, mm = map(int, (os.environ.get("POLL_UNTIL_KST") or "07:40").split(":"))
+        hh, mm = map(int, (os.environ.get("POLL_UNTIL_KST") or DEFAULT_POLL_UNTIL).split(":"))
         until = now.replace(hour=hh, minute=mm, second=0, microsecond=0)
     print(f"[i] 라이브 찾기: {'videoId ' + want if want else '채널 ' + CHANNEL['name']} — {until:%H:%M} KST까지")
     finished = set()          # 이미 끝났거나 라이브가 아닌 영상은 다시 묻지 않는다
+    skipped = set()           # ★26 제목 필터로 건너뛴 라이브(로그는 한 번만)
     while True:
         ids = [want] if want else ([None] + candidates())
         seen = []
@@ -166,7 +174,9 @@ def find_live():
                     print(f"[i] {pid} 이미 받아 둠 — 건너뜀")
                     finished.add(pid)
                 elif pat and not pat.search(title):
-                    print(f"[i] {pid} 라이브지만 제목 필터에 안 맞음: {title}")
+                    if pid not in skipped:
+                        print(f"[i] {pid} 월나우가 아닌 라이브 — 건너뜀: {title}")
+                        skipped.add(pid)
                     finished.add(pid)
                 else:
                     print(f"[+] 라이브 발견: {pid} {title}")
@@ -321,7 +331,7 @@ def vtt_to_pairs(path):
 def recent_broadcast():
     """★23 라이브를 놓쳤을 때: 채널 /streams 에서 최근 6시간 안에 끝난 방송 하나 (id, title, ts) 또는 None"""
     # 놓친 방송을 고를 때는 다른 라이브(브레이킹 뉴스 등)를 잘못 고르지 않도록 기본으로 월나우만 본다.
-    pat = re.compile(os.environ.get("TITLE_FILTER", "").strip() or r"월나우|월스트리트나우|월스트리트 나우")
+    pat = re.compile(os.environ.get("TITLE_FILTER", "").strip() or WALLNOW_PAT)
     want = os.environ.get("VIDEO_ID", "").strip()
     for vid in ([want] if want else candidates()):
         p = probe(f"https://www.youtube.com/watch?v={vid}")
