@@ -17,10 +17,12 @@ on:
     #   (09:42·09:50 KST)에야 떠서 방송을 통째로 놓쳤다. 그래서 03:47~05:47 KST 에 일찍 여러 번 걸어
     #   3시간 늦어도 방송 전에 하나는 뜨게 하고, 일찍 뜬 실행은 아래 첫 단계에서 06:25 KST 까지 잔다.
     #   concurrency(hkgm-live) 때문에 한 번에 하나만 돌고 나머지는 대기열에서 기다렸다가,
-    #   이미 받아 둔 영상은 건너뛰고 07:40 KST 가 지났으면 한 번만 확인하고 끝난다.
+    #   이미 받아 둔 영상은 건너뛰고 마감(★26 09:00 KST)이 지났으면 한 번만 확인하고 끝난다.
     #   18:47 UTC = 03:47 KST (월~금 UTC = 화~토 KST)
     # ★23 10/2에는 이 예약 5개 중 4개가 아예 안 떴다. 이제 주 경로는 live-relay.yml 의 릴레이 실행이고
     #   아래 예약은 보험으로만 남긴다.
+    # ★26 11/1 미국 서머타임 해제 뒤 월나우는 07:00~08:30 에 시작한다. 06:30 무렵엔 「클로징벨 요것만」 라이브가 있어
+    #   record_live.py 는 제목이 월나우인 라이브만 녹음하고 09:00 KST 까지 기다린다.
     - cron: '47 18 * * 1-5'
     - cron: '47 19 * * 1-5'
     - cron: '47 20 * * 1-5'
@@ -35,7 +37,7 @@ on:
       poll_until_kst:
         description: '라이브를 찾는 마감 HH:MM (KST, video_id 가 없을 때)'
         required: false
-        default: '07:40'
+        default: '09:00'
       wait_0625:
         description: 'true 면 06:25 KST 까지 자고 시작한다(★23 live-relay.yml 이 넘긴다)'
         required: false
@@ -64,9 +66,33 @@ jobs:
       # ★22 일찍 뜬 예약 실행은 방송 직전까지 잔다. 몇 시간 동안 유튜브를 조회하면 봇 차단 위험이 있어서
       #   잠은 checkout·설치보다 먼저 자고, 깨어난 뒤에 최신 main 과 최신 도구로 시작한다.
       # ★23 live-relay.yml 이 06:05 KST 무렵 wait_0625=true 로 실행한 것도 같이 잔다.
+      # ★26 마감이 09:00 KST 로 늦어져, 05:00 KST 전에 뜬 실행은 330분 상한 안에 녹음·받아쓰기를 끝내지 못할 수 있다
+      #     (09:00 직전 시작 + 녹음 60분 + 받아쓰기 15분 ≈ 10:15, 05:00 부터 315분). 그래서 05:00 까지 자고 새 record-live 실행에 넘긴 뒤
+      #     이 실행은 끝낸다. 넘기기에 실패하면 이 실행이 그대로 이어간다.
       - name: Wait until 06:25 KST (early scheduled runs)
+        id: wait
         if: github.event_name == 'schedule' || github.event.inputs.wait_0625 == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
         run: |
+          hour=$(TZ=Asia/Seoul date +%-H)
+          now=$(TZ=Asia/Seoul date +%s)
+          relay=$(TZ=Asia/Seoul date -d 'today 05:00' +%s)
+          if [ "$hour" -ge 2 ] && [ "$now" -lt "$relay" ]; then
+            echo "[i] $(TZ=Asia/Seoul date +%H:%M) KST — 05:00 KST 까지 $(( (relay - now) / 60 ))분 대기 후 새 실행에 넘김"
+            sleep $(( relay - now ))
+            for i in 1 2 3 4 5; do
+              if gh workflow run record-live.yml --ref main -f wait_0625=true; then
+                echo "[i] 새 record-live 실행에 넘김 — 이 실행은 끝냄"
+                echo "### 05:00 KST 새 실행에 넘김" >> "$GITHUB_STEP_SUMMARY"
+                echo "handed_off=true" >> "$GITHUB_OUTPUT"
+                exit 0
+              fi
+              echo "재시도 ${i}"; sleep $((i * 20))
+            done
+            echo "::warning::새 실행에 넘기지 못함 — 이 실행이 이어서 녹음한다"
+          fi
           now=$(TZ=Asia/Seoul date +%s)
           target=$(TZ=Asia/Seoul date -d 'today 06:25' +%s)
           hour=$(TZ=Asia/Seoul date +%-H)
@@ -78,24 +104,29 @@ jobs:
           fi
 
       - uses: actions/checkout@v4
+        if: steps.wait.outputs.handed_off != 'true'
         with:
           ref: main
 
       - uses: actions/setup-python@v5
+        if: steps.wait.outputs.handed_off != 'true'
         with:
           python-version: '3.12'
 
       - uses: denoland/setup-deno@v2
+        if: steps.wait.outputs.handed_off != 'true'
         with:
           deno-version: v2.x
 
       - name: Cache whisper model
+        if: steps.wait.outputs.handed_off != 'true'
         uses: actions/cache@v4
         with:
           path: ~/.cache/huggingface
           key: whisper-small-v1
 
       - name: Start PO token provider
+        if: steps.wait.outputs.handed_off != 'true'
         run: |
           set +e
           docker run --name bgutil-provider -d --init -p 4416:4416 \
@@ -108,6 +139,7 @@ jobs:
           exit 0
 
       - name: Install tools
+        if: steps.wait.outputs.handed_off != 'true'
         run: |
           sudo apt-get update -qq >/dev/null
           sudo apt-get install -y -qq ffmpeg >/dev/null
@@ -118,11 +150,12 @@ jobs:
           yt-dlp --version
 
       - name: Record and transcribe
+        if: steps.wait.outputs.handed_off != 'true'
         env:
           YT_COOKIES: ${{ secrets.YT_COOKIES }}
           TRANSCRIPT_KEY: ${{ secrets.TRANSCRIPT_KEY }}
           VIDEO_ID: ${{ github.event.inputs.video_id }}
-          POLL_UNTIL_KST: ${{ github.event.inputs.poll_until_kst || '07:40' }}
+          POLL_UNTIL_KST: ${{ github.event.inputs.poll_until_kst || '09:00' }}
           RETRY_ATTEMPT: ${{ github.event.inputs.attempt || '1' }}
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
@@ -141,6 +174,7 @@ jobs:
           exit $rc
 
       - name: Commit
+        if: steps.wait.outputs.handed_off != 'true'
         run: |
           if ! ls _out/*.enc >/dev/null 2>&1; then
             echo "올릴 결과 없음"; exit 0
