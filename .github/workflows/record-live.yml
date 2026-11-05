@@ -23,6 +23,7 @@ on:
     #   아래 예약은 보험으로만 남긴다.
     # ★26 11/1 미국 서머타임 해제 뒤 월나우는 07:00~08:30 에 시작한다. 06:30 무렵엔 「클로징벨 요것만」 라이브가 있어
     #   record_live.py 는 제목이 월나우인 라이브만 녹음하고 09:00 KST 까지 기다린다.
+    # ★27 대기·마감 시각은 미국 서머타임 여부로 자동 계산한다(EDT 06:00~08:00, EST 07:00~09:00 KST). 아래 예약(03:47~06:50 KST)은 둘 다 덮는다.
     - cron: '47 18 * * 1-5'
     - cron: '47 19 * * 1-5'
     - cron: '47 20 * * 1-5'
@@ -35,11 +36,11 @@ on:
         required: false
         default: ''
       poll_until_kst:
-        description: '라이브를 찾는 마감 HH:MM (KST, video_id 가 없을 때)'
+        description: '라이브를 찾는 마감 HH:MM (KST, video_id 가 없을 때). 비우면 서머타임에 따라 08:00(EDT)/09:00(EST)'
         required: false
-        default: '09:00'
+        default: ''
       wait_0625:
-        description: 'true 면 06:25 KST 까지 자고 시작한다(★23 live-relay.yml 이 넘긴다)'
+        description: 'true 면 라이브 찾기 시작 시각(★27 EDT 06:00 / EST 07:00 KST)까지 자고 시작한다(live-relay.yml 이 넘긴다)'
         required: false
         default: 'false'
       attempt:
@@ -69,23 +70,33 @@ jobs:
       # ★26 마감이 09:00 KST 로 늦어져, 05:00 KST 전에 뜬 실행은 330분 상한 안에 녹음·받아쓰기를 끝내지 못할 수 있다
       #     (09:00 직전 시작 + 녹음 60분 + 받아쓰기 15분 ≈ 10:15, 05:00 부터 315분). 그래서 05:00 까지 자고 새 record-live 실행에 넘긴 뒤
       #     이 실행은 끝낸다. 넘기기에 실패하면 이 실행이 그대로 이어간다.
-      - name: Wait until 06:25 KST (early scheduled runs)
+      # ★27 시각을 고정하지 않고 뉴욕 마감(16:00 ET)에서 계산한다. 서머타임(EDT)이면 마감 05:00 KST, 아니면(EST) 06:00 KST.
+      #     넘기기 = 마감 -60분(04:00/05:00), 라이브 찾기 시작 = 마감 +60분(06:00/07:00). .github/scripts/market_clock.py 와 같은 규칙
+      #     (이 단계는 checkout 전이라 같은 계산을 셸로 한다).
+      - name: Wait until live window (early runs)
         id: wait
         if: github.event_name == 'schedule' || github.event.inputs.wait_0625 == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
         run: |
+          yday=$(TZ=Asia/Seoul date -d yesterday +%F)
+          close=$(date -d "TZ=\"America/New_York\" ${yday} 16:00" +%s)
+          zone=$(TZ=America/New_York date -d "@${close}" +%Z)
+          relay=$(( close - 3600 ))
+          target=$(( close + 3600 ))
+          kst() { TZ=Asia/Seoul date -d "@$1" +%H:%M; }
+          echo "[i] 뉴욕 ${zone} — 마감 $(kst $close) KST · 넘기기 $(kst $relay) · 라이브 찾기 시작 $(kst $target) KST"
+          echo "### 미국 ${zone}: 마감 $(kst $close) KST · 라이브 찾기 $(kst $target) KST 부터" >> "$GITHUB_STEP_SUMMARY"
           hour=$(TZ=Asia/Seoul date +%-H)
-          now=$(TZ=Asia/Seoul date +%s)
-          relay=$(TZ=Asia/Seoul date -d 'today 05:00' +%s)
+          now=$(date +%s)
           if [ "$hour" -ge 2 ] && [ "$now" -lt "$relay" ]; then
-            echo "[i] $(TZ=Asia/Seoul date +%H:%M) KST — 05:00 KST 까지 $(( (relay - now) / 60 ))분 대기 후 새 실행에 넘김"
+            echo "[i] $(TZ=Asia/Seoul date +%H:%M) KST — $(kst $relay) KST 까지 $(( (relay - now) / 60 ))분 대기 후 새 실행에 넘김"
             sleep $(( relay - now ))
             for i in 1 2 3 4 5; do
               if gh workflow run record-live.yml --ref main -f wait_0625=true; then
                 echo "[i] 새 record-live 실행에 넘김 — 이 실행은 끝냄"
-                echo "### 05:00 KST 새 실행에 넘김" >> "$GITHUB_STEP_SUMMARY"
+                echo "### $(kst $relay) KST 새 실행에 넘김" >> "$GITHUB_STEP_SUMMARY"
                 echo "handed_off=true" >> "$GITHUB_OUTPUT"
                 exit 0
               fi
@@ -93,11 +104,10 @@ jobs:
             done
             echo "::warning::새 실행에 넘기지 못함 — 이 실행이 이어서 녹음한다"
           fi
-          now=$(TZ=Asia/Seoul date +%s)
-          target=$(TZ=Asia/Seoul date -d 'today 06:25' +%s)
+          now=$(date +%s)
           hour=$(TZ=Asia/Seoul date +%-H)
           if [ "$hour" -ge 2 ] && [ "$now" -lt "$target" ]; then
-            echo "[i] $(TZ=Asia/Seoul date +%H:%M) KST — 06:25 KST 까지 $(( (target - now) / 60 ))분 대기"
+            echo "[i] $(TZ=Asia/Seoul date +%H:%M) KST — $(kst $target) KST 까지 $(( (target - now) / 60 ))분 대기"
             sleep $(( target - now ))
           else
             echo "[i] $(TZ=Asia/Seoul date +%H:%M) KST — 대기 없이 시작"
@@ -155,7 +165,7 @@ jobs:
           YT_COOKIES: ${{ secrets.YT_COOKIES }}
           TRANSCRIPT_KEY: ${{ secrets.TRANSCRIPT_KEY }}
           VIDEO_ID: ${{ github.event.inputs.video_id }}
-          POLL_UNTIL_KST: ${{ github.event.inputs.poll_until_kst || '09:00' }}
+          POLL_UNTIL_KST: ${{ github.event.inputs.poll_until_kst }}
           RETRY_ATTEMPT: ${{ github.event.inputs.attempt || '1' }}
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
