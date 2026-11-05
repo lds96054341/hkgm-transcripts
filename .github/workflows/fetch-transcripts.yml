@@ -153,7 +153,7 @@ jobs:
           echo "[i] JS runtime: $(cat js_status.txt)"
           exit 0
  
-      # ★24 월나우 라이브 녹음 점검. KST 화~토 06:40 이후인데 오늘 녹음 결과가 없으면 경고 문구를 남긴다.
+      # ★24 월나우 라이브 녹음 점검. KST 화~토 06:40(★27 서머타임이 아니면 07:40) 이후인데 오늘 녹음 결과가 없으면 경고 문구를 남긴다.
       #     (10/6 에는 녹음이 아예 실행되지 않았는데 브리핑에는 '멤버십 전용'으로만 보였다)
       # ★26 '오늘 결과'는 제목이 월나우인 항목만 센다(11/3 클로징벨 녹음을 월나우 녹음으로 잘못 셌다).
       #     월나우를 수집기가 따로 받았으면 경고하지 않는다. 실패 문구는 실패한 실행을 가리킨다
@@ -165,12 +165,14 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           python3 - <<'PY' > live_rec_status.txt
-          import datetime as dt, json, os, re, subprocess
+          import datetime as dt, json, os, re, subprocess, sys
+          sys.path.insert(0, ".github/scripts")
+          import market_clock            # ★27 경고 시작 시각도 서머타임에 따라(EDT 06:40 / EST 07:40 KST)
           WALLNOW = re.compile(r"월나우|월스트리트나우|월스트리트 나우")
           KST = dt.timezone(dt.timedelta(hours=9))
           now = dt.datetime.now(KST)
           since = now.replace(hour=3, minute=0, second=0, microsecond=0)
-          if now.weekday() not in (1, 2, 3, 4, 5) or (now.hour, now.minute) < (6, 40):
+          if now.weekday() not in (1, 2, 3, 4, 5) or now < market_clock.schedule(now)["warn_after"]:
               raise SystemExit
           try:
               idx = json.load(open("transcripts/index.json", encoding="utf-8"))

@@ -13,7 +13,7 @@
 환경변수
   YT_COOKIES, TRANSCRIPT_KEY  수집기와 같은 시크릿
   VIDEO_ID                    이 영상만 기다려 녹음(수동 실행용). 없으면 채널에서 찾는다.
-  POLL_UNTIL_KST              라이브를 찾는 마감(HH:MM, 기본 09:00). VIDEO_ID 가 있으면 시작 후 90분.
+  POLL_UNTIL_KST              라이브를 찾는 마감(HH:MM). 비우면 ★27 market_clock 의 deadline(EDT 08:00 / EST 09:00). VIDEO_ID 가 있으면 시작 후 90분.
   TITLE_FILTER                제목 정규식(비우면 월나우만: WALLNOW_PAT). VIDEO_ID 가 있으면 쓰지 않는다.
   CAPTION_WAIT_MIN            ★23 녹음이 실패했을 때 유튜브 자막을 기다리는 시간(분, 기본 60)
   RETRY_ATTEMPT               ★25 몇 번째 러너인지(첫 실행 1). 녹음이 실패하면 다음 러너로 넘긴다.
@@ -36,7 +36,11 @@
 ★26 월나우만 녹음·마감 09:00 (2026-11-05)
   11/1 미국 서머타임 해제 뒤 06:30 무렵 「박신영의 클로징벨 요것만」 라이브가 새로 생기고
   월나우는 07:00~08:30 으로 늦어졌다. 예전에는 처음 발견한 라이브를 녹음하고 07:40 까지만 기다려서
-  11/3·11/5 에 클로징벨을 잘못 녹음하고 월나우를 놓쳤다. 이제 제목이 월나우인 라이브만 녹음하고 09:00 KST 까지 기다린다.
+  11/3·11/5 에 클로징벨을 잘못 녹음하고 월나우를 놓쳤다. 이제 제목이 월나우인 라이브만 녹음한다.
+
+★27 서머타임 자동 인식 (2026-11-05)
+  마감·자막 대체 마감을 고정하지 않고 market_clock.py 가 뉴욕 서머타임 여부로 계산한다
+  (EDT: 08:00·08:30, EST: 09:00·09:30 KST). 3월 서머타임 시작·11월 해제 때 손댈 필요가 없다.
 """
 import glob
 import json
@@ -44,6 +48,7 @@ import os
 import re
 import shutil
 import subprocess
+import sys
 import time
 from datetime import datetime, timedelta, timezone
 
@@ -56,14 +61,16 @@ REC_TIMEOUT = 130 * 60        # 녹음 한 번의 최대 시간(월나우는 40�
 MIN_COVERAGE = 0.5            # 받은 오디오가 방송 길이의 절반도 안 되면 버린다
 WHISPER_MODEL = "small"
 CAPTION_POLL_SEC = 180         # ★23 자막 대체: 확인 간격
-CAPTION_CAP_KST = (9, 30)      # ★23 자막 대체: 이 시각(KST)이 지나면 한 번만 확인
+# ★23 자막 대체: 이 시각(KST)이 지나면 한 번만 확인 — ★27 서머타임에 따라 08:30(EDT)/09:30(EST)
 REC_RETRY_MIN = 12             # ★25 같은 러너에서 녹음을 되풀이하는 시간(분)
 REC_RETRY_GAP = 60             # ★25 방식 묶음 사이 쉬는 시간(초)
 MAX_RUNNERS = 3                # ★25 첫 러너 포함 최대 몇 대까지 넘기나
 ATTEMPT = int(os.environ.get("RETRY_ATTEMPT") or 1)
 MEMBERS = re.compile(r"members|Join this channel|멤버십", re.I)
 WALLNOW_PAT = r"월나우|월스트리트나우|월스트리트 나우"   # ★26 녹음 대상(TITLE_FILTER 기본값)
-DEFAULT_POLL_UNTIL = "09:00"                          # ★26 라이브를 찾는 마감(KST)
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import market_clock                                    # ★27 서머타임에 따른 시간표
+CLOCK = market_clock.schedule()
 DOMAIN_PROMPT = (
     "미국 증시와 반도체 시장 브리핑입니다. "
     "엔비디아, 삼성전자, SK하이닉스, 마이크론, 브로드컴, TSMC, 인텔, AMD, "
@@ -151,8 +158,13 @@ def find_live():
     if want:
         until = now + timedelta(minutes=90)
     else:
-        hh, mm = map(int, (os.environ.get("POLL_UNTIL_KST") or DEFAULT_POLL_UNTIL).split(":"))
-        until = now.replace(hour=hh, minute=mm, second=0, microsecond=0)
+        poll = os.environ.get("POLL_UNTIL_KST", "").strip()
+        if poll:
+            hh, mm = map(int, poll.split(":"))
+            until = now.replace(hour=hh, minute=mm, second=0, microsecond=0)
+        else:
+            until = CLOCK["deadline"]      # ★27
+        print(f"[i] {market_clock.describe(CLOCK)}")
     print(f"[i] 라이브 찾기: {'videoId ' + want if want else '채널 ' + CHANNEL['name']} — {until:%H:%M} KST까지")
     finished = set()          # 이미 끝났거나 라이브가 아닌 영상은 다시 묻지 않는다
     skipped = set()           # ★26 제목 필터로 건너뛴 라이브(로그는 한 번만)
@@ -352,7 +364,7 @@ def caption_fallback(vid):
     """★23 녹음 대신 유튜브 자막을 받는다. (pairs, lang, 오류)"""
     url = f"https://www.youtube.com/watch?v={vid}"
     now = datetime.now(KST)
-    cap = now.replace(hour=CAPTION_CAP_KST[0], minute=CAPTION_CAP_KST[1], second=0, microsecond=0)
+    cap = CLOCK["caption_cap"]              # ★27
     wait_min = int(os.environ.get("CAPTION_WAIT_MIN") or 60)
     until = min(now + timedelta(minutes=wait_min), max(cap, now))
     print(f"[i] 자막 대체 시도: {vid} — {until:%H:%M} KST까지 {CAPTION_POLL_SEC // 60}분 간격")
