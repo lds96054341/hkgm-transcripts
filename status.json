@@ -1,10 +1,10 @@
 {
- "last_run_utc": "2026-11-05T22:14:44+00:00",
- "last_run_kst": "2026-11-06 07:14:44 KST",
+ "last_run_utc": "2026-11-05T23:12:24+00:00",
+ "last_run_kst": "2026-11-06 08:12:24 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
-   "listed": 3,
+   "listed": 4,
    "list_error": ""
   },
   "hkgm": {
@@ -15,12 +15,17 @@
  },
  "results": [
   {
-   "id": "4yb-QgodD30",
+   "id": "aUI0niJuD4g",
    "channel": "hkwowtv",
    "state": "fetched",
    "source": "caption",
    "lang": "ko-orig",
-   "chars": 22086
+   "chars": 826
+  },
+  {
+   "id": "4yb-QgodD30",
+   "channel": "hkwowtv",
+   "state": "cached"
   },
   {
    "id": "EZzzP6E2B2U",
@@ -35,16 +40,18 @@
   {
    "id": "XMhf4Y-qmWs",
    "channel": "hkgm",
+   "state": "cached"
+  },
+  {
+   "id": "PA82jotR7DI",
+   "channel": "hkgm",
    "state": "live_pending",
-   "error": "LIVE: 라이브 진행 중 — 방송이 끝난 뒤 다음 실행에서 다시 시도"
+   "error": "UPCOMING: 예약된 라이브(아직 시작 전) — 방송이 끝난 뒤 다음 실행에서 다시 시도"
   },
   {
    "id": "Xr-xw6KaThk",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 6798
+   "state": "cached"
   },
   {
    "id": "dv2hUa_JAxw",
@@ -105,11 +112,6 @@
    "id": "Rckv2rouQH8",
    "channel": "hkgm",
    "state": "cached"
-  },
-  {
-   "id": "wk8hRM6kxZE",
-   "channel": "hkgm",
-   "state": "cached"
   }
  ],
  "whisper_used": 0,
@@ -138,8 +140,8 @@
   "ejs_failures": 0,
   "bot_blocked": 0,
   "audio_disabled": false,
-  "fetched": 2,
-  "by_caption": 2,
+  "fetched": 1,
+  "by_caption": 1,
   "failed": 0,
   "live_pending": 1,
   "live_record": "ok",
