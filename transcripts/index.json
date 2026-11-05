@@ -1095,11 +1095,15 @@
  },
  "XMhf4Y-qmWs": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
-  "pending": "live",
-  "title": "[김현석의 월나우-11월6일] 투매, 패닉...나스닥 -5.5%...골드만 \"매수세 안 보여\" | 반도체 고점 6월이었다? 2026-11-05 22:15",
-  "uploaded_epoch": 1793915159
+  "chars": 17647,
+  "coverage": 0.98,
+  "duration_sec": 2365,
+  "lang": "whisper-small",
+  "live_record": true,
+  "ok": true,
+  "source": "audio",
+  "title": "[김현석의 월나우-11월6일] 투매, 패닉...나스닥 -5.5%...골드만 \"매수세 안 보여\" | 반도체 고점 6월이었다? 2026-11-05 22:09",
+  "uploaded_epoch": 1793916449
  },
  "XTimReAM6rw": {
   "channel": "hkgm",
