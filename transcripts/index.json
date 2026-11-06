@@ -1890,11 +1890,15 @@
  },
  "vt8us98Mpls": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
-  "pending": "live",
+  "chars": 18270,
+  "coverage": 0.98,
+  "duration_sec": 2424,
+  "lang": "whisper-small",
+  "live_record": true,
+  "ok": true,
+  "source": "audio",
   "title": "[김현석의 월나우-11월7일] 기술주 다음 주에 달렸다...⑴ 코어위브 실적 ⑵ 앤트로픽 IPO 여부 2026-11-06 22:14",
-  "uploaded_epoch": 1794001602
+  "uploaded_epoch": 1794003200
  },
  "w4OBX-JoHtM": {
   "ok": false,
