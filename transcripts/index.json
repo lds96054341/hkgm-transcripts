@@ -826,11 +826,13 @@
  },
  "PA82jotR7DI": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
-  "pending": "upcoming",
-  "title": "[김현석의 브레이킹 뉴스] 10월 고용보고서 발표! 11월 6일 22시 30분 L.I.V.E",
-  "uploaded_epoch": 1793919033
+  "chars": 5899,
+  "duration_sec": 838,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "[김현석의 브레이킹 뉴스] 너무 강력한 고용...Fed 금리 올리나",
+  "uploaded_epoch": 1793972507
  },
  "PC-toIUYe_I": {
   "channel": "hkwowtv",
@@ -933,16 +935,6 @@
   "source": "caption",
   "title": "중간선거 뒤 이란 때린다 vs 안 때린다 | 월가백브리핑",
   "uploaded_epoch": 1793446221
- },
- "RgO2vSLHR8M": {
-  "channel": "hkgm",
-  "chars": 21108,
-  "duration_sec": 2937,
-  "lang": "ko-orig",
-  "ok": true,
-  "source": "caption",
-  "title": "[박신영의 개장전요것만-9월22일]글로벌 자금은 美·中가리지 않았다...엔비디아는 가치 재평가?",
-  "uploaded_epoch": 1790087277
  },
  "SBUPE775CgM": {
   "channel": "hkwowtv",
@@ -1683,6 +1675,16 @@
   "source": "caption",
   "title": "[박신영의 개장전요것만-11월2일] \"인텔 저가매수 신중해야\" | 팔란티어, 월가는 긍정 vs 개인 심리 '약세'",
   "uploaded_epoch": 1793631843
+ },
+ "pIOco5Fk_eI": {
+  "channel": "hkgm",
+  "chars": 13543,
+  "duration_sec": 1799,
+  "lang": "whisper-small",
+  "ok": true,
+  "source": "audio",
+  "title": "[박신영의 개장전 요것만-11월6일] 엔비디아 살까, 말까? | 앤트로픽 IPO 고비는 넘겨야",
+  "uploaded_epoch": 1793978202
  },
  "pNGUtf6XNMY": {
   "channel": "hkgm",
