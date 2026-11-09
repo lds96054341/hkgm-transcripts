@@ -29,6 +29,14 @@
   "title": "10월 6일 글로벌 1분 시황✅ #당잠사 #굿모닝한경글로벌마켓 #1분시황",
   "uploaded_epoch": 1791249516
  },
+ "-Vt4G9lojw0": {
+  "channel": "hkgm",
+  "duration_sec": 0,
+  "ok": false,
+  "pending": "upcoming",
+  "title": "[조연의 브레이킹 뉴스] 10월 소비자물가지수(CPI) 발표! 11월 10일 오후 10시 30분 L.I.V.E",
+  "uploaded_epoch": 1794260808
+ },
  "-n210dvK4GQ": {
   "channel": "hkgm",
   "chars": 17832,
@@ -56,16 +64,6 @@
  "00AEfpaMfUQ": {
   "ok": false,
   "title": "NVIDIA's Margins Are Shrinking"
- },
- "07AQ_BD48kg": {
-  "channel": "hkgm",
-  "chars": 13138,
-  "duration_sec": 1797,
-  "lang": "ko-orig",
-  "ok": true,
-  "source": "caption",
-  "title": "[박신영의 개장전요것만-9월25일] 국채 고금리? \"정상화 과정\"...AI기업 채권 “비중 축소”",
-  "uploaded_epoch": 1790344836
  },
  "07gk3cngKx0": {
   "ok": false,
@@ -498,6 +496,16 @@
   "title": "AI 규제 외치던 앤트로픽의 소름 돋는 큰 그림은 | 직격인터뷰",
   "uploaded_epoch": 1792017017
  },
+ "FupvNmCfBPs": {
+  "channel": "hkwowtv",
+  "chars": 24460,
+  "duration_sec": 3370,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "[🔴11/10 #당잠사] 필라델피아반도체 상승 | 트럼프 \"이란 추가 공격 가능성 매우 낮아” | 엔비디아, 젠슨 황 ‘中 스파이 불륜’ 리스크 | #엔비디아 #알파벳 #애플",
+  "uploaded_epoch": 1794259682
+ },
  "GHT2uEfRoz8": {
   "channel": "hkgm",
   "chars": 13047,
@@ -507,16 +515,6 @@
   "source": "caption",
   "title": "[박신영의 개장전 요것만-11월4일] 돌아온 매수 기회?...AMD 실적이 증거, 테슬라와 스페이스X는 위험",
   "uploaded_epoch": 1793803830
- },
- "GpG_KHvk9As": {
-  "channel": "hkgm",
-  "chars": 33600,
-  "duration_sec": 3910,
-  "lang": "ko-orig",
-  "ok": true,
-  "source": "caption",
-  "title": "고금리보다 이게 더 문제...위기에 처한 구글? | 월가백브리핑",
-  "uploaded_epoch": 1790350650
  },
  "GqPdrsLmYyo": {
   "channel": "hkwowtv",
@@ -1365,6 +1363,16 @@
   "title": "고금리를 이상하리만큼 잘버티는 美 증시의 비결은? | 박신영의 월가아나토미",
   "uploaded_epoch": 1790730036
  },
+ "iZ1Fj1_38UQ": {
+  "channel": "hkgm",
+  "chars": 6284,
+  "duration_sec": 814,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "[박신영의 클로징벨 요것만-11월10일] 엔비디아 리스크에도 뉴욕증시 반등 성공...앤트로픽 불안은 여전",
+  "uploaded_epoch": 1794260801
+ },
  "i_WV2Vd1uVY": {
   "channel": "hkwowtv",
   "chars": 17989,
@@ -1907,6 +1915,16 @@
   "source": "caption",
   "title": "다가온 미국 중간선거...데이터센터 규제 현실화? | 직격인터뷰",
   "uploaded_epoch": 1793442606
+ },
+ "xH7Oa8WzppU": {
+  "channel": "hkgm",
+  "chars": 15928,
+  "duration_sec": 2061,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "[박신영의 개장전 요것만-11월9일] 젠슨 황 스캔들에 떨고있는 네오클라우드...코어위브는 파멸의 악순환?",
+  "uploaded_epoch": 1794236207
  },
  "xIQFdrHGaqo": {
   "channel": "hkgm",

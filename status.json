@@ -1,10 +1,10 @@
 {
- "last_run_utc": "2026-11-09T12:45:51+00:00",
- "last_run_kst": "2026-11-09 21:45:51 KST",
+ "last_run_utc": "2026-11-09T22:15:01+00:00",
+ "last_run_kst": "2026-11-10 07:15:01 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
-   "listed": 2,
+   "listed": 3,
    "list_error": ""
   },
   "hkgm": {
@@ -14,6 +14,14 @@
   }
  },
  "results": [
+  {
+   "id": "FupvNmCfBPs",
+   "channel": "hkwowtv",
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 24460
+  },
   {
    "id": "5PRnjUbMY6A",
    "channel": "hkwowtv",
@@ -25,12 +33,31 @@
    "state": "cached"
   },
   {
-   "id": "tKwWCma33PM",
+   "id": "-Vt4G9lojw0",
+   "channel": "hkgm",
+   "state": "live_pending",
+   "error": "UPCOMING: 예약된 라이브(아직 시작 전) — 방송이 끝난 뒤 다음 실행에서 다시 시도"
+  },
+  {
+   "id": "iZ1Fj1_38UQ",
    "channel": "hkgm",
    "state": "fetched",
    "source": "caption",
    "lang": "ko-orig",
-   "chars": 16664
+   "chars": 6284
+  },
+  {
+   "id": "xH7Oa8WzppU",
+   "channel": "hkgm",
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 15928
+  },
+  {
+   "id": "tKwWCma33PM",
+   "channel": "hkgm",
+   "state": "cached"
   },
   {
    "id": "mRL_8AYmVZ0",
@@ -86,21 +113,6 @@
    "id": "jb_V0AW3qBQ",
    "channel": "hkgm",
    "state": "cached"
-  },
-  {
-   "id": "ESla1WSxaCA",
-   "channel": "hkgm",
-   "state": "cached"
-  },
-  {
-   "id": "GHT2uEfRoz8",
-   "channel": "hkgm",
-   "state": "cached"
-  },
-  {
-   "id": "N_JXlcBFB5M",
-   "channel": "hkgm",
-   "state": "cached"
   }
  ],
  "whisper_used": 0,
@@ -121,7 +133,7 @@
     "__Secure-3PSID"
    ],
    "nearest_expiry_kst": "2027-12-03 20:15 KST",
-   "days_left": 388.9,
+   "days_left": 388.5,
    "note": ""
   },
   "pot_provider": "ok",
@@ -129,10 +141,10 @@
   "ejs_failures": 0,
   "bot_blocked": 0,
   "audio_disabled": false,
-  "fetched": 1,
-  "by_caption": 1,
+  "fetched": 3,
+  "by_caption": 3,
   "failed": 0,
-  "live_pending": 0,
+  "live_pending": 1,
   "live_record": "ok",
   "whisper_errors": 0,
   "warnings": []
