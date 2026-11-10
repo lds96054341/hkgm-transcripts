@@ -158,6 +158,7 @@ jobs:
       # ★26 '오늘 결과'는 제목이 월나우인 항목만 센다(11/3 클로징벨 녹음을 월나우 녹음으로 잘못 셌다).
       #     월나우를 수집기가 따로 받았으면 경고하지 않는다. 실패 문구는 실패한 실행을 가리킨다
       #     (11/5 에는 뒤늦게 뜬 예약 실행의 'success' 를 집어 "녹음 실패 — record-live success" 로 나왔다).
+      # ★28 채널에 월나우가 아예 올라오지 않은 날은 '월나우 방송 없음'으로 따로 남긴다(11/10).
       - name: Check live recording
         continue-on-error: true
         env:
@@ -200,7 +201,14 @@ jobs:
                   print(f"월나우 라이브 녹음 실패 — record-live {r['conclusion']} ({r['url']})")
               else:
                   r = runs[-1]            # 오늘 가장 먼저 뜬 실행(녹음 담당)
-                  print(f"월나우 라이브 녹음 실패 — 월나우 라이브를 찾지 못함(record-live 는 성공으로 끝남, {r['url']})")
+                  # ★28 녹음이 성공으로 끝났는데 색인에 오늘 월나우 항목이 하나도 없으면(예정·실패 항목 포함)
+                  #     채널에 월나우가 올라오지 않은 것이다(11/10). 녹음 실패와 구분해 남긴다.
+                  seen = any(WALLNOW.search(e.get("title", ""))
+                             and (e.get("uploaded_epoch") or 0) >= since.timestamp() for e in idx.values())
+                  if seen:
+                      print(f"월나우 라이브 녹음 실패 — 월나우 라이브를 찾지 못함(record-live 는 성공으로 끝남, {r['url']})")
+                  else:
+                      print(f"월나우 방송 없음 — 오늘 채널에 월나우가 올라오지 않음(녹음 실행은 마감까지 확인, {r['url']})")
           PY
           cat live_rec_status.txt
 
