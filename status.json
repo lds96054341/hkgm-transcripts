@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-11-09T23:12:16+00:00",
- "last_run_kst": "2026-11-10 08:12:16 KST",
+ "last_run_utc": "2026-11-10T03:46:18+00:00",
+ "last_run_kst": "2026-11-10 12:46:18 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -17,10 +17,7 @@
   {
    "id": "2-YnoFMbu_I",
    "channel": "hkwowtv",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 902
+   "state": "cached"
   },
   {
    "id": "FupvNmCfBPs",
@@ -132,7 +129,7 @@
     "__Secure-3PSID"
    ],
    "nearest_expiry_kst": "2027-12-03 20:15 KST",
-   "days_left": 388.5,
+   "days_left": 388.3,
    "note": ""
   },
   "pot_provider": "ok",
@@ -140,12 +137,14 @@
   "ejs_failures": 0,
   "bot_blocked": 0,
   "audio_disabled": false,
-  "fetched": 1,
-  "by_caption": 1,
+  "fetched": 0,
+  "by_caption": 0,
   "failed": 0,
   "live_pending": 1,
-  "live_record": "ok",
+  "live_record": "월나우 라이브 녹음 실패 — 월나우 라이브를 찾지 못함(record-live 는 성공으로 끝남, https://github.com/lds96054341/hkgm-transcripts/actions/runs/42689112328)",
   "whisper_errors": 0,
-  "warnings": []
+  "warnings": [
+   "월나우 라이브 녹음 실패 — 월나우 라이브를 찾지 못함(record-live 는 성공으로 끝남, https://github.com/lds96054341/hkgm-transcripts/actions/runs/42689112328)"
+  ]
  }
 }
