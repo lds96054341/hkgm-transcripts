@@ -31,11 +31,13 @@
  },
  "-Vt4G9lojw0": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
-  "pending": "upcoming",
-  "title": "[조연의 브레이킹 뉴스] 10월 소비자물가지수(CPI) 발표! 11월 10일 오후 10시 30분 L.I.V.E",
-  "uploaded_epoch": 1794260808
+  "chars": 4332,
+  "duration_sec": 640,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "[조연의 브레이킹 뉴스] 근원 물가 석 달째 0.3%...빅스텝 갈까",
+  "uploaded_epoch": 1794318253
  },
  "-n210dvK4GQ": {
   "channel": "hkgm",
@@ -937,6 +939,16 @@
  "SZ4z62t41Eo": {
   "ok": false,
   "title": "\"The Police Know Where I've Been\": The Truth Behind the 120,000 Cameras Covering America | Kim In..."
+ },
+ "Sz8CdKRm-Bs": {
+  "channel": "hkgm",
+  "chars": 16266,
+  "duration_sec": 2137,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "[박신영의 개장전 요것만-11월10일] 월러가 누른 빅스텝 발작 버튼...0.5%p 인상 '가능성'에 월가 깜짝 | 중국이 美 데이터센터 중단시키나?",
+  "uploaded_epoch": 1794322669
  },
  "TF3F2WxyISA": {
   "ok": false,
