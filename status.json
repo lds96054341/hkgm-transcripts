@@ -1,10 +1,10 @@
 {
- "last_run_utc": "2026-11-10T23:12:28+00:00",
- "last_run_kst": "2026-11-11 08:12:28 KST",
+ "last_run_utc": "2026-11-11T01:27:18+00:00",
+ "last_run_kst": "2026-11-11 10:27:18 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
-   "listed": 5,
+   "listed": 4,
    "list_error": ""
   },
   "hkgm": {
@@ -17,10 +17,7 @@
   {
    "id": "JLpZ0qjtmhg",
    "channel": "hkwowtv",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 936
+   "state": "cached"
   },
   {
    "id": "dvKCm93L6zQ",
@@ -38,9 +35,12 @@
    "state": "cached"
   },
   {
-   "id": "5PRnjUbMY6A",
-   "channel": "hkwowtv",
-   "state": "cached"
+   "id": "gXnkcvaEAyg",
+   "channel": "hkgm",
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 6555
   },
   {
    "id": "5mTGihYeJhI",
@@ -111,11 +111,6 @@
    "id": "Xr-xw6KaThk",
    "channel": "hkgm",
    "state": "cached"
-  },
-  {
-   "id": "dv2hUa_JAxw",
-   "channel": "hkgm",
-   "state": "cached"
   }
  ],
  "whisper_used": 0,
@@ -136,7 +131,7 @@
     "__Secure-3PSID"
    ],
    "nearest_expiry_kst": "2027-12-03 20:15 KST",
-   "days_left": 387.5,
+   "days_left": 387.4,
    "note": ""
   },
   "pot_provider": "ok",
@@ -148,8 +143,10 @@
   "by_caption": 1,
   "failed": 0,
   "live_pending": 0,
-  "live_record": "ok",
+  "live_record": "월나우 방송 없음 — 오늘 채널에 월나우가 올라오지 않음(녹음 실행은 마감까지 확인, https://github.com/lds96054341/hkgm-transcripts/actions/runs/42888847144)",
   "whisper_errors": 0,
-  "warnings": []
+  "warnings": [
+   "월나우 방송 없음 — 오늘 채널에 월나우가 올라오지 않음(녹음 실행은 마감까지 확인, https://github.com/lds96054341/hkgm-transcripts/actions/runs/42888847144)"
+  ]
  }
 }
