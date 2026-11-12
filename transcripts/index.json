@@ -1102,16 +1102,6 @@
   "title": "[박신영의 개장전요것만-10월29일] AI가 뒤집은 빅테크 권력지형...애플·구글, '을'로 전락 위기",
   "uploaded_epoch": 1793282645
  },
- "XZZe-WfIM-A": {
-  "channel": "hkwowtv",
-  "chars": 18617,
-  "duration_sec": 2610,
-  "lang": "ko-orig",
-  "ok": true,
-  "source": "caption",
-  "title": "[🔴09/29 #당잠사] 엔비디아 역대급 자사주 매입ㅣ뉴욕증시, 치솟는 국채금리에 투심 위축ㅣ사우디, 동서 송유관 가동 재개…국제유가 변동성 커져ㅣ#엔비디아 #스페이스X #메타",
-  "uploaded_epoch": 1790630519
- },
  "Xr-xw6KaThk": {
   "channel": "hkgm",
   "chars": 6798,
@@ -1361,6 +1351,13 @@
  "fnaYkJ-XqII": {
   "ok": false,
   "title": "서로 한방씩 주고받은 베선트 vs 워시…싸울 일만 남았다ㅣ이상은의 워싱턴나우"
+ },
+ "gNZjwF6oKcI": {
+  "channel": "hkwowtv",
+  "duration_sec": 0,
+  "ok": false,
+  "title": "[🔴11/13 #당잠사] 젠슨 황 엔비디아 CEO 사임ㅣ트럼프 “이란과 합의 필요 없어”ㅣ10년물 국채금리 5.1% 재돌파·유가 상승·금값 하락ㅣ#엔비디아 #AMD #알파벳",
+  "uploaded_epoch": 0
  },
  "gSbNBssBaaE": {
   "channel": "hkwowtv",
@@ -1934,6 +1931,13 @@
   "source": "caption",
   "title": "[🔴10/12 #당잠사]AI 종목 강세에 기술주 반등 | 트럼프 “푸틴과 러 경유 공급 합의” | 연준 “美 가계 부채 상환 능력 악화” | #스페이스x #엔비디아 #애플",
   "uploaded_epoch": 1791753598
+ },
+ "wgvcb9hGqNQ": {
+  "channel": "hkgm",
+  "duration_sec": 0,
+  "ok": false,
+  "title": "[박신영의 클로징벨 요것만-11월13일] 젠슨 황 사임 충격에도 힘 실리는 저가 매수세",
+  "uploaded_epoch": 0
  },
  "wk8hRM6kxZE": {
   "channel": "hkgm",
