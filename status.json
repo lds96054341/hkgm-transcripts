@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-11-12T02:28:38+00:00",
- "last_run_kst": "2026-11-12 11:28:38 KST",
+ "last_run_utc": "2026-11-12T02:49:34+00:00",
+ "last_run_kst": "2026-11-12 11:49:34 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -17,10 +17,7 @@
   {
    "id": "jfPffoyeAnY",
    "channel": "hkwowtv",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 933
+   "state": "cached"
   },
   {
    "id": "DEb5daFJUKU",
@@ -40,10 +37,7 @@
   {
    "id": "iF9Ygkhf3XA",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 3921
+   "state": "cached"
   },
   {
    "id": "l7wpm-45qwQ",
@@ -142,8 +136,8 @@
   "ejs_failures": 0,
   "bot_blocked": 0,
   "audio_disabled": false,
-  "fetched": 2,
-  "by_caption": 2,
+  "fetched": 0,
+  "by_caption": 0,
   "failed": 0,
   "live_pending": 0,
   "live_record": "월나우 방송 없음 — 오늘 채널에 월나우가 올라오지 않음(녹음 실행은 마감까지 확인, https://github.com/lds96054341/hkgm-transcripts/actions/runs/43107874189)",
