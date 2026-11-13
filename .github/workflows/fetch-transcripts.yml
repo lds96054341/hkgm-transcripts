@@ -36,6 +36,9 @@ name: fetch-hkgm-transcripts
 #       (transcripts/live/<id>.json)을 index.json 에 다시 반영한다.
 # 2026-10-01 추가
 #   ★22 Whisper 가 예외로 죽은 영상(error 에 "whisper 실패")을 세어 health.warnings 에 올린다.
+# 2026-11-13 추가
+#   ★29 자막 경로도 봇 차단에 걸린 영상을 따로 센다. 예전 경고는 봇 차단이면 늘 "자막 경로로만 수집됩니다"라고
+#       했는데, 11/13 에는 자막 경로까지 막혀 신규 수집 0건이었다. 그런 날은 경고 문구를 바꾼다.
 # ─────────────────────────────────────────────────────────────────────
  
 on:
@@ -641,6 +644,7 @@ jobs:
  
           whisper_used = 0
           bot_hits = 0
+          caption_bot_vids = 0    # ★29 자막 경로에서도 봇 차단을 받은 영상 수
           ejs_hits = 0            # ★12 포맷 없음/EJS 로 오디오를 못 받은 횟수
           audio_disabled = False
  
@@ -692,6 +696,7 @@ jobs:
               got_sub, used_client, info, last_err = None, None, None, ""
               no_track_clients = []
               live = False          # ★16
+              caption_bot = False   # ★29
  
               # 경로 1 — 유튜브 자막
               # ★1 예전에는 첫 클라이언트가 "자막 트랙 없음"을 주면 즉시 break 해서
@@ -736,7 +741,12 @@ jobs:
                       last_err = f"[{client}] 자막 트랙 없음"
                   else:
                       last_err = f"[{client}] " + (r.stderr or r.stdout or "(출력 없음)")[-350:]
+                      if "not a bot" in (r.stderr or "") or "confirm you" in (r.stderr or ""):
+                          caption_bot = True
                   time.sleep(2)
+
+              if not got_sub and not live and caption_bot and not no_track_clients:   # 한 클라이언트라도 메타데이터를 받았으면 막힌 게 아니다
+                  caption_bot_vids += 1
  
               if not got_sub and no_track_clients:
                   last_err = ("자막 트랙 없음(" + ",".join(no_track_clients) +
@@ -841,7 +851,11 @@ jobs:
               warnings.append(live_rec_state)   # ★24
           if pot_state != "ok":
               warnings.append(f"PO 토큰 프로바이더 비정상({pot_state}) — web/mweb 클라이언트가 실패할 수 있습니다.")
-          if bot_hits:
+          # ★29 자막 경로까지 막혔으면 "자막 경로로만 수집" 문구는 틀리다.
+          if caption_bot_vids:
+              warnings.append(f"YouTube 봇 차단 — 자막 경로도 막힘(영상 {caption_bot_vids}건, 음성 경로 {bot_hits}회). "
+                              "쿠키 세션 무효화 또는 러너 IP 차단 — YT_COOKIES 시크릿 갱신이 필요할 수 있습니다.")
+          elif bot_hits:
               warnings.append(f"YouTube 봇 차단 {bot_hits}회 — GitHub Actions의 데이터센터 IP는 차단 대상입니다. 자막 경로로만 수집됩니다.")
           # ★12 EJS 경고
           if not js_state.startswith("ok"):
@@ -864,6 +878,7 @@ jobs:
               "js_runtime": js_state,          # ★12
               "ejs_failures": ejs_hits,        # ★12
               "bot_blocked": bot_hits,
+              "caption_bot_blocked": caption_bot_vids,   # ★29
               "audio_disabled": audio_disabled,
               "fetched": n_fetched,
               "by_caption": n_caption,
