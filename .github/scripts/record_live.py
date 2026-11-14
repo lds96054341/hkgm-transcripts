@@ -38,6 +38,11 @@
   월나우는 07:00~08:30 으로 늦어졌다. 예전에는 처음 발견한 라이브를 녹음하고 07:40 까지만 기다려서
   11/3·11/5 에 클로징벨을 잘못 녹음하고 월나우를 놓쳤다. 이제 제목이 월나우인 라이브만 녹음한다.
 
+★29 봇 차단 구분 (2026-11-14)
+  11/13·11/14 에는 유튜브 봇 차단으로 영상 상태가 전부 NA 로 와서 '라이브 없음'으로 끝났고,
+  수집기 경고가 이를 '월나우 방송 없음'으로 잘못 보였다. 라이브를 찾는 동안 상태를 읽은 비율이
+  절반 미만이면 '월나우 확인 불가(봇 차단)'로 실패 처리한다(실행이 빨간색, ::error:: 로 남는다).
+
 ★27 서머타임 자동 인식 (2026-11-05)
   마감·자막 대체 마감을 고정하지 않고 market_clock.py 가 뉴욕 서머타임 여부로 계산한다
   (EDT: 08:00·08:30, EST: 09:00·09:30 KST). 3월 서머타임 시작·11월 해제 때 손댈 필요가 없다.
@@ -67,6 +72,8 @@ REC_RETRY_GAP = 60             # ★25 방식 묶음 사이 쉬는 시간(초)
 MAX_RUNNERS = 3                # ★25 첫 러너 포함 최대 몇 대까지 넘기나
 ATTEMPT = int(os.environ.get("RETRY_ATTEMPT") or 1)
 MEMBERS = re.compile(r"members|Join this channel|멤버십", re.I)
+KNOWN_STATUS = {"is_live", "is_upcoming", "was_live", "not_live", "post_live"}
+PROBES = {"total": 0, "known": 0}    # ★29 라이브 찾기 중 상태 조회 건수 / 상태를 읽은 건수
 WALLNOW_PAT = r"월나우|월스트리트나우|월스트리트 나우"   # ★26 녹음 대상(TITLE_FILTER 기본값)
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import market_clock                                    # ★27 서머타임에 따른 시간표
@@ -177,6 +184,9 @@ def find_live():
             url = (f"https://www.youtube.com/watch?v={vid}" if vid
                    else f"https://www.youtube.com/channel/{CHANNEL['id']}/live")
             p = probe(url)
+            PROBES["total"] += 1
+            if p and p[1] in KNOWN_STATUS:
+                PROBES["known"] += 1
             if not p:
                 continue
             pid, status, title, rts = p
@@ -437,7 +447,13 @@ def main():
         # ★23 늦게 떠서 방송을 놓쳤을 수 있다 → 최근에 끝난 방송이 있으면 자막으로 대체
         late = recent_broadcast()
         if not late:
-            result("no_live: 마감까지 라이브가 시작되지 않음")
+            total, known = PROBES["total"], PROBES["known"]
+            if total and known * 2 < total:
+                # ★29 상태를 거의 못 읽었으면 '방송 없음'이 아니라 '확인 불가'
+                result(f"failed: 월나우 확인 불가 — YouTube 봇 차단으로 영상 상태를 읽지 못함"
+                       f"(상태 확인 {known}/{total}건). YT_COOKIES 갱신이 필요할 수 있음")
+                return
+            result(f"no_live: 마감까지 라이브가 시작되지 않음(상태 확인 {known}/{total}건)")
             return
         fallback(*late, "라이브를 놓침(실행이 방송 뒤에 시작)")
         return
