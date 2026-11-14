@@ -91,16 +91,6 @@
   "title": "10월 1일 글로벌 1분 시황✅ #당잠사 #굿모닝한경글로벌마켓 #1분시황",
   "uploaded_epoch": 1790811281
  },
- "0riIOoRgkN0": {
-  "channel": "hkwowtv",
-  "chars": 715,
-  "duration_sec": 87,
-  "lang": "ko-orig",
-  "ok": true,
-  "source": "caption",
-  "title": "9월 30일 글로벌 1분 시황✅ #당잠사 #굿모닝한경글로벌마켓 #1분시황",
-  "uploaded_epoch": 1790729557
- },
  "12PU2HvotsA": {
   "chars": 272,
   "duration_sec": 27,
@@ -397,10 +387,13 @@
  },
  "A7REqASCMDo": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
+  "chars": 14022,
+  "duration_sec": 1866,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
   "title": "[박신영의 개장전 요것만-11월13일] 젠슨 황, 떠나기 전 임원들과 갈등?...\"주주들은 오히려 좋을 수도\"",
-  "uploaded_epoch": 0
+  "uploaded_epoch": 1794581605
  },
  "A86HETRrAFg": {
   "channel": "hkwowtv",
@@ -681,10 +674,13 @@
  },
  "JV2z8Eku3i4": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
-  "title": "[Park Shin-young's Pre-market Briefing - November 12] Jensen Huang Resigns from NVIDIA",
-  "uploaded_epoch": 0
+  "chars": 16055,
+  "duration_sec": 2167,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "[박신영의 개장전 요것만-11월12일] 젠슨 황, 엔비디아 사임",
+  "uploaded_epoch": 1794494208
  },
  "JVX4xO3zD8g": {
   "channel": "hkgm",
@@ -747,6 +743,16 @@
   "source": "caption",
   "title": "데이터센터에 두쪽 난 실리콘밸리, 공청회 현장 가보니 | 김인엽의 실리콘밸리나우",
   "uploaded_epoch": 1792659629
+ },
+ "LJzKimu7neI": {
+  "channel": "hkgm",
+  "chars": 4695,
+  "duration_sec": 591,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "''비행기 부족 시대' 7년치 주문이 쌓였는데…보잉의 시간은 왜 늦어졌나ㅣ바이아메리카",
+  "uploaded_epoch": 1794614416
  },
  "LQMbUa_toqM": {
   "channel": "hkgm",
@@ -1195,10 +1201,13 @@
  },
  "aF0fHSQow3w": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
+  "chars": 8090,
+  "duration_sec": 1028,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
   "title": "[박신영의 클로징벨 요것만-11월 14일]\"AI 대변인이 사라졌다\"…AMD·브로드컴도 급락",
-  "uploaded_epoch": 0
+  "uploaded_epoch": 1794606681
  },
  "aNoXsBdK9W0": {
   "channel": "hkwowtv",
@@ -1236,10 +1245,13 @@
  },
  "bEApLcAJsl0": {
   "channel": "hkwowtv",
-  "duration_sec": 0,
-  "ok": false,
+  "chars": 734,
+  "duration_sec": 81,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
   "title": "11월 13일 글로벌 1분 시황✅ #당잠사 #굿모닝한경글로벌마켓 #1분시황",
-  "uploaded_epoch": 0
+  "uploaded_epoch": 1794522421
  },
  "bIAXjjkKGR4": {
   "channel": "hkwowtv",
@@ -1365,10 +1377,13 @@
  },
  "gNZjwF6oKcI": {
   "channel": "hkwowtv",
-  "duration_sec": 0,
-  "ok": false,
+  "chars": 24110,
+  "duration_sec": 3322,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
   "title": "[🔴11/13 #당잠사] 젠슨 황 엔비디아 CEO 사임ㅣ트럼프 “이란과 합의 필요 없어”ㅣ10년물 국채금리 5.1% 재돌파·유가 상승·금값 하락ㅣ#엔비디아 #AMD #알파벳",
-  "uploaded_epoch": 0
+  "uploaded_epoch": 1794519446
  },
  "gSbNBssBaaE": {
   "channel": "hkwowtv",
@@ -1389,16 +1404,6 @@
   "source": "caption",
   "title": "월가를 긴장시키는 빅스텝 가능성을 짚어봤습니다 | 박신영의 월가아나토미",
   "uploaded_epoch": 1794358802
- },
- "hSf0LLTgdU0": {
-  "channel": "hkgm",
-  "chars": 7280,
-  "duration_sec": 910,
-  "lang": "ko-orig",
-  "ok": true,
-  "source": "caption",
-  "title": "고금리를 이상하리만큼 잘버티는 美 증시의 비결은? | 박신영의 월가아나토미",
-  "uploaded_epoch": 1790730036
  },
  "iF9Ygkhf3XA": {
   "channel": "hkgm",
@@ -1925,10 +1930,13 @@
  },
  "wgvcb9hGqNQ": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
-  "title": "[Park Shin-young's Closing Bell Briefing - Nov 13] Bargain Hunting Gains Momentum Despite Jensen ...",
-  "uploaded_epoch": 0
+  "chars": 7441,
+  "duration_sec": 966,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "[박신영의 클로징벨 요것만-11월13일] 젠슨 황 사임 충격에도 힘 실리는 저가 매수세",
+  "uploaded_epoch": 1794520835
  },
  "wk8hRM6kxZE": {
   "channel": "hkgm",
