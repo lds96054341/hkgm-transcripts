@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-11-14T01:11:14+00:00",
- "last_run_kst": "2026-11-14 10:11:14 KST",
+ "last_run_utc": "2026-11-14T01:13:46+00:00",
+ "last_run_kst": "2026-11-14 10:13:46 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -17,18 +17,12 @@
   {
    "id": "bEApLcAJsl0",
    "channel": "hkwowtv",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 734
+   "state": "cached"
   },
   {
    "id": "gNZjwF6oKcI",
    "channel": "hkwowtv",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 24110
+   "state": "cached"
   },
   {
    "id": "jfPffoyeAnY",
@@ -43,42 +37,27 @@
   {
    "id": "LJzKimu7neI",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 4695
+   "state": "cached"
   },
   {
    "id": "aF0fHSQow3w",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 8090
+   "state": "cached"
   },
   {
    "id": "A7REqASCMDo",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 14022
+   "state": "cached"
   },
   {
    "id": "wgvcb9hGqNQ",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 7441
+   "state": "cached"
   },
   {
    "id": "JV2z8Eku3i4",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 16055
+   "state": "cached"
   },
   {
    "id": "65EO7MrOoh8",
@@ -158,8 +137,8 @@
   "bot_blocked": 0,
   "caption_bot_blocked": 0,
   "audio_disabled": false,
-  "fetched": 7,
-  "by_caption": 7,
+  "fetched": 0,
+  "by_caption": 0,
   "failed": 0,
   "live_pending": 0,
   "live_record": "월나우 방송 없음 — 오늘 채널에 월나우가 올라오지 않음(녹음 실행은 마감까지 확인, https://github.com/lds96054341/hkgm-transcripts/actions/runs/43495779969)",
