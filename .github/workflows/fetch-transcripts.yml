@@ -162,6 +162,7 @@ jobs:
       #     월나우를 수집기가 따로 받았으면 경고하지 않는다. 실패 문구는 실패한 실행을 가리킨다
       #     (11/5 에는 뒤늦게 뜬 예약 실행의 'success' 를 집어 "녹음 실패 — record-live success" 로 나왔다).
       # ★28 채널에 월나우가 아예 올라오지 않은 날은 '월나우 방송 없음'으로 따로 남긴다(11/10).
+      # ★29 녹음 실행이 봇 차단으로 실패했으면(::error:: 에 '월나우 확인 불가') '월나우 확인 불가'로 남긴다(11/13·11/14).
       - name: Check live recording
         continue-on-error: true
         env:
@@ -186,8 +187,21 @@ jobs:
                  and (e.get("uploaded_epoch") or 0) >= since.timestamp() for e in idx.values()):
               raise SystemExit          # 오늘 월나우 확보(녹음 또는 수집기)
           out = subprocess.run(["gh", "run", "list", "-w", "record-live.yml", "-L", "10",
-                                "--json", "createdAt,status,conclusion,url"],
+                                "--json", "createdAt,status,conclusion,url,databaseId"],
                                capture_output=True, text=True)
+
+          def error_text(run_id):
+              """★29 실행의 ::error:: 문구(작업 주석). 못 읽으면 빈 문자열"""
+              repo = os.environ.get("GH_REPO", "")
+              j = subprocess.run(["gh", "api", f"repos/{repo}/actions/runs/{run_id}/jobs",
+                                  "--jq", ".jobs[].id"], capture_output=True, text=True)
+              msgs = []
+              for jid in (j.stdout or "").split():
+                  a = subprocess.run(["gh", "api", f"repos/{repo}/check-runs/{jid}/annotations",
+                                      "--jq", ".[] | select(.annotation_level == \"failure\") | .message"],
+                                     capture_output=True, text=True)
+                  msgs += [m for m in (a.stdout or "").splitlines() if m.strip()]
+              return " ".join(msgs)
           if out.returncode != 0:
               print("월나우 라이브 녹음 결과 없음 — record-live 실행 상태 확인 실패")
               raise SystemExit
@@ -201,7 +215,12 @@ jobs:
               bad = [r for r in runs if r["conclusion"] not in ("success", "skipped")]
               if bad:
                   r = bad[0]              # 가장 최근의 실패한 실행
-                  print(f"월나우 라이브 녹음 실패 — record-live {r['conclusion']} ({r['url']})")
+                  err = error_text(r.get("databaseId", ""))
+                  if "월나우 확인 불가" in err:
+                      print(f"월나우 확인 불가 — YouTube 봇 차단으로 녹음 실행이 채널을 확인하지 못함"
+                            f"(YT_COOKIES 갱신 필요할 수 있음, {r['url']})")
+                  else:
+                      print(f"월나우 라이브 녹음 실패 — record-live {r['conclusion']} ({r['url']})")
               else:
                   r = runs[-1]            # 오늘 가장 먼저 뜬 실행(녹음 담당)
                   # ★28 녹음이 성공으로 끝났는데 색인에 오늘 월나우 항목이 하나도 없으면(예정·실패 항목 포함)
