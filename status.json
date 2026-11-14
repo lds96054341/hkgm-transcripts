@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-11-14T11:24:13+00:00",
- "last_run_kst": "2026-11-14 20:24:13 KST",
+ "last_run_utc": "2026-11-14T18:08:52+00:00",
+ "last_run_kst": "2026-11-15 03:08:52 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -109,7 +109,7 @@
     "__Secure-3PSID"
    ],
    "nearest_expiry_kst": "2027-12-19 10:06 KST",
-   "days_left": 399.6,
+   "days_left": 399.3,
    "note": ""
   },
   "pot_provider": "ok",
@@ -122,10 +122,9 @@
   "by_caption": 0,
   "failed": 1,
   "live_pending": 0,
-  "live_record": "월나우 방송 없음 — 오늘 채널에 월나우가 올라오지 않음(녹음 실행은 마감까지 확인, https://github.com/lds96054341/hkgm-transcripts/actions/runs/43495779969)",
+  "live_record": "ok",
   "whisper_errors": 0,
   "warnings": [
-   "월나우 방송 없음 — 오늘 채널에 월나우가 올라오지 않음(녹음 실행은 마감까지 확인, https://github.com/lds96054341/hkgm-transcripts/actions/runs/43495779969)",
    "YouTube 봇 차단 1회 — GitHub Actions의 데이터센터 IP는 차단 대상입니다. 자막 경로로만 수집됩니다.",
    "이번 회차 신규 수집 0건(실패 1건) — 리포트는 기사 기반으로 작성해야 합니다."
   ]

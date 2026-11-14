@@ -1080,16 +1080,6 @@
   "ok": false,
   "title": "[Park Shin-young's Pre-market Briefing - August 31] Will SaaS climb even higher in September-Octo..."
  },
- "WMoYRatt-wM": {
-  "channel": "hkgm",
-  "chars": 19130,
-  "duration_sec": 2700,
-  "lang": "whisper-small",
-  "ok": true,
-  "source": "audio",
-  "title": "[박신영의 개장전요것만-9월30일] 앤트로픽 목줄 쥔 기업은 어디?...국채금리에도 레버리지 효과 | 머스크와 젠슨황의 전력 민심 달래기",
-  "uploaded_epoch": 1790778397
- },
  "XMhf4Y-qmWs": {
   "channel": "hkgm",
   "chars": 17647,
@@ -1702,16 +1692,6 @@
   "source": "audio",
   "title": "[박신영의 개장전 요것만-11월6일] 엔비디아 살까, 말까? | 앤트로픽 IPO 고비는 넘겨야",
   "uploaded_epoch": 1793978202
- },
- "pVqQ3m0lkWE": {
-  "channel": "hkgm",
-  "chars": 4511,
-  "duration_sec": 682,
-  "lang": "ko-orig",
-  "ok": true,
-  "source": "caption",
-  "title": "[김현석의 브레이킹 뉴스] 8월 PCE(개인소비지출) 물가 발표! 9월 30일 오후 9시30분 L.I.V.E",
-  "uploaded_epoch": 1790771884
  },
  "pqQxTi1oghQ": {
   "channel": "hkgm",
