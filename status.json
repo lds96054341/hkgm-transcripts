@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-11-14T23:11:58+00:00",
- "last_run_kst": "2026-11-15 08:11:58 KST",
+ "last_run_utc": "2026-11-15T01:16:24+00:00",
+ "last_run_kst": "2026-11-15 10:16:24 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -18,7 +18,7 @@
    "id": "GVwAbKaBRIs",
    "channel": "hkgm",
    "state": "no_subtitle",
-   "error": "b_safari,mweb) → 음성 받아쓰기로 전환 || [audio/default] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] GVwAbKaBRIs: Sign in to confirm you’re not a bot. This helps protect o | [audio/tv] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] GVwAbKaBRIs: Sign in to confirm you’re not a bot. This helps protect o | [audio/web_safari] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] GVwAbKaBRIs: Sign in to confirm you’re not a bot. This helps protect o | [audio/mweb] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] GVwAbKaBRIs: Sign in to confirm you’re not a bot. This helps protect o"
+   "error": "b_safari,mweb) → 음성 받아쓰기로 전환 || [audio/default] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] GVwAbKaBRIs: Sign in to confirm you’re not a bot. This helps protect o | [audio/tv] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] GVwAbKaBRIs: Sign in to confirm you’re not a bot. Use --cookies-from-b | [audio/web_safari] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] GVwAbKaBRIs: Sign in to confirm you’re not a bot. This helps protect o | [audio/mweb] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] GVwAbKaBRIs: Sign in to confirm you’re not a bot. This helps protect o"
   },
   {
    "id": "LJzKimu7neI",
@@ -109,7 +109,7 @@
     "__Secure-3PSID"
    ],
    "nearest_expiry_kst": "2027-12-19 10:06 KST",
-   "days_left": 399.1,
+   "days_left": 399.0,
    "note": ""
   },
   "pot_provider": "ok",
