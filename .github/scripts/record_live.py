@@ -190,9 +190,12 @@ def find_live():
             url = (f"https://www.youtube.com/watch?v={vid}" if vid
                    else f"https://www.youtube.com/channel/{CHANNEL['id']}/live")
             p = probe(url)
-            PROBES["total"] += 1
-            if p and p[1] in KNOWN_STATUS:
-                PROBES["known"] += 1
+            # ★29 차단 판단은 개별 영상 조회만 센다. 채널 /live 는 라이브가 없으면 원래 응답이 없어서(11/15 확인)
+            #     그것까지 세면 방송 없는 날 2시간 대기 동안 비율이 떨어져 '확인 불가'로 잘못 실패한다.
+            if vid:
+                PROBES["total"] += 1
+                if p and p[1] in KNOWN_STATUS:
+                    PROBES["known"] += 1
             if not p:
                 continue
             pid, status, title, rts = p
