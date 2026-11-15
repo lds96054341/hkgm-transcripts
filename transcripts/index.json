@@ -540,10 +540,13 @@
  },
  "GVwAbKaBRIs": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
+  "chars": 14152,
+  "duration_sec": 1575,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
   "title": "대체 불가 인력 젠슨 황이 빠진 앞으로의 AI 산업은 | 월가백브리핑",
-  "uploaded_epoch": 0
+  "uploaded_epoch": 1794625232
  },
  "GqPdrsLmYyo": {
   "channel": "hkwowtv",
@@ -1262,10 +1265,13 @@
  },
  "cAL9vwsDXxA": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
-  "title": "Preview of the Biggest IPO Ever with 6x Oversubscription | Wall Street Backbriefing",
-  "uploaded_epoch": 0
+  "chars": 13670,
+  "duration_sec": 1517,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "청약 6배 몰렸다는 사상 최대 IPO 프리뷰 | 월가백브리핑",
+  "uploaded_epoch": 1794711609
  },
  "cx_0RmUhE1E": {
   "channel": "hkgm",
