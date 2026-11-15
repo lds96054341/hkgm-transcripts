@@ -39,6 +39,17 @@ jobs:
           python3 --version 2>&1 || true
           ffmpeg -version 2>/dev/null | head -1 || true
           docker --version 2>/dev/null || true
+      - name: WSL settings
+        run: |
+          # ★30 Windows 쪽 .wslconfig(WSL 자동 종료 설정)와 Ubuntu 가동 시간을 보여 준다
+          found=0
+          for f in /mnt/c/Users/*/.wslconfig; do
+            [ -f "$f" ] || continue
+            found=1; echo "== $f"; cat "$f" | tr -d '\r'; echo
+          done
+          [ "$found" = 1 ] || echo "MISS .wslconfig (C:\\Users\\<사용자>\\.wslconfig 없음)"
+          echo "uptime: $(uptime -p)  (since $(uptime -s))"
+
       - name: Network (no YouTube)
         run: |
           curl -s -o /dev/null -w "github.com HTTP %{http_code}\n" https://github.com
