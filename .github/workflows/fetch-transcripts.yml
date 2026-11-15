@@ -88,9 +88,18 @@ jobs:
     runs-on: ${{ inputs.runner == 'home' && fromJSON('["self-hosted","home"]') || 'ubuntu-latest' }}
     timeout-minutes: 150
     steps:
-      # ★30 집 노트북에는 gh 가 없을 수 있다(릴레이·녹음 넘기기·점검에 쓴다). GitHub 러너에는 이미 있다.
-      - name: Ensure gh CLI
-        run: command -v gh >/dev/null || { sudo apt-get update -qq >/dev/null; sudo apt-get install -y -qq gh >/dev/null; }; gh --version | head -1
+      - name: Ensure base tools (home runner)
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          # ★30 집 노트북에는 gh·unzip(setup-deno 가 씀)이 없을 수 있다. GitHub 러너에는 이미 있다.
+          need=""
+          for c in gh unzip; do command -v $c >/dev/null || need="$need $c"; done
+          if [ -n "$need" ]; then
+            echo "[i] 설치:$need"
+            sudo -E apt-get update -qq >/dev/null && sudo -E apt-get install -y -qq $need >/dev/null
+          fi
+          gh --version | head -1; unzip -v | head -1
 
       # ★18 대기열에서 기다린 실행도 시작 시점의 최신 main 에서 출발한다.
       - uses: actions/checkout@v4
