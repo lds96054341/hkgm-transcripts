@@ -43,6 +43,12 @@
   수집기 경고가 이를 '월나우 방송 없음'으로 잘못 보였다. 라이브를 찾는 동안 상태를 읽은 비율이
   절반 미만이면 '월나우 확인 불가(봇 차단)'로 실패 처리한다(실행이 빨간색, ::error:: 로 남는다).
 
+★30 집 노트북 우선 (2026-11-15)
+  GitHub 러너 IP 는 음성 다운로드가 봇 차단되기 쉬워 집 노트북(self-hosted, RUNNER_KIND=home)에서 먼저 녹음한다.
+  GitHub 러너(RUNNER_KIND=github)는 보험이다. 라이브를 찾으면 오늘 노트북 녹음 실행이 '진행 중'인지 보고,
+  진행 중이면 방송이 이어지는 동안 기다렸다가 노트북이 성공하면 물러난다(yielded). 노트북 실행이 없거나
+  (꺼져서 대기만 하는 실행은 진행 중이 아님) 실패로 끝나면 직접 녹음한다. --live-from-start 라 늦게 시작해도 처음부터 받는다.
+
 ★27 서머타임 자동 인식 (2026-11-05)
   마감·자막 대체 마감을 고정하지 않고 market_clock.py 가 뉴욕 서머타임 여부로 계산한다
   (EDT: 08:00·08:30, EST: 09:00·09:30 KST). 3월 서머타임 시작·11월 해제 때 손댈 필요가 없다.
@@ -284,6 +290,49 @@ def hand_off(vid):
     return True
 
 
+RUNNER_KIND = os.environ.get("RUNNER_KIND", "github")
+
+
+def home_state():
+    """★30 오늘(03:00 KST 이후) 노트북 녹음 실행 상태: 'active'(진행 중) / 'done_ok' / 'none'"""
+    r = run(["gh", "run", "list", "-w", "record-live.yml", "-L", "20",
+             "--json", "displayTitle,status,conclusion,createdAt"], timeout=60)
+    try:
+        runs = json.loads(r.stdout or "[]")
+    except Exception:
+        return "none"
+    since = datetime.now(KST).replace(hour=3, minute=0, second=0, microsecond=0)
+    mine = [x for x in runs if "[home]" in x.get("displayTitle", "")
+            and datetime.fromisoformat(x["createdAt"].replace("Z", "+00:00")) >= since]
+    if any(x.get("status") == "in_progress" for x in mine):
+        return "active"
+    if any(x.get("conclusion") == "success" for x in mine):
+        return "done_ok"
+    return "none"
+
+
+def yield_to_home(vid):
+    """★30 GitHub 러너: 노트북이 녹음 중이면 기다린다. 노트북이 성공하면 True(물러남)"""
+    if RUNNER_KIND != "github":
+        return False
+    st = home_state()
+    if st == "none":
+        return False
+    print(f"[i] 집 노트북 녹음 상태: {st} — 노트북 결과를 기다림")
+    while st == "active" and still_live(vid):
+        time.sleep(60)
+        st = home_state()
+    if st == "active":
+        # 방송은 끝났고 노트북은 받아쓰기 중일 수 있다 — 최대 40분 더 기다린다
+        for _ in range(40):
+            time.sleep(60)
+            st = home_state()
+            if st != "active":
+                break
+    print(f"[i] 집 노트북 녹음 결과: {st}")
+    return st == "done_ok"
+
+
 def audio_seconds(path):
     r = run(["ffprobe", "-v", "error", "-show_entries", "format=duration",
              "-of", "csv=p=0", path], timeout=60)
@@ -458,6 +507,9 @@ def main():
         fallback(*late, "라이브를 놓침(실행이 방송 뒤에 시작)")
         return
     vid, title, rts = found
+    if yield_to_home(vid):
+        result(f"yielded: {vid} 집 노트북이 녹음함 — GitHub 러너는 물러남")
+        return
     rec_start = time.time()
     apath, rec_end, err = record(vid)
     if not apath:

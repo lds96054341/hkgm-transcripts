@@ -106,6 +106,9 @@ jobs:
       - name: Dispatch record-live
         if: steps.plan.outputs.dispatch == 'true' && env.DRY_RUN != 'true'
         run: |
+          # ★30 집 노트북 녹음을 먼저 걸고, GitHub 러너 녹음은 보험으로 함께 건다.
+          #     GitHub 쪽은 방송을 찾으면 노트북 녹음이 도는 동안 기다렸다가, 노트북이 성공하면 물러난다.
+          gh workflow run record-live.yml --ref main -f wait_0625=true -f runner=home || echo "::warning::노트북 녹음 실행 요청 실패"
           gh workflow run record-live.yml --ref main -f wait_0625=true
           echo "### record-live 실행 요청 $(TZ=Asia/Seoul date '+%m-%d %H:%M') KST" >> "$GITHUB_STEP_SUMMARY"
 

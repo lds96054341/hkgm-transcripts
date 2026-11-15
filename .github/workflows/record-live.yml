@@ -10,6 +10,10 @@ name: record-hkgm-live
 #   코드: .github/scripts/record_live.py, .github/scripts/merge_live_index.py
 # ─────────────────────────────────────────────────────────────────────
 
+# ★30 runner=home 이면 집 노트북(self-hosted, 라벨 home)에서 돈다. 제목에 [home] 을 붙여
+#   대기 스크립트·녹음 점검이 '노트북이 꺼져 대기만 하는 실행'을 가려낼 수 있게 한다.
+run-name: "record-hkgm-live${{ inputs.runner == 'home' && ' [home]' || '' }}"
+
 on:
   schedule:
     # 월나우는 미국 거래일 다음 날 아침(KST 화~토) 06:30~07:20 안팎 (10/1은 06:37~07:17).
@@ -43,6 +47,10 @@ on:
         description: 'true 면 라이브 찾기 시작 시각(★27 EDT 06:00 / EST 07:00 KST)까지 자고 시작한다(live-relay.yml 이 넘긴다)'
         required: false
         default: 'false'
+      runner:
+        description: '★30 home = 집 노트북(self-hosted)에서 녹음, 비우면 GitHub 러너'
+        required: false
+        default: ''
       attempt:
         description: '★25 몇 번째 러너인지(녹음 실패 시 record_live.py 가 다음 러너를 띄우며 넘긴다)'
         required: false
@@ -54,16 +62,21 @@ permissions:
 
 # 수집기(hkgm-transcripts)와 다른 그룹이라 녹음하는 동안에도 수집기는 따로 돈다.
 concurrency:
-  group: hkgm-live
+  # ★30 노트북·GitHub 녹음은 서로 다른 그룹이라 동시에 돈다(노트북이 꺼져 있어도 GitHub 보험이 막히지 않게)
+  group: hkgm-live${{ inputs.runner == 'home' && '-home' || '' }}
   cancel-in-progress: false
 
 jobs:
   record:
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runner == 'home' && fromJSON('["self-hosted","home"]') || 'ubuntu-latest' }}
     # ★22 03:47 KST 에 제때 뜨면 06:25 까지 약 160분을 자고, 라이브 대기·녹음(40분 안팎)·받아쓰기를 더한다.
     #   GitHub 호스트 러너 상한은 360분.
     timeout-minutes: 330
     steps:
+      # ★30 집 노트북에는 gh 가 없을 수 있다(릴레이·녹음 넘기기·점검에 쓴다). GitHub 러너에는 이미 있다.
+      - name: Ensure gh CLI
+        run: command -v gh >/dev/null || { sudo apt-get update -qq >/dev/null; sudo apt-get install -y -qq gh >/dev/null; }; gh --version | head -1
+
       # ★22 일찍 뜬 예약 실행은 방송 직전까지 잔다. 몇 시간 동안 유튜브를 조회하면 봇 차단 위험이 있어서
       #   잠은 checkout·설치보다 먼저 자고, 깨어난 뒤에 최신 main 과 최신 도구로 시작한다.
       # ★23 live-relay.yml 이 06:05 KST 무렵 wait_0625=true 로 실행한 것도 같이 잔다.
@@ -94,7 +107,7 @@ jobs:
             echo "[i] $(TZ=Asia/Seoul date +%H:%M) KST — $(kst $relay) KST 까지 $(( (relay - now) / 60 ))분 대기 후 새 실행에 넘김"
             sleep $(( relay - now ))
             for i in 1 2 3 4 5; do
-              if gh workflow run record-live.yml --ref main -f wait_0625=true; then
+              if gh workflow run record-live.yml --ref main -f wait_0625=true -f runner="${{ inputs.runner }}"; then
                 echo "[i] 새 record-live 실행에 넘김 — 이 실행은 끝냄"
                 echo "### $(kst $relay) KST 새 실행에 넘김" >> "$GITHUB_STEP_SUMMARY"
                 echo "handed_off=true" >> "$GITHUB_OUTPUT"
@@ -139,8 +152,12 @@ jobs:
         if: steps.wait.outputs.handed_off != 'true'
         run: |
           set +e
-          docker run --name bgutil-provider -d --init -p 4416:4416 \
-            brainicism/bgutil-ytdlp-pot-provider
+          # ★30 집 노트북(self-hosted)에서는 컨테이너가 남아 있다. 이미 응답하면 그대로 쓰고, 아니면 지우고 새로 띄운다.
+          if ! curl -s -m 5 http://127.0.0.1:4416/ping >/dev/null 2>&1; then
+            docker rm -f bgutil-provider >/dev/null 2>&1
+            docker run --name bgutil-provider -d --init --restart unless-stopped -p 4416:4416 \
+              brainicism/bgutil-ytdlp-pot-provider
+          fi
           for i in $(seq 1 15); do
             sleep 2
             curl -s -m 5 http://127.0.0.1:4416/ping >/dev/null 2>&1 && { echo "[i] provider OK"; exit 0; }
@@ -167,6 +184,7 @@ jobs:
           VIDEO_ID: ${{ github.event.inputs.video_id }}
           POLL_UNTIL_KST: ${{ github.event.inputs.poll_until_kst }}
           RETRY_ATTEMPT: ${{ github.event.inputs.attempt || '1' }}
+          RUNNER_KIND: ${{ inputs.runner == 'home' && 'home' || 'github' }}
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
         run: |
