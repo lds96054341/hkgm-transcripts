@@ -41,6 +41,9 @@ name: fetch-hkgm-transcripts
 #       했는데, 11/13 에는 자막 경로까지 막혀 신규 수집 0건이었다. 그런 날은 경고 문구를 바꾼다.
 # ─────────────────────────────────────────────────────────────────────
  
+# ★30 runner=home 이면 집 노트북(self-hosted, 라벨 home)에서 돈다(음성 경로 봇 차단 대비).
+run-name: "fetch-hkgm-transcripts${{ inputs.runner == 'home' && ' [home]' || '' }}"
+
 on:
   schedule:
     # 아침 4회 (UTC 기준). GitHub 예약 실행이 자주 건너뛰어져서 촘촘히 건다.
@@ -57,6 +60,10 @@ on:
     - cron: '20 12 * * *'
   workflow_dispatch:
     inputs:
+      runner:
+        description: '★30 home = 집 노트북(self-hosted)에서 수집. 비우면 GitHub 러너'
+        required: false
+        default: ''
       audio_test:
         description: '★14 음성 받아쓰기 테스트 — videoId 11자. 자막 유무와 무관하게 오디오 경로만 돌리고 결과를 transcripts/<id>.audio-test.enc 로 남긴다'
         required: false
@@ -72,14 +79,19 @@ permissions:
   actions: write   # ★23 마지막 단계에서 live-relay.yml 을 다시 건다
  
 concurrency:
-  group: hkgm-transcripts
+  # ★30 노트북 수집은 다른 그룹(노트북이 꺼져 대기만 해도 GitHub 수집이 막히지 않게)
+  group: hkgm-transcripts${{ inputs.runner == 'home' && '-home' || '' }}
   cancel-in-progress: false
  
 jobs:
   fetch:
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runner == 'home' && fromJSON('["self-hosted","home"]') || 'ubuntu-latest' }}
     timeout-minutes: 150
     steps:
+      # ★30 집 노트북에는 gh 가 없을 수 있다(릴레이·녹음 넘기기·점검에 쓴다). GitHub 러너에는 이미 있다.
+      - name: Ensure gh CLI
+        run: command -v gh >/dev/null || { sudo apt-get update -qq >/dev/null; sudo apt-get install -y -qq gh >/dev/null; }; gh --version | head -1
+
       # ★18 대기열에서 기다린 실행도 시작 시점의 최신 main 에서 출발한다.
       - uses: actions/checkout@v4
         with:
@@ -111,8 +123,12 @@ jobs:
         run: |
           set +e
           echo "down" > pot_status.txt
-          docker run --name bgutil-provider -d --init -p 4416:4416 \
-            brainicism/bgutil-ytdlp-pot-provider
+          # ★30 집 노트북(self-hosted)에서는 컨테이너가 남아 있다. 이미 응답하면 그대로 쓰고, 아니면 지우고 새로 띄운다.
+          if ! curl -s -m 5 http://127.0.0.1:4416/ping >/dev/null 2>&1; then
+            docker rm -f bgutil-provider >/dev/null 2>&1
+            docker run --name bgutil-provider -d --init --restart unless-stopped -p 4416:4416 \
+              brainicism/bgutil-ytdlp-pot-provider
+          fi
           if [ $? -ne 0 ]; then
             echo "docker_failed" > pot_status.txt
             echo "[!] provider 컨테이너 기동 실패"
@@ -187,7 +203,7 @@ jobs:
                  and (e.get("uploaded_epoch") or 0) >= since.timestamp() for e in idx.values()):
               raise SystemExit          # 오늘 월나우 확보(녹음 또는 수집기)
           out = subprocess.run(["gh", "run", "list", "-w", "record-live.yml", "-L", "10",
-                                "--json", "createdAt,status,conclusion,url,databaseId"],
+                                "--json", "createdAt,status,conclusion,url,databaseId,displayTitle"],
                                capture_output=True, text=True)
 
           def error_text(run_id):
@@ -206,7 +222,9 @@ jobs:
               print("월나우 라이브 녹음 결과 없음 — record-live 실행 상태 확인 실패")
               raise SystemExit
           runs = [r for r in json.loads(out.stdout or "[]")
-                  if dt.datetime.fromisoformat(r["createdAt"].replace("Z", "+00:00")) >= since]
+                  if dt.datetime.fromisoformat(r["createdAt"].replace("Z", "+00:00")) >= since
+                  # ★30 노트북이 꺼져 대기만 하는 실행, 노트북에 양보하고 물러난 실행은 판단에서 뺀다
+                  and not ("[home]" in r.get("displayTitle", "") and r["status"] in ("queued", "waiting", "pending"))]
           if not runs:
               print("월나우 라이브 녹음 미실행 — 오늘 03:00 KST 이후 record-live 실행이 없습니다(live-relay 확인).")
           elif any(r["status"] != "completed" for r in runs):
@@ -236,6 +254,7 @@ jobs:
 
       - name: Fetch transcripts
         env:
+          RUNNER_KIND: ${{ inputs.runner == 'home' && 'home' || 'github' }}
           YT_COOKIES: ${{ secrets.YT_COOKIES }}
           TRANSCRIPT_KEY: ${{ secrets.TRANSCRIPT_KEY }}
           AUDIO_TEST: ${{ github.event.inputs.audio_test }}
@@ -932,6 +951,9 @@ jobs:
               os.remove("cookies.txt")
           print(json.dumps(status["channels"], ensure_ascii=False, indent=1))
           print("whisper 사용:", whisper_used, "건 / 봇 차단:", bot_hits, "회")
+          # ★30 GitHub 러너에서 봇 차단을 받았으면 집 노트북에서 한 번 더 돌리도록 표시한다
+          if (bot_hits or caption_bot_vids) and os.environ.get("RUNNER_KIND") != "home":
+              open("need_home.txt", "w").write(f"bot={bot_hits} caption_bot={caption_bot_vids}\n")
           PY
           rc=$?
           # ★9 파이썬이 중간에 죽더라도 쿠키 파일은 반드시 지운다.
@@ -994,6 +1016,23 @@ jobs:
       # ★23 월나우 녹음 릴레이(live-relay.yml)를 다시 건다. 예약이든 수동이든 수집기가 돌 때마다
       #     사슬을 새로 이어서, 릴레이가 끊겨도 다음 수집기 실행에서 되살아난다.
       #     06시대 KST 에 걸어도 릴레이가 오늘 record-live 실행 여부를 확인하므로 녹음이 겹치지 않는다.
+      # ★30 봇 차단으로 못 받은 영상이 있으면 집 노트북에서 수집기를 한 번 더 돌린다.
+      #     노트북 실행이 이미 대기·진행 중이면 다시 걸지 않는다(노트북이 꺼져 있으면 대기만 하다 24시간 뒤 사라진다).
+      - name: Hand blocked videos to home runner
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          [ -f need_home.txt ] || { echo "[i] 노트북에 넘길 영상 없음"; exit 0; }
+          cat need_home.txt
+          busy=$(gh run list -w fetch-transcripts.yml -L 20 --json displayTitle,status \
+                   --jq '[.[] | select((.displayTitle | contains("[home]")) and .status != "completed")] | length' 2>/dev/null || echo 0)
+          if [ "${busy:-0}" != "0" ]; then echo "[i] 노트북 수집이 이미 대기·진행 중(${busy}건)"; exit 0; fi
+          gh workflow run fetch-transcripts.yml --ref main -f runner=home && echo "[i] 노트북 수집 요청" \
+            || echo "::warning::노트북 수집 요청 실패"
+          exit 0
+
       - name: Re-arm live relay
         if: always()
         env:

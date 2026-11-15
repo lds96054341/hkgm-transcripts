@@ -128,7 +128,9 @@ except Exception:
 mine = [r for r in runs if datetime.fromisoformat(r["created_at"].replace("Z", "+00:00")) >= t0]
 # 같은 concurrency 그룹이라 도는·대기 중인 실행이 하나라도 있으면 그 실행이 결과를 올린다.
 # 대기 중인 수동 실행은 새 예약 실행이 들어오면 취소되고 그 실행이 대신 돈다(취소 = 실패 아님).
-busy = [r for r in runs if r.get("status") != "completed"]
+# ★30 집 노트북 실행([home])이 노트북이 꺼져 대기(queued)만 하는 경우는 기다리지 않는다
+busy = [r for r in runs if r.get("status") != "completed"
+        and not ("[home]" in r.get("display_title", "") and r.get("status") in ("queued", "waiting", "pending"))]
 if busy:
     print("active", busy[0]["status"], busy[0]["html_url"])
 elif mine:
@@ -160,7 +162,8 @@ try:
     runs = json.load(sys.stdin).get("workflow_runs", [])
 except Exception:
     runs = []
-busy = [r for r in runs if r.get("status") != "completed"]
+busy = [r for r in runs if r.get("status") != "completed"
+        and not ("[home]" in r.get("display_title", "") and r.get("status") in ("queued", "waiting", "pending"))]
 if busy:
     print(busy[0]["status"], busy[0]["html_url"])
 ' 2>/dev/null)
