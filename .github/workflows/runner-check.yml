@@ -6,17 +6,23 @@ name: runner-check
 
 on:
   workflow_dispatch:
+    inputs:
+      labels:
+        description: '실행기 라벨(JSON 배열). 라벨 문제를 가릴 때는 ["self-hosted"] 로 돌린다'
+        required: false
+        default: '["self-hosted","home"]'
 
 permissions:
   contents: read
 
 jobs:
   check:
-    runs-on: [self-hosted, home]
+    runs-on: ${{ fromJSON(inputs.labels || '["self-hosted","home"]') }}
     timeout-minutes: 10
     steps:
       - name: Runner info
         run: |
+          echo "labels: ${{ inputs.labels }}  runner: $RUNNER_NAME"
           echo "host: $(hostname)  user: $(whoami)  kernel: $(uname -r)"
           grep -E '^(PRETTY_NAME)=' /etc/os-release || true
           echo "cpu: $(nproc) cores  mem: $(free -h | awk '/^Mem:/{print $2}')  disk free: $(df -h ~ | awk 'NR==2{print $4}')"
