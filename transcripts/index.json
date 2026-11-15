@@ -1387,10 +1387,13 @@
  },
  "i1pUe8llLvA": {
   "channel": "hkwowtv",
-  "duration_sec": 0,
-  "ok": false,
+  "chars": 26063,
+  "duration_sec": 3218,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
   "title": "[🔴11/16 #당잠사] 엔비디아 여파 지속…필라델피아 반도체 하락 | PPI 연간 상승률 4년만에 최고 | 엔비디아 후임 CEO 물색 | #엔비디아 #스페이스X #애플",
-  "uploaded_epoch": 0
+  "uploaded_epoch": 1794777953
  },
  "iF9Ygkhf3XA": {
   "channel": "hkgm",
@@ -1574,8 +1577,9 @@
   "channel": "hkgm",
   "duration_sec": 0,
   "ok": false,
-  "title": "[플러스 라이브] AI 왕좌 바뀌나...앤트로픽 IPO에 달린 월가 운명",
-  "uploaded_epoch": 0
+  "pending": "live",
+  "title": "[플러스 라이브] AI 왕좌 바뀌나...앤트로픽 IPO에 달린 월가 운명 2026-11-16 07:17",
+  "uploaded_epoch": 1794779298
  },
  "mAGzUse1pBI": {
   "channel": "hkgm",
