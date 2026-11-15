@@ -1,0 +1,39 @@
+name: runner-check
+
+# ★30 집 노트북 실행기(self-hosted, 라벨 home) 점검용. 수동 실행만 받는다.
+#   노트북의 WSL2 Ubuntu 에서 실행기가 살아 있는지, 녹음·받아쓰기에 필요한 도구가 있는지 확인한다.
+#   유튜브에는 접속하지 않는다. 실행기가 꺼져 있으면 이 작업은 대기(queued) 상태로 남는다.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: [self-hosted, home]
+    timeout-minutes: 10
+    steps:
+      - name: Runner info
+        run: |
+          echo "host: $(hostname)  user: $(whoami)  kernel: $(uname -r)"
+          grep -E '^(PRETTY_NAME)=' /etc/os-release || true
+          echo "cpu: $(nproc) cores  mem: $(free -h | awk '/^Mem:/{print $2}')  disk free: $(df -h ~ | awk 'NR==2{print $4}')"
+      - name: Tools
+        run: |
+          ok() { if "$@" >/dev/null 2>&1; then echo "OK   $*"; else echo "MISS $*"; fi; }
+          ok systemctl is-system-running
+          ok sudo -n true
+          ok git --version
+          ok curl --version
+          ok ffmpeg -version
+          ok docker info
+          ok python3 --version
+          python3 --version 2>&1 || true
+          ffmpeg -version 2>/dev/null | head -1 || true
+          docker --version 2>/dev/null || true
+      - name: Network (no YouTube)
+        run: |
+          curl -s -o /dev/null -w "github.com HTTP %{http_code}\n" https://github.com
+          curl -s https://api.ipify.org -o /dev/null -w "public IP lookup HTTP %{http_code}\n"
