@@ -972,10 +972,13 @@
  },
  "SzHeL8Nj1jE": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
-  "title": "US Congress Sharpens 'Blade' of Semiconductor Export Controls... Korean Firms Also in the Crossha...",
-  "uploaded_epoch": 0
+  "chars": 13547,
+  "duration_sec": 1443,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "반도체 수출통제 '칼날' 벼리는 美 의회..韓 기업도 영향권 | 이상은의 워싱턴나우",
+  "uploaded_epoch": 1794799839
  },
  "TF3F2WxyISA": {
   "ok": false,
