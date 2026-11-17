@@ -1,10 +1,10 @@
 {
- "last_run_utc": "2026-11-17T00:03:38+00:00",
- "last_run_kst": "2026-11-17 09:03:38 KST",
+ "last_run_utc": "2026-11-17T00:58:56+00:00",
+ "last_run_kst": "2026-11-17 09:58:56 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
-   "listed": 0,
+   "listed": 2,
    "list_error": ""
   },
   "hkgm": {
@@ -15,20 +15,30 @@
  },
  "results": [
   {
-   "id": "bc2-Rv4KpQ8",
-   "channel": "hkgm",
+   "id": "ERcTmUjF8m8",
+   "channel": "hkwowtv",
    "state": "fetched",
    "source": "caption",
    "lang": "ko-orig",
-   "chars": 4820
+   "chars": 24802
+  },
+  {
+   "id": "zcXzKmfTOGw",
+   "channel": "hkwowtv",
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 969
+  },
+  {
+   "id": "bc2-Rv4KpQ8",
+   "channel": "hkgm",
+   "state": "cached"
   },
   {
    "id": "blDGIYqWsIo",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 17079
+   "state": "cached"
   },
   {
    "id": "SzHeL8Nj1jE",
@@ -127,10 +137,10 @@
   "by_caption": 2,
   "failed": 0,
   "live_pending": 0,
-  "live_record": "월나우 확인 불가 — YouTube 봇 차단으로 녹음 실행이 채널을 확인하지 못함(YT_COOKIES 갱신 필요할 수 있음, https://github.com/lds96054341/hkgm-transcripts/actions/runs/43945153813)",
+  "live_record": "월나우 방송 없음 — 오늘 채널에 월나우가 올라오지 않음(집 노트북 녹음 실행이 마감까지 확인, https://github.com/lds96054341/hkgm-transcripts/actions/runs/43945155465)",
   "whisper_errors": 0,
   "warnings": [
-   "월나우 확인 불가 — YouTube 봇 차단으로 녹음 실행이 채널을 확인하지 못함(YT_COOKIES 갱신 필요할 수 있음, https://github.com/lds96054341/hkgm-transcripts/actions/runs/43945153813)"
+   "월나우 방송 없음 — 오늘 채널에 월나우가 올라오지 않음(집 노트북 녹음 실행이 마감까지 확인, https://github.com/lds96054341/hkgm-transcripts/actions/runs/43945155465)"
   ]
  }
 }
