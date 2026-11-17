@@ -471,10 +471,13 @@
  },
  "ERcTmUjF8m8": {
   "channel": "hkwowtv",
-  "duration_sec": 0,
-  "ok": false,
-  "title": "[🔴11/17 #WhileYouWereSleeping] \"Nvidia Not Considering Jensen Huang's Return\" | U.S. Moves to Blo...",
-  "uploaded_epoch": 0
+  "chars": 24802,
+  "duration_sec": 3327,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "[🔴11/17 #당잠사] ”엔비디아, 젠슨 황 복귀 고려 안해” | 미, 중 AI 반도체 우회 이용 차단 | 워시 \"AI 영향 시나리오 마련 중” | #엔비디아 #마이크론 #구글",
+  "uploaded_epoch": 1794864433
  },
  "ESla1WSxaCA": {
   "channel": "hkgm",
@@ -1974,10 +1977,13 @@
  },
  "zcXzKmfTOGw": {
   "channel": "hkwowtv",
-  "duration_sec": 0,
-  "ok": false,
-  "title": "November 16 Global Market Brief in 1 Minute✅ #WhileYouWereSleeping #GoodMorningHankyungGlobalMark...",
-  "uploaded_epoch": 0
+  "chars": 969,
+  "duration_sec": 105,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "11월 16일 글로벌 1분 시황✅ #당잠사 #굿모닝한경글로벌마켓 #1분시황",
+  "uploaded_epoch": 1794783135
  },
  "zhv6pUO9Xz4": {
   "channel": "hkgm",
