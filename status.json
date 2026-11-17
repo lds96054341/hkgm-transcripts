@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-11-17T20:59:03+00:00",
- "last_run_kst": "2026-11-18 05:59:03 KST",
+ "last_run_utc": "2026-11-17T22:14:44+00:00",
+ "last_run_kst": "2026-11-18 07:14:44 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -31,10 +31,16 @@
    "state": "cached"
   },
   {
+   "id": "zapKFAzarYg",
+   "channel": "hkgm",
+   "state": "no_subtitle",
+   "error": "b_safari,mweb) → 음성 받아쓰기로 전환 || [audio/default] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] zapKFAzarYg: Sign in to confirm you’re not a bot. This helps protect o | [audio/tv] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] zapKFAzarYg: Sign in to confirm you’re not a bot. This helps protect o | [audio/web_safari] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] zapKFAzarYg: Sign in to confirm you’re not a bot. This helps protect o | [audio/mweb] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] zapKFAzarYg: Sign in to confirm you’re not a bot. This helps protect o"
+  },
+  {
    "id": "v5ng9PqOAlo",
    "channel": "hkgm",
    "state": "no_subtitle",
-   "error": "b_safari,mweb) → 음성 받아쓰기로 전환 || [audio/default] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] v5ng9PqOAlo: Sign in to confirm you’re not a bot. This helps protect o | [audio/tv] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] v5ng9PqOAlo: Sign in to confirm you’re not a bot. This helps protect o | [audio/web_safari] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] v5ng9PqOAlo: Sign in to confirm you’re not a bot. This helps protect o | [audio/mweb] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] v5ng9PqOAlo: Sign in to confirm you’re not a bot. This helps protect o"
+   "error": "자막 트랙 없음(default,tv,web_safari,mweb) → 음성 받아쓰기로 전환 || 봇 차단 2회로 이번 회차 받아쓰기 중단"
   },
   {
    "id": "x-2Vpsnl134",
@@ -101,11 +107,6 @@
    "id": "65EO7MrOoh8",
    "channel": "hkgm",
    "state": "cached"
-  },
-  {
-   "id": "iF9Ygkhf3XA",
-   "channel": "hkgm",
-   "state": "cached"
   }
  ],
  "whisper_used": 2,
@@ -126,7 +127,7 @@
     "__Secure-3PSID"
    ],
    "nearest_expiry_kst": "2027-12-19 10:06 KST",
-   "days_left": 396.2,
+   "days_left": 396.1,
    "note": ""
   },
   "pot_provider": "ok",
@@ -137,13 +138,13 @@
   "audio_disabled": true,
   "fetched": 0,
   "by_caption": 0,
-  "failed": 3,
+  "failed": 4,
   "live_pending": 0,
   "live_record": "ok",
   "whisper_errors": 0,
   "warnings": [
    "YouTube 봇 차단 — 자막 경로도 막힘(영상 1건, 음성 경로 2회). 쿠키 세션 무효화 또는 러너 IP 차단 — YT_COOKIES 시크릿 갱신이 필요할 수 있습니다.",
-   "이번 회차 신규 수집 0건(실패 3건) — 리포트는 기사 기반으로 작성해야 합니다."
+   "이번 회차 신규 수집 0건(실패 4건) — 리포트는 기사 기반으로 작성해야 합니다."
   ]
  }
 }
