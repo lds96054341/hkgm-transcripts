@@ -1220,17 +1220,23 @@
  },
  "bc2-Rv4KpQ8": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
+  "chars": 4820,
+  "duration_sec": 625,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
   "title": "[박신영의 클로징벨 요것만-11월17일] 엔비디아 쇼크에 나스닥 2.5% 급락",
-  "uploaded_epoch": 0
+  "uploaded_epoch": 1794865581
  },
  "blDGIYqWsIo": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
+  "chars": 17079,
+  "duration_sec": 2321,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
   "title": "[박신영의 개장전 요것만-11월16일] \"젠슨 황 돌려달라\"...커지는 투자자 목소리 | 악재 겹친 인텔과 아마존",
-  "uploaded_epoch": 0
+  "uploaded_epoch": 1794841268
  },
  "bqknPig-Tq0": {
   "channel": "hkgm",
@@ -1271,16 +1277,6 @@
   "source": "caption",
   "title": "FOMC보다 중요한 연준의 다음 메시지",
   "uploaded_epoch": 1792963821
- },
- "dZu9yhEtMEM": {
-  "channel": "hkgm",
-  "chars": 4542,
-  "duration_sec": 583,
-  "lang": "ko-orig",
-  "ok": true,
-  "source": "caption",
-  "title": "AI 시대, 원전의 운명을 쥔 단 한 곳…원자로 짓는데 연료가 없다? | 바이아메리카 in NY",
-  "uploaded_epoch": 1790985633
  },
  "dv2hUa_JAxw": {
   "channel": "hkgm",
