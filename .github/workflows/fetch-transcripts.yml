@@ -198,7 +198,7 @@ jobs:
           import datetime as dt, json, os, re, subprocess, sys
           sys.path.insert(0, ".github/scripts")
           import market_clock            # ★27 경고 시작 시각도 서머타임에 따라(EDT 06:40 / EST 07:40 KST)
-          WALLNOW = re.compile(r"월나우|월스트리트나우|월스트리트 나우")
+          WALLNOW = re.compile(r"월나우|월스트리트\s?나우|Wall\s?Now|Wall\s?Street\s?Now", re.I)   # ★31 영어 번역 제목 포함
           KST = dt.timezone(dt.timedelta(hours=9))
           now = dt.datetime.now(KST)
           since = now.replace(hour=3, minute=0, second=0, microsecond=0)
@@ -240,6 +240,13 @@ jobs:
               pass                      # 아직 녹음·받아쓰기 중
           else:
               bad = [r for r in runs if r["conclusion"] not in ("success", "skipped")]
+              # ★31 노트북 녹음이 성공으로 끝났으면 노트북 판단을 믿는다(GitHub 러너는 봇 차단으로 '확인 불가'가 나기 쉽다)
+              home_ok = [r for r in runs if "[home]" in r.get("displayTitle", "") and r["conclusion"] == "success"]
+              seen_today = any(WALLNOW.search(e.get("title", ""))
+                               and (e.get("uploaded_epoch") or 0) >= since.timestamp() for e in idx.values())
+              if home_ok and not seen_today:
+                  print(f"월나우 방송 없음 — 오늘 채널에 월나우가 올라오지 않음(집 노트북 녹음 실행이 마감까지 확인, {home_ok[0]['url']})")
+                  raise SystemExit
               if bad:
                   r = bad[0]              # 가장 최근의 실패한 실행
                   err = error_text(r.get("databaseId", ""))
@@ -282,6 +289,9 @@ jobs:
           #   priority      → 낮을수록 먼저 처리(★2). 받아쓰기 슬롯을 먼저 가져간다.
           # 한국경제TV는 하루 55건이 올라오고 반려동물·차트게임 등이 섞여 있어
           # 🔴 라이브 코너 「당잠사」만 고른다 (매일 06:10~06:15 KST, 미국장 마감 정리).
+          # ★31 유튜브가 제목을 영어로 자동 번역해 주는 일이 있다(11/17 노트북 수집에서 한국경제TV 90건 스캔 → 0건 선별).
+          #     당잠사는 '#WhileYouWereSleeping', 월나우는 'Wall Now' 로 바뀌므로 영어 제목도 함께 고른다.
+          #     (yt-dlp youtube:lang=ko 는 목록 API 가 403 으로 끊겨 쓰지 않는다)
           # ────────────────────────────────────────────────────────────
           CHANNELS = [
               {
@@ -291,7 +301,7 @@ jobs:
                       "https://www.youtube.com/channel/UCF8AeLlUbEpKju6v1H6p8Eg/videos",
                   ],
                   "scan": 90,
-                  "include": r"당잠사|당신이\s*잠든\s*사이",
+                  "include": r"당잠사|당신이\s*잠든\s*사이|While\s*You\s*Were\s*Sleeping",   # ★31 영어 번역 제목
                   "priority": 0,          # ★2 당잠사가 먼저
               },
               {
