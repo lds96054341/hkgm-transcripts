@@ -43,6 +43,10 @@
   수집기 경고가 이를 '월나우 방송 없음'으로 잘못 보였다. 라이브를 찾는 동안 상태를 읽은 비율이
   절반 미만이면 '월나우 확인 불가(봇 차단)'로 실패 처리한다(실행이 빨간색, ::error:: 로 남는다).
 
+★31 영어 번역 제목 (2026-11-17)
+  유튜브가 계정·IP 에 따라 제목을 영어로 자동 번역해 줄 때가 있다. 월나우는 "Kim Hyun-seok's Wall Now" 가 되므로
+  제목 필터에 영어 표기도 넣는다(yt-dlp youtube:lang=ko 는 목록 API 가 403 으로 끊겨 쓰지 않는다).
+
 ★30 집 노트북 우선 (2026-11-15)
   GitHub 러너 IP 는 음성 다운로드가 봇 차단되기 쉬워 집 노트북(self-hosted, RUNNER_KIND=home)에서 먼저 녹음한다.
   GitHub 러너(RUNNER_KIND=github)는 보험이다. 라이브를 찾으면 오늘 노트북 녹음 실행이 '진행 중'인지 보고,
@@ -80,7 +84,7 @@ ATTEMPT = int(os.environ.get("RETRY_ATTEMPT") or 1)
 MEMBERS = re.compile(r"members|Join this channel|멤버십", re.I)
 KNOWN_STATUS = {"is_live", "is_upcoming", "was_live", "not_live", "post_live"}
 PROBES = {"total": 0, "known": 0}    # ★29 라이브 찾기 중 상태 조회 건수 / 상태를 읽은 건수
-WALLNOW_PAT = r"월나우|월스트리트나우|월스트리트 나우"   # ★26 녹음 대상(TITLE_FILTER 기본값)
+WALLNOW_PAT = r"(?i)월나우|월스트리트\s?나우|Wall\s?Now|Wall\s?Street\s?Now"   # ★31 영어 번역 제목(Kim Hyun-seok's Wall Now) 포함   # ★26 녹음 대상(TITLE_FILTER 기본값)
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import market_clock                                    # ★27 서머타임에 따른 시간표
 CLOCK = market_clock.schedule()
