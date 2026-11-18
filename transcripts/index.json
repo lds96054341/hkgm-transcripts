@@ -648,10 +648,13 @@
  },
  "If5T3iAJrwI": {
   "channel": "hkwowtv",
-  "duration_sec": 0,
-  "ok": false,
+  "chars": 21959,
+  "duration_sec": 3194,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
   "title": "[🔴11/19 #당잠사] 엔비디아 호실적 불구 하락 전환 | 앤트로픽 상장 D-1 | 월러 “12월 빅스텝 해야” | #엔비디아 #구글 #스페이스X",
-  "uploaded_epoch": 1795032473
+  "uploaded_epoch": 1795037124
  },
  "Isrglm5aKvA": {
   "channel": "hkgm",
@@ -819,10 +822,13 @@
  },
  "NP6j34pcd9c": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
+  "chars": 7946,
+  "duration_sec": 1074,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
   "title": "[박신영의 클로징벨 요것만-11월19일] 엔비디아 2.9% 하락...앤트로픽 공모가 83달러",
-  "uploaded_epoch": 0
+  "uploaded_epoch": 1795038835
  },
  "N_JXlcBFB5M": {
   "channel": "hkgm",
