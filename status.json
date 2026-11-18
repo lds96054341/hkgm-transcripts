@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-11-17T23:12:12+00:00",
- "last_run_kst": "2026-11-18 08:12:12 KST",
+ "last_run_utc": "2026-11-18T00:02:31+00:00",
+ "last_run_kst": "2026-11-18 09:02:31 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -17,14 +17,18 @@
   {
    "id": "-UUE-DQJnNM",
    "channel": "hkwowtv",
-   "state": "no_subtitle",
-   "error": "b_safari,mweb) → 음성 받아쓰기로 전환 || [audio/default] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] -UUE-DQJnNM: Sign in to confirm you’re not a bot. This helps protect o | [audio/tv] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] -UUE-DQJnNM: Sign in to confirm you’re not a bot. This helps protect o | [audio/web_safari] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] -UUE-DQJnNM: Sign in to confirm you’re not a bot. This helps protect o | [audio/mweb] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] -UUE-DQJnNM: Sign in to confirm you’re not a bot. This helps protect o"
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 961
   },
   {
    "id": "-26ghY_PNo4",
    "channel": "hkwowtv",
-   "state": "no_subtitle",
-   "error": "ted format is not available\n || [audio/default] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] -26ghY_PNo4: Sign in to confirm you’re not a bot. This helps protect o | [audio/tv] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] -26ghY_PNo4: Sign in to confirm you’re not a bot. This helps protect o | [audio/web_safari] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] -26ghY_PNo4: Sign in to confirm you’re not a bot. This helps protect o | [audio/mweb] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] -26ghY_PNo4: Sign in to confirm you’re not a bot. This helps protect o"
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 24328
   },
   {
    "id": "ERcTmUjF8m8",
@@ -34,26 +38,34 @@
   {
    "id": "vhOKWCD9SZY",
    "channel": "hkgm",
-   "state": "no_subtitle",
-   "error": "[mweb] for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\nWARNING: No video formats found!\nWARNING: Requested format is not available\n || 봇 차단 2회로 이번 회차 받아쓰기 중단"
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 6041
   },
   {
    "id": "zapKFAzarYg",
    "channel": "hkgm",
-   "state": "no_subtitle",
-   "error": "자막 트랙 없음(default,tv,web_safari,mweb) → 음성 받아쓰기로 전환 || 봇 차단 2회로 이번 회차 받아쓰기 중단"
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 7319
   },
   {
    "id": "v5ng9PqOAlo",
    "channel": "hkgm",
-   "state": "no_subtitle",
-   "error": "자막 트랙 없음(default,tv,web_safari,mweb) → 음성 받아쓰기로 전환 || 봇 차단 2회로 이번 회차 받아쓰기 중단"
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 5322
   },
   {
    "id": "x-2Vpsnl134",
    "channel": "hkgm",
-   "state": "no_subtitle",
-   "error": "자막 트랙 없음(default,tv,web_safari,mweb) → 음성 받아쓰기로 전환 || 봇 차단 2회로 이번 회차 받아쓰기 중단"
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 15497
   },
   {
    "id": "bc2-Rv4KpQ8",
@@ -111,7 +123,7 @@
    "state": "cached"
   }
  ],
- "whisper_used": 2,
+ "whisper_used": 0,
  "health": {
   "cookie": {
    "status": "ok",
@@ -129,24 +141,23 @@
     "__Secure-3PSID"
    ],
    "nearest_expiry_kst": "2027-12-19 10:06 KST",
-   "days_left": 396.1,
+   "days_left": 396.0,
    "note": ""
   },
   "pot_provider": "ok",
-  "js_runtime": "ok deno=2.9.8 ejs=0.8.0 ffmpeg=8.0.1-3ubuntu2",
+  "js_runtime": "ok deno=2.9.8 ejs=0.8.0 ffmpeg=6.1.1-3ubuntu5",
   "ejs_failures": 0,
-  "bot_blocked": 2,
-  "caption_bot_blocked": 2,
-  "audio_disabled": true,
-  "fetched": 0,
-  "by_caption": 0,
-  "failed": 6,
+  "bot_blocked": 0,
+  "caption_bot_blocked": 0,
+  "audio_disabled": false,
+  "fetched": 6,
+  "by_caption": 6,
+  "failed": 0,
   "live_pending": 0,
-  "live_record": "ok",
+  "live_record": "월나우 방송 없음 — 오늘 채널에 월나우가 올라오지 않음(집 노트북 녹음 실행이 마감까지 확인, https://github.com/lds96054341/hkgm-transcripts/actions/runs/44164836040)",
   "whisper_errors": 0,
   "warnings": [
-   "YouTube 봇 차단 — 자막 경로도 막힘(영상 2건, 음성 경로 2회). 쿠키 세션 무효화 또는 러너 IP 차단 — YT_COOKIES 시크릿 갱신이 필요할 수 있습니다.",
-   "이번 회차 신규 수집 0건(실패 6건) — 리포트는 기사 기반으로 작성해야 합니다."
+   "월나우 방송 없음 — 오늘 채널에 월나우가 올라오지 않음(집 노트북 녹음 실행이 마감까지 확인, https://github.com/lds96054341/hkgm-transcripts/actions/runs/44164836040)"
   ]
  }
 }

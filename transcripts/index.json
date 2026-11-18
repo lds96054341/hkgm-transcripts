@@ -1,10 +1,13 @@
 {
  "-26ghY_PNo4": {
   "channel": "hkwowtv",
-  "duration_sec": 0,
-  "ok": false,
+  "chars": 24328,
+  "duration_sec": 3386,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
   "title": "[🔴11/18 #당잠사] 엔비디아 실적 발표 | 젠슨 황 \"요청 시 복귀”…엔비디아 이사회 ”고려 안 해” | 앤트로픽, IPO 흥행 기대 | #엔비디아 #마이크론 #마이크로소프트",
-  "uploaded_epoch": 0
+  "uploaded_epoch": 1794950911
  },
  "-4V9HpvXs44": {
   "channel": "hkgm",
@@ -38,10 +41,13 @@
  },
  "-UUE-DQJnNM": {
   "channel": "hkwowtv",
-  "duration_sec": 0,
-  "ok": false,
-  "title": "November 18 Global Market Update in 1 Minute✅ #WhileYouWereSleeping #GoodMorningHankyungGlobalMar...",
-  "uploaded_epoch": 0
+  "chars": 961,
+  "duration_sec": 108,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "11월 18일 글로벌 1분 시황✅ #당잠사 #굿모닝한경글로벌마켓 #1분시황",
+  "uploaded_epoch": 1794954739
  },
  "-Vt4G9lojw0": {
   "channel": "hkgm",
@@ -1812,10 +1818,13 @@
  },
  "v5ng9PqOAlo": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
+  "chars": 5322,
+  "duration_sec": 656,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
   "title": "젠슨 황의 엔비디아 복귀 가능성을 짚어봤습니다 | 박신영의 월가아나토미",
-  "uploaded_epoch": 0
+  "uploaded_epoch": 1794941584
  },
  "vEZ_uZ6MEsU": {
   "channel": "hkgm",
@@ -1839,10 +1848,13 @@
  },
  "vhOKWCD9SZY": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
+  "chars": 6041,
+  "duration_sec": 845,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
   "title": "[플러스 라이브] 엔비디아 \"젠슨 황 복귀 없다\"...\"네오클라우드 지원 신중\"",
-  "uploaded_epoch": 0
+  "uploaded_epoch": 1794957017
  },
  "vqq2PGkd8ww": {
   "channel": "hkgm",
@@ -1906,10 +1918,13 @@
  },
  "x-2Vpsnl134": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
-  "title": "[Park Shin-young's Pre-Market Briefing - Nov. 17] The 'Weapon' in AI Infrastructure Dominated by ...",
-  "uploaded_epoch": 0
+  "chars": 15497,
+  "duration_sec": 2126,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "[박신영의 개장전 요것만-11월17일] 中 장악한 AI 인프라 무기는 '이것' | 아마존·구글·메타 \"대비 10년 걸려\"",
+  "uploaded_epoch": 1794927528
  },
  "xH7Oa8WzppU": {
   "channel": "hkgm",
@@ -1992,10 +2007,13 @@
  },
  "zapKFAzarYg": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
-  "title": "[Park Shin-young's Closing Bell Brief - Nov. 18] Nvidia's Surprise Earnings... Can It Ease Invest...",
-  "uploaded_epoch": 0
+  "chars": 7319,
+  "duration_sec": 947,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "[박신영의 클로징벨 요것만-11월18일] 엔비디아, 실적은 서프라이즈...투자자 불안 해소가 관건",
+  "uploaded_epoch": 1794952463
  },
  "zcXzKmfTOGw": {
   "channel": "hkwowtv",
