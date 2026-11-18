@@ -1,10 +1,10 @@
 {
- "last_run_utc": "2026-11-18T00:02:31+00:00",
- "last_run_kst": "2026-11-18 09:02:31 KST",
+ "last_run_utc": "2026-11-18T03:06:49+00:00",
+ "last_run_kst": "2026-11-18 12:06:49 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
-   "listed": 3,
+   "listed": 2,
    "list_error": ""
   },
   "hkgm": {
@@ -17,18 +17,7 @@
   {
    "id": "-UUE-DQJnNM",
    "channel": "hkwowtv",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 961
-  },
-  {
-   "id": "-26ghY_PNo4",
-   "channel": "hkwowtv",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 24328
+   "state": "cached"
   },
   {
    "id": "ERcTmUjF8m8",
@@ -38,34 +27,22 @@
   {
    "id": "vhOKWCD9SZY",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 6041
+   "state": "cached"
   },
   {
    "id": "zapKFAzarYg",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 7319
+   "state": "cached"
   },
   {
    "id": "v5ng9PqOAlo",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 5322
+   "state": "cached"
   },
   {
    "id": "x-2Vpsnl134",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 15497
+   "state": "cached"
   },
   {
    "id": "bc2-Rv4KpQ8",
@@ -141,17 +118,17 @@
     "__Secure-3PSID"
    ],
    "nearest_expiry_kst": "2027-12-19 10:06 KST",
-   "days_left": 396.0,
+   "days_left": 395.9,
    "note": ""
   },
   "pot_provider": "ok",
-  "js_runtime": "ok deno=2.9.8 ejs=0.8.0 ffmpeg=6.1.1-3ubuntu5",
+  "js_runtime": "ok deno=2.9.8 ejs=0.8.0 ffmpeg=8.0.1-3ubuntu2",
   "ejs_failures": 0,
   "bot_blocked": 0,
   "caption_bot_blocked": 0,
   "audio_disabled": false,
-  "fetched": 6,
-  "by_caption": 6,
+  "fetched": 0,
+  "by_caption": 0,
   "failed": 0,
   "live_pending": 0,
   "live_record": "월나우 방송 없음 — 오늘 채널에 월나우가 올라오지 않음(집 노트북 녹음 실행이 마감까지 확인, https://github.com/lds96054341/hkgm-transcripts/actions/runs/44164836040)",
