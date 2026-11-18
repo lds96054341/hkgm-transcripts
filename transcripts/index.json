@@ -650,8 +650,7 @@
   "channel": "hkwowtv",
   "duration_sec": 0,
   "ok": false,
-  "pending": "live",
-  "title": "[🔴11/19 #당잠사] 엔비디아 호실적 불구 하락 전환 | 앤트로픽 상장 D-1 | 월러 “12월 빅스텝 해야” | #엔비디아 #구글 #스페이스X 2026-11-19 05:40",
+  "title": "[🔴11/19 #당잠사] 엔비디아 호실적 불구 하락 전환 | 앤트로픽 상장 D-1 | 월러 “12월 빅스텝 해야” | #엔비디아 #구글 #스페이스X",
   "uploaded_epoch": 1795032473
  },
  "Isrglm5aKvA": {
@@ -817,6 +816,13 @@
   "source": "caption",
   "title": "[🔴10/15 #당잠사]예상 웃돈 미 9월 CPI…금리인상 확률 커져 | 기술주 급락 | 연준 베이지북 “전 지역 물가 상승” | #ASML #애플 #코어위브",
   "uploaded_epoch": 1792012432
+ },
+ "NP6j34pcd9c": {
+  "channel": "hkgm",
+  "duration_sec": 0,
+  "ok": false,
+  "title": "[박신영의 클로징벨 요것만-11월19일] 엔비디아 2.9% 하락...앤트로픽 공모가 83달러",
+  "uploaded_epoch": 0
  },
  "N_JXlcBFB5M": {
   "channel": "hkgm",
@@ -1130,16 +1136,6 @@
   "source": "caption",
   "title": "정말 중간선거 전에 조정 오는 걸까 | 월가백브리핑",
   "uploaded_epoch": 1791687615
- },
- "ZuMSb_aoNoQ": {
-  "channel": "hkgm",
-  "chars": 8147,
-  "duration_sec": 904,
-  "lang": "ko-orig",
-  "ok": true,
-  "source": "caption",
-  "title": "반도체 우려, 언제 해소될까?ㅣ김현석의 월나우 위클리Q",
-  "uploaded_epoch": 1791149428
  },
  "_2tIRmb5UBw": {
   "channel": "hkgm",
