@@ -1764,10 +1764,13 @@
  },
  "uOQKfOjyBcI": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
-  "title": "U.S. Companies Spending $210 Million on Abandoned Factories… The AI Investment Landscape is Shift...",
-  "uploaded_epoch": 0
+  "chars": 8185,
+  "duration_sec": 735,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "2900억 주고 폐공장 사들이는 미국 기업들…AI 투자 판이 바뀐다 | 김인엽의 실리콘밸리나우",
+  "uploaded_epoch": 1795078807
  },
  "uXrhKxVBlwM": {
   "channel": "hkwowtv",

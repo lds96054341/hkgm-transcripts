@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-11-19T12:54:25+00:00",
- "last_run_kst": "2026-11-19 21:54:25 KST",
+ "last_run_utc": "2026-11-19T12:57:18+00:00",
+ "last_run_kst": "2026-11-19 21:57:18 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -22,8 +22,10 @@
   {
    "id": "uOQKfOjyBcI",
    "channel": "hkgm",
-   "state": "no_subtitle",
-   "error": "b_safari,mweb) → 음성 받아쓰기로 전환 || [audio/default] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] uOQKfOjyBcI: Sign in to confirm you’re not a bot. This helps protect o | [audio/tv] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] uOQKfOjyBcI: Sign in to confirm you’re not a bot. This helps protect o | [audio/web_safari] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] uOQKfOjyBcI: Sign in to confirm you’re not a bot. This helps protect o | [audio/mweb] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] uOQKfOjyBcI: Sign in to confirm you’re not a bot. This helps protect o"
+   "state": "fetched",
+   "source": "caption",
+   "lang": "ko-orig",
+   "chars": 8185
   },
   {
    "id": "NP6j34pcd9c",
@@ -96,7 +98,7 @@
    "state": "cached"
   }
  ],
- "whisper_used": 1,
+ "whisper_used": 0,
  "health": {
   "cookie": {
    "status": "ok",
@@ -118,21 +120,19 @@
    "note": ""
   },
   "pot_provider": "ok",
-  "js_runtime": "ok deno=2.9.8 ejs=0.8.0 ffmpeg=8.0.1-3ubuntu2",
+  "js_runtime": "ok deno=2.9.8 ejs=0.8.0 ffmpeg=6.1.1-3ubuntu5",
   "ejs_failures": 0,
-  "bot_blocked": 1,
+  "bot_blocked": 0,
   "caption_bot_blocked": 0,
   "audio_disabled": false,
-  "fetched": 0,
-  "by_caption": 0,
-  "failed": 1,
+  "fetched": 1,
+  "by_caption": 1,
+  "failed": 0,
   "live_pending": 0,
   "live_record": "월나우 방송 없음 — 오늘 채널에 월나우가 올라오지 않음(집 노트북 녹음 실행이 마감까지 확인, https://github.com/lds96054341/hkgm-transcripts/actions/runs/44386588615)",
   "whisper_errors": 0,
   "warnings": [
-   "월나우 방송 없음 — 오늘 채널에 월나우가 올라오지 않음(집 노트북 녹음 실행이 마감까지 확인, https://github.com/lds96054341/hkgm-transcripts/actions/runs/44386588615)",
-   "YouTube 봇 차단 1회 — GitHub Actions의 데이터센터 IP는 차단 대상입니다. 자막 경로로만 수집됩니다.",
-   "이번 회차 신규 수집 0건(실패 1건) — 리포트는 기사 기반으로 작성해야 합니다."
+   "월나우 방송 없음 — 오늘 채널에 월나우가 올라오지 않음(집 노트북 녹음 실행이 마감까지 확인, https://github.com/lds96054341/hkgm-transcripts/actions/runs/44386588615)"
   ]
  }
 }
