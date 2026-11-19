@@ -1575,8 +1575,9 @@
   "channel": "hkwowtv",
   "duration_sec": 0,
   "ok": false,
-  "title": "[🔴11/20 #당잠사] 앤트로픽, 상장 첫날 변동성↑…시초가 대비 10%↓ | AMD 中 수출통제 위반 의혹 제기 | 월마트 실적발표 | #앤트로픽 #AMD #구글",
-  "uploaded_epoch": 0
+  "pending": "live",
+  "title": "[🔴11/20 #당잠사] 앤트로픽, 상장 첫날 변동성↑…시초가 대비 10%↓ | AMD 中 수출통제 위반 의혹 제기 | 월마트 실적발표 | #앤트로픽 #AMD #구글 2026-11-20 05:45",
+  "uploaded_epoch": 1795118928
  },
  "mAGzUse1pBI": {
   "channel": "hkgm",
@@ -1976,10 +1977,13 @@
  },
  "y_oI6FX6H5g": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
-  "title": "[Park Shin-young’s Pre-Market Highlights - November 19] Antropic D-Day | Is China the Culprit Beh...",
-  "uploaded_epoch": 0
+  "chars": 12820,
+  "duration_sec": 1779,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "[박신영의 개장전 요것만-11월19일] 앤트로픽 D-day | 미국 사이버사고 범인은 中?",
+  "uploaded_epoch": 1795099979
  },
  "ybN74LY7b-M": {
   "chars": 13288,
