@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-11-19T03:09:33+00:00",
- "last_run_kst": "2026-11-19 12:09:33 KST",
+ "last_run_utc": "2026-11-19T03:46:00+00:00",
+ "last_run_kst": "2026-11-19 12:46:00 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -126,8 +126,10 @@
   "by_caption": 0,
   "failed": 0,
   "live_pending": 0,
-  "live_record": "ok",
+  "live_record": "월나우 방송 없음 — 오늘 채널에 월나우가 올라오지 않음(집 노트북 녹음 실행이 마감까지 확인, https://github.com/lds96054341/hkgm-transcripts/actions/runs/44386588615)",
   "whisper_errors": 0,
-  "warnings": []
+  "warnings": [
+   "월나우 방송 없음 — 오늘 채널에 월나우가 올라오지 않음(집 노트북 녹음 실행이 마감까지 확인, https://github.com/lds96054341/hkgm-transcripts/actions/runs/44386588615)"
+  ]
  }
 }
