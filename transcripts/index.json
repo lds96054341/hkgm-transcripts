@@ -834,10 +834,13 @@
  },
  "P76jZE8gOWI": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
-  "title": "Anthropic IPO: Stocks to Watch",
-  "uploaded_epoch": 0
+  "chars": 369,
+  "duration_sec": 39,
+  "lang": "ko",
+  "ok": true,
+  "source": "caption",
+  "title": "앤트로픽 상장, 함께 주목할 수혜주",
+  "uploaded_epoch": 1795157167
  },
  "PA82jotR7DI": {
   "channel": "hkgm",
