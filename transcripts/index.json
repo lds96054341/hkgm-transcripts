@@ -283,10 +283,13 @@
  },
  "6oeQKk24rXM": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
+  "chars": 8290,
+  "duration_sec": 1085,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
   "title": "[박신영의 클로징벨 요것만-11월21일] 앤트로픽도 소용 없었다 | 나스닥 폭락...퍼펙트스톰 시작?",
-  "uploaded_epoch": 0
+  "uploaded_epoch": 1795211577
  },
  "6u6nIqka_Mw": {
   "channel": "hkwowtv",
