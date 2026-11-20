@@ -305,10 +305,13 @@
  },
  "7EHcrP6Wn0U": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
-  "title": "[Park Shin-young's Pre-market Briefing - Nov 20] AI Sell-off Hits Even Anthropic... Apple's Entry...",
-  "uploaded_epoch": 0
+  "chars": 12242,
+  "duration_sec": 1664,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "[박신영의 개장전 요것만-11월20일] 앤트로픽도 쓸어간 AI 매도세...애플 참전에 AI 경쟁 격화",
+  "uploaded_epoch": 1795186238
  },
  "7YCLtirCyd4": {
   "channel": "hkgm",
