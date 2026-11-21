@@ -1073,10 +1073,13 @@
  },
  "XbM2AbJXeUQ": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
-  "title": "Amidst a Growing Pile of Bad News, Did Anthropic Just Cash Out and Run? | Wall Street Backbriefing",
-  "uploaded_epoch": 0
+  "chars": 11212,
+  "duration_sec": 1253,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "악재는 계속 겹치는데 앤트로픽은 혼자만 먹고 튀었다? | 월가백브리핑",
+  "uploaded_epoch": 1795230016
  },
  "Xr-xw6KaThk": {
   "channel": "hkgm",
