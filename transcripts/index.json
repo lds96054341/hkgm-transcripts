@@ -860,6 +860,16 @@
   "title": "유가 100달러 시대, 미국 경제에 벌어지는 일",
   "uploaded_epoch": 1792359039
  },
+ "Qbohameg3R0": {
+  "channel": "hkgm",
+  "chars": 13256,
+  "duration_sec": 1467,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "메모리 슈퍼사이클은 이제 끝물인 걸까 | 월가백브리핑",
+  "uploaded_epoch": 1795316429
+ },
  "QoLqSsmwCB8": {
   "channel": "hkgm",
   "chars": 17770,
@@ -994,10 +1004,13 @@
  },
  "Tce49IyMt1A": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
-  "title": "※The video you’ve been asking for※ Backbriefing in Seoul｜Special Lecture by Correspondent Kim Hyu...",
-  "uploaded_epoch": 0
+  "chars": 11158,
+  "duration_sec": 1375,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "※궁금해하셨던 그 영상※ 백브리핑 in 서울｜김현석 특파원 특별 강연",
+  "uploaded_epoch": 1795298411
  },
  "TurrTr6nJjM": {
   "channel": "hkgm",
