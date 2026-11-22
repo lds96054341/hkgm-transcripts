@@ -564,6 +564,13 @@
   "title": "[김현석의 월나우-10월21일] '가짜뉴스'에 유턴한 주가...강세장 속 일반적 조정? | 스페이스X 매출 161% 급등 2026-10-20 21:41",
   "uploaded_epoch": 1792532478
  },
+ "Hx2C-QlXSxc": {
+  "channel": "hkwowtv",
+  "duration_sec": 3292,
+  "ok": false,
+  "title": "[🔴11/23 #당잠사] AI 투매에 나스닥 연간 상승분 반납…S&P·다우 조정 진입ㅣ필라델피아 반도체 10% 하락ㅣ엔비디아 시총 4위 추락ㅣ#엔비디아 #앤트로픽 #SOXL",
+  "uploaded_epoch": 1795382801
+ },
  "HxjWqkc-KNw": {
   "channel": "hkgm",
   "chars": 10607,
@@ -767,6 +774,13 @@
   "source": "caption",
   "title": "[🔴10/15 #당잠사]예상 웃돈 미 9월 CPI…금리인상 확률 커져 | 기술주 급락 | 연준 베이지북 “전 지역 물가 상승” | #ASML #애플 #코어위브",
   "uploaded_epoch": 1792012432
+ },
+ "NLGGULcwUxE": {
+  "channel": "hkgm",
+  "duration_sec": 2650,
+  "ok": false,
+  "title": "다시 뭉친 김현석·빈난새·김종학 기자ㅣ백브리핑 in 서울",
+  "uploaded_epoch": 1795384829
  },
  "NP6j34pcd9c": {
   "channel": "hkgm",
@@ -1033,18 +1047,6 @@
   "ok": false,
   "title": "[김현석의 월스트리트나우-8월29일] 워시, 9월 인상 시사? 증시 하락한 이유..\"Fed와 싸우지 마라\""
  },
- "VBwiIH5659w": {
-  "channel": "hkgm",
-  "chars": 13231,
-  "coverage": 0.97,
-  "duration_sec": 1879,
-  "lang": "whisper-small",
-  "live_record": true,
-  "ok": true,
-  "source": "audio",
-  "title": "[김현석의 월나우-10월9일] 갑자기 터진 'AI 수요' 걱정...사실 아니라는데 기술주 발작 | 금리는 급락...고점 쳤다? 2026-10-08 21:41",
-  "uploaded_epoch": 1791495593
- },
  "VriNuQw8d6s": {
   "channel": "hkgm",
   "chars": 17942,
@@ -1198,6 +1200,13 @@
  "aig2WN5150s": {
   "ok": false,
   "title": "[박신영의 개장전요것만-9월1일] 글로벌 국채금리, 금융위기 후 최고치..반도체, 유탄맞고 9월 조정 시작﻿? | 엔비디아 스페이스X의 1등 수혜주"
+ },
+ "bDSMjDR_F9Y": {
+  "channel": "hkgm",
+  "duration_sec": 1080,
+  "ok": false,
+  "title": "[플러스 라이브]\"저가 매수 기회 접근\"...\"아직 완전한 투매는 아냐\"",
+  "uploaded_epoch": 1795385140
  },
  "bEApLcAJsl0": {
   "channel": "hkwowtv",
