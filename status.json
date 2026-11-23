@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-11-23T22:19:15+00:00",
- "last_run_kst": "2026-11-24 07:19:15 KST",
+ "last_run_utc": "2026-11-23T23:57:24+00:00",
+ "last_run_kst": "2026-11-24 08:57:24 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -15,12 +15,10 @@
  },
  "results": [
   {
-   "id": "jguFMibEtRk",
+   "id": "G2pERPQfv08",
    "channel": "hkwowtv",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 24009
+   "state": "no_subtitle",
+   "error": "b_safari,mweb) → 음성 받아쓰기로 전환 || [audio/default] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] G2pERPQfv08: Sign in to confirm you’re not a bot. This helps protect o | [audio/tv] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] G2pERPQfv08: Sign in to confirm you’re not a bot. This helps protect o | [audio/web_safari] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] G2pERPQfv08: Sign in to confirm you’re not a bot. This helps protect o | [audio/mweb] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] G2pERPQfv08: Sign in to confirm you’re not a bot. This helps protect o"
   },
   {
    "id": "Hx2C-QlXSxc",
@@ -28,26 +26,14 @@
    "state": "cached"
   },
   {
-   "id": "-XDbOFwc-o8",
-   "channel": "hkgm",
-   "state": "live_pending",
-   "error": "LIVE: 라이브 진행 중 — 방송이 끝난 뒤 다음 실행에서 다시 시도"
-  },
-  {
    "id": "SlogffV3wZE",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 7342
+   "state": "cached"
   },
   {
    "id": "J_-b0JnKJhY",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 15736
+   "state": "cached"
   },
   {
    "id": "8-A1yMnC06E",
@@ -108,9 +94,14 @@
    "id": "uOQKfOjyBcI",
    "channel": "hkgm",
    "state": "cached"
+  },
+  {
+   "id": "NP6j34pcd9c",
+   "channel": "hkgm",
+   "state": "cached"
   }
  ],
- "whisper_used": 0,
+ "whisper_used": 1,
  "health": {
   "cookie": {
    "status": "ok",
@@ -128,21 +119,24 @@
     "__Secure-3PSID"
    ],
    "nearest_expiry_kst": "2027-12-19 10:06 KST",
-   "days_left": 390.1,
+   "days_left": 390.0,
    "note": ""
   },
   "pot_provider": "ok",
-  "js_runtime": "ok deno=2.9.8 ejs=0.8.0 ffmpeg=6.1.1-3ubuntu5",
+  "js_runtime": "ok deno=2.9.8 ejs=0.8.0 ffmpeg=8.0.1-3ubuntu2",
   "ejs_failures": 0,
-  "bot_blocked": 0,
+  "bot_blocked": 1,
   "caption_bot_blocked": 0,
   "audio_disabled": false,
-  "fetched": 3,
-  "by_caption": 3,
-  "failed": 0,
-  "live_pending": 1,
+  "fetched": 0,
+  "by_caption": 0,
+  "failed": 1,
+  "live_pending": 0,
   "live_record": "ok",
   "whisper_errors": 0,
-  "warnings": []
+  "warnings": [
+   "YouTube 봇 차단 1회 — GitHub Actions의 데이터센터 IP는 차단 대상입니다. 자막 경로로만 수집됩니다.",
+   "이번 회차 신규 수집 0건(실패 1건) — 리포트는 기사 기반으로 작성해야 합니다."
+  ]
  }
 }
