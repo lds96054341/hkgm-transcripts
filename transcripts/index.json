@@ -9,16 +9,6 @@
   "title": "[🔴11/18 #당잠사] 엔비디아 실적 발표 | 젠슨 황 \"요청 시 복귀”…엔비디아 이사회 ”고려 안 해” | 앤트로픽, IPO 흥행 기대 | #엔비디아 #마이크론 #마이크로소프트",
   "uploaded_epoch": 1794950911
  },
- "-5SpuJ68878": {
-  "channel": "hkgm",
-  "chars": 13617,
-  "duration_sec": 1624,
-  "lang": "ko-orig",
-  "ok": true,
-  "source": "caption",
-  "title": "CIA 정보활동에 쓰이던 기업의 성장과정을 알아봤습니다 | 박신영의 월가아나토미",
-  "uploaded_epoch": 1791579604
- },
  "-UUE-DQJnNM": {
   "channel": "hkwowtv",
   "chars": 961,
@@ -38,6 +28,13 @@
   "source": "caption",
   "title": "[조연의 브레이킹 뉴스] 근원 물가 석 달째 0.3%...빅스텝 갈까",
   "uploaded_epoch": 1794318253
+ },
+ "-XDbOFwc-o8": {
+  "channel": "hkgm",
+  "duration_sec": 0,
+  "ok": false,
+  "title": "[김현석의 월나우-11월24일] 왕의 귀환…엔비디아 31%↑, 아직 다 끝난 건 아니다? \"하루 이틀 더 봐야\"",
+  "uploaded_epoch": 0
  },
  "-iiS_1t8enU": {
   "channel": "hkgm",
@@ -684,8 +681,7 @@
   "channel": "hkgm",
   "duration_sec": 0,
   "ok": false,
-  "pending": "live",
-  "title": "[박신영의 개장전 요것만-11월23일] 젠슨 황 엔비디아 복귀...뉴욕증시 반등 시도 2026-11-23 23:32",
+  "title": "[Park Shin-young’s Pre-Market Highlights - November 23] Jensen Huang Returns to Board by Unanimou...",
   "uploaded_epoch": 1795441576
  },
  "JnAMGLw_JkQ": {
@@ -973,6 +969,13 @@
  "SZ4z62t41Eo": {
   "ok": false,
   "title": "\"The Police Know Where I've Been\": The Truth Behind the 120,000 Cameras Covering America | Kim In..."
+ },
+ "SlogffV3wZE": {
+  "channel": "hkgm",
+  "duration_sec": 0,
+  "ok": false,
+  "title": "[박신영의 클로징벨 요것만-11월24일] 젠슨 황 복귀에 엔비디아 31.6% 폭등, AI 인프라주도 급등...앤트로픽만 랠리에서 제외",
+  "uploaded_epoch": 0
  },
  "Sz8CdKRm-Bs": {
   "channel": "hkgm",
@@ -1481,6 +1484,13 @@
   "title": "11월 12일 글로벌 1분 시황✅ #당잠사 #굿모닝한경글로벌마켓 #1분시황",
   "uploaded_epoch": 1794438140
  },
+ "jguFMibEtRk": {
+  "channel": "hkwowtv",
+  "duration_sec": 0,
+  "ok": false,
+  "title": "[🔴11/24 #당잠사] 엔비디아, 젠슨 황 CEO 즉시 복귀 결정ㅣ필라델피아반도체 급등ㅣPMI 확장세 지속ㅣ크라우드스트라이크, 지스케일러 인수ㅣ#엔비디아 #앤트로픽 #마이크론",
+  "uploaded_epoch": 0
+ },
  "jmQolgkrx_g": {
   "channel": "hkwowtv",
   "chars": 21801,
@@ -1625,18 +1635,6 @@
  "oddhu5wf7M8": {
   "ok": false,
   "title": "Examining the Role of GPUs in the AI Era and the Power of NVIDIA | Park Shin-young's Wall Street ..."
- },
- "ovY3N4j4J5Q": {
-  "channel": "hkgm",
-  "chars": 17872,
-  "coverage": 0.98,
-  "duration_sec": 2480,
-  "lang": "whisper-small",
-  "live_record": true,
-  "ok": true,
-  "source": "audio",
-  "title": "[김현석의 월나우-10월10일] AI 수요 오해 풀렸지만, S&P 신기록 다가섰지만, 오늘도 떨어진 반도체...왜 2026-10-09 21:39",
-  "uploaded_epoch": 1791581950
  },
  "ozMJS8ChedM": {
   "channel": "hkgm",
