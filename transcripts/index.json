@@ -323,10 +323,13 @@
  },
  "8-A1yMnC06E": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
-  "title": "Putin Hits a 'Home Run' at Trilateral Talks... Xi Jinping Smiling Behind the Scenes | Lee Sang-eo...",
-  "uploaded_epoch": 0
+  "chars": 15908,
+  "duration_sec": 1704,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "3자회담 '홈런' 친 푸틴…그 뒤에서 웃는 시진핑 | 이상은의 워싱턴나우",
+  "uploaded_epoch": 1795404608
  },
  "89Dn-PKY6gU": {
   "channel": "hkgm",
@@ -681,8 +684,9 @@
   "channel": "hkgm",
   "duration_sec": 0,
   "ok": false,
-  "title": "[박신영의 개장전 요것만-11월23일] 젠슨 황 엔비디아 복귀...뉴욕증시 반등 시도",
-  "uploaded_epoch": 0
+  "pending": "live",
+  "title": "[박신영의 개장전 요것만-11월23일] 젠슨 황 엔비디아 복귀...뉴욕증시 반등 시도 2026-11-23 23:32",
+  "uploaded_epoch": 1795441576
  },
  "JnAMGLw_JkQ": {
   "channel": "hkwowtv",
