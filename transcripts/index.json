@@ -33,8 +33,9 @@
   "channel": "hkgm",
   "duration_sec": 0,
   "ok": false,
-  "title": "[김현석의 월나우-11월24일] 왕의 귀환…엔비디아 31%↑, 아직 다 끝난 건 아니다? \"하루 이틀 더 봐야\"",
-  "uploaded_epoch": 0
+  "pending": "live",
+  "title": "[김현석의 월나우-11월24일] 왕의 귀환…엔비디아 31%↑, 아직 다 끝난 건 아니다? \"하루 이틀 더 봐야\" 2026-11-24 07:19",
+  "uploaded_epoch": 1795469590
  },
  "-iiS_1t8enU": {
   "channel": "hkgm",
@@ -679,10 +680,13 @@
  },
  "J_-b0JnKJhY": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
-  "title": "[Park Shin-young’s Pre-Market Highlights - November 23] Jensen Huang Returns to Board by Unanimou...",
-  "uploaded_epoch": 1795441576
+  "chars": 15736,
+  "duration_sec": 2093,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "[박신영의 개장전 요것만-11월23일] 젠슨 황, 이사회 만장일치 복귀...엔비디아 주가 폭등",
+  "uploaded_epoch": 1795445031
  },
  "JnAMGLw_JkQ": {
   "channel": "hkwowtv",
@@ -972,10 +976,13 @@
  },
  "SlogffV3wZE": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
+  "chars": 7342,
+  "duration_sec": 991,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
   "title": "[박신영의 클로징벨 요것만-11월24일] 젠슨 황 복귀에 엔비디아 31.6% 폭등, AI 인프라주도 급등...앤트로픽만 랠리에서 제외",
-  "uploaded_epoch": 0
+  "uploaded_epoch": 1795470660
  },
  "Sz8CdKRm-Bs": {
   "channel": "hkgm",
@@ -1486,10 +1493,13 @@
  },
  "jguFMibEtRk": {
   "channel": "hkwowtv",
-  "duration_sec": 0,
-  "ok": false,
+  "chars": 24009,
+  "duration_sec": 3368,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
   "title": "[🔴11/24 #당잠사] 엔비디아, 젠슨 황 CEO 즉시 복귀 결정ㅣ필라델피아반도체 급등ㅣPMI 확장세 지속ㅣ크라우드스트라이크, 지스케일러 인수ㅣ#엔비디아 #앤트로픽 #마이크론",
-  "uploaded_epoch": 0
+  "uploaded_epoch": 1795469319
  },
  "jmQolgkrx_g": {
   "channel": "hkwowtv",
