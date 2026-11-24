@@ -704,10 +704,13 @@
  },
  "KO9Nzb0OsWg": {
   "channel": "hkwowtv",
-  "duration_sec": 0,
-  "ok": false,
-  "title": "November 25 Global Market Minute✅ #WhileYouWereSleeping #GoodMorningHankyungGlobalMarket #1Minute...",
-  "uploaded_epoch": 0
+  "chars": 662,
+  "duration_sec": 69,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "11월 25일 글로벌 1분 시황✅ #당잠사 #굿모닝한경글로벌마켓 #1분시황",
+  "uploaded_epoch": 1795560219
  },
  "KzpzJxIEiR0": {
   "channel": "hkwowtv",
