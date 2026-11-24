@@ -894,10 +894,13 @@
  },
  "Qf534kSg86A": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
-  "title": "[Park Shin-young's Pre-market Briefing - Nov 24] Will the US Market Climb the Wall of Worry or Sl...",
-  "uploaded_epoch": 1795528081
+  "chars": 16025,
+  "duration_sec": 2198,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "[박신영의 개장전 요것만-11월24일] 뉴욕증시, 걱정의 벽 타고 오를까 vs 희망의 비탈길로 내려올까",
+  "uploaded_epoch": 1795532432
  },
  "QoLqSsmwCB8": {
   "channel": "hkgm",
@@ -1060,10 +1063,13 @@
  },
  "U1sdd_SVx-Q": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
+  "chars": 7089,
+  "duration_sec": 919,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
   "title": "[박신영의 클로징벨 요것만-11월25일] 하루 만에 꺾인 엔비디아 랠리...공모가 무너진 엔트로픽",
-  "uploaded_epoch": 0
+  "uploaded_epoch": 1795557097
  },
  "V0FVQ_hBk80": {
   "channel": "hkwowtv",
@@ -1477,10 +1483,13 @@
  },
  "jYCUaFdAGUw": {
   "channel": "hkwowtv",
-  "duration_sec": 0,
-  "ok": false,
+  "chars": 23342,
+  "duration_sec": 3508,
+  "lang": "whisper-small",
+  "ok": true,
+  "source": "audio",
   "title": "[🔴11/25 #당잠사] AI 투매 재개, 앤트로픽 공모가 깨져ㅣ“美, 과잉생산 관세 이르면 이번주 발표\"ㅣ스페이스X-테슬라 합병 속도전ㅣ#엔비디아 #앤트로픽 #스페이스X",
-  "uploaded_epoch": 0
+  "uploaded_epoch": 1795555832
  },
  "jb_V0AW3qBQ": {
   "channel": "hkgm",
@@ -1952,8 +1961,9 @@
   "channel": "hkgm",
   "duration_sec": 0,
   "ok": false,
-  "title": "[김현석의 월나우-11월25일] 젠슨 효과, 하루로 끝...골드만 \"메모리 내년 정점\", 그래도 \"약세장 없다\"는 월가",
-  "uploaded_epoch": 0
+  "pending": "live",
+  "title": "[김현석의 월나우-11월25일] 젠슨 효과, 하루로 끝...골드만 \"메모리 내년 정점\", 그래도 \"약세장 없다\"는 월가 2026-11-25 07:44",
+  "uploaded_epoch": 1795556166
  },
  "y0Rq9qCxTnY": {
   "ok": false,
