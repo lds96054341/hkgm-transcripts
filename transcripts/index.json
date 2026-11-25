@@ -451,11 +451,15 @@
  },
  "Dj4GQEtoIjs": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
-  "pending": "live",
-  "title": "[김현석의 월나우-11월26일] 마이클 버리가 살렸다...나스닥 -4%에서 -0.6%로 \"떨어지는 칼 잡지마\" 2026-11-26 07:17",
-  "uploaded_epoch": 1795642390
+  "chars": 16247,
+  "coverage": 0.98,
+  "duration_sec": 2225,
+  "lang": "whisper-small",
+  "live_record": true,
+  "ok": true,
+  "source": "audio",
+  "title": "[김현석의 월나우-11월26일] 마이클 버리가 살렸다...나스닥 -4%에서 -0.6%로 \"떨어지는 칼 잡지마\" 2026-11-26 07:13",
+  "uploaded_epoch": 1795644691
  },
  "DjkGddjliZA": {
   "channel": "hkgm",
