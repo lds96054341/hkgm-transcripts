@@ -411,10 +411,13 @@
  },
  "CCVHyPD0TRw": {
   "channel": "hkwowtv",
-  "duration_sec": 0,
-  "ok": false,
+  "chars": 21394,
+  "duration_sec": 3354,
+  "lang": "whisper-small",
+  "ok": true,
+  "source": "audio",
   "title": "[🔴11/26 #당잠사] S&P, 엔비디아 신용등급 하향 경고ㅣ버리 “현재 대부분 롱 포지션”ㅣ美 10월 PCE 3.8% 상승ㅣ#엔비디아 #구글 #스페이스X",
-  "uploaded_epoch": 0
+  "uploaded_epoch": 1795642084
  },
  "CFHVGCGHv2E": {
   "channel": "hkgm",
@@ -428,10 +431,13 @@
  },
  "CsIkZEzNxiY": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
-  "title": "[Plus Live] Government bond yields plummet despite inflation... \"AI: When to buy bonds\"",
-  "uploaded_epoch": 0
+  "chars": 3940,
+  "duration_sec": 516,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "[플러스 라이브] 인플레에도 국채금리 급락...\"AI 채권 살 때\"",
+  "uploaded_epoch": 1795628408
  },
  "DEb5daFJUKU": {
   "channel": "hkwowtv",
@@ -447,7 +453,8 @@
   "channel": "hkgm",
   "duration_sec": 0,
   "ok": false,
-  "title": "[김현석의 월나우-11월26일] 마이클 버리가 살렸다...나스닥 -4%에서 -0.6%로 \"떨어지는 칼 잡지마\"",
+  "pending": "live",
+  "title": "[김현석의 월나우-11월26일] 마이클 버리가 살렸다...나스닥 -4%에서 -0.6%로 \"떨어지는 칼 잡지마\" 2026-11-26 07:17",
   "uploaded_epoch": 1795642390
  },
  "DjkGddjliZA": {
@@ -1041,10 +1048,13 @@
  },
  "T1_B5WH4YNo": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
+  "chars": 6502,
+  "duration_sec": 863,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
   "title": "[박신영의 클로징벨 요것만-11월26일] '롱'으로 돌아선 마이클 버리...낙폭 줄였지만 AI 매도세 여전",
-  "uploaded_epoch": 0
+  "uploaded_epoch": 1795643004
  },
  "T3sZ09L3D5A": {
   "channel": "hkgm",
@@ -1451,10 +1461,13 @@
  },
  "h70eJBqQJiM": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
-  "title": "[Park Shin-young's Pre-Market Briefing - Nov 25] Wall Street, AI Concerns Resurface... \"Nothing H...",
-  "uploaded_epoch": 1795614483
+  "chars": 13717,
+  "duration_sec": 1859,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "[박신영의 개장전 요것만-11월25일] 월가, AI 우려 재확산...\"젠슨 황 말고 변한게 없다\"",
+  "uploaded_epoch": 1795618428
  },
  "i1pUe8llLvA": {
   "channel": "hkwowtv",
