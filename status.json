@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-11-25T14:15:47+00:00",
- "last_run_kst": "2026-11-25 23:15:47 KST",
+ "last_run_utc": "2026-11-25T21:45:05+00:00",
+ "last_run_kst": "2026-11-26 06:45:05 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -15,6 +15,12 @@
  },
  "results": [
   {
+   "id": "CCVHyPD0TRw",
+   "channel": "hkwowtv",
+   "state": "no_subtitle",
+   "error": "ted format is not available\n || [audio/default] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] CCVHyPD0TRw: Sign in to confirm you’re not a bot. This helps protect o | [audio/tv] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] CCVHyPD0TRw: Sign in to confirm you’re not a bot. This helps protect o | [audio/web_safari] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] CCVHyPD0TRw: Sign in to confirm you’re not a bot. This helps protect o | [audio/mweb] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] CCVHyPD0TRw: Sign in to confirm you’re not a bot. This helps protect o"
+  },
+  {
    "id": "KO9Nzb0OsWg",
    "channel": "hkwowtv",
    "state": "cached"
@@ -25,23 +31,33 @@
    "state": "cached"
   },
   {
-   "id": "G2pERPQfv08",
-   "channel": "hkwowtv",
-   "state": "cached"
+   "id": "T1_B5WH4YNo",
+   "channel": "hkgm",
+   "state": "no_subtitle",
+   "error": "ted format is not available\n || [audio/default] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] T1_B5WH4YNo: Sign in to confirm you’re not a bot. This helps protect o | [audio/tv] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] T1_B5WH4YNo: Sign in to confirm you’re not a bot. This helps protect o | [audio/web_safari] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] T1_B5WH4YNo: Sign in to confirm you’re not a bot. This helps protect o | [audio/mweb] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] T1_B5WH4YNo: Sign in to confirm you’re not a bot. This helps protect o"
   },
   {
-   "id": "h70eJBqQJiM",
+   "id": "Dj4GQEtoIjs",
    "channel": "hkgm",
    "state": "live_pending",
    "error": "UPCOMING: 예약된 라이브(아직 시작 전) — 방송이 끝난 뒤 다음 실행에서 다시 시도"
   },
   {
+   "id": "CsIkZEzNxiY",
+   "channel": "hkgm",
+   "state": "no_subtitle",
+   "error": "자막 트랙 없음(default,tv,web_safari,mweb) → 음성 받아쓰기로 전환 || 봇 차단 2회로 이번 회차 받아쓰기 중단"
+  },
+  {
+   "id": "h70eJBqQJiM",
+   "channel": "hkgm",
+   "state": "no_subtitle",
+   "error": "자막 트랙 없음(default,tv,web_safari,mweb) → 음성 받아쓰기로 전환 || 봇 차단 2회로 이번 회차 받아쓰기 중단"
+  },
+  {
    "id": "T3sZ09L3D5A",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 4588
+   "state": "cached"
   },
   {
    "id": "8kjSUv6ZE9k",
@@ -92,24 +108,9 @@
    "id": "Tce49IyMt1A",
    "channel": "hkgm",
    "state": "cached"
-  },
-  {
-   "id": "XbM2AbJXeUQ",
-   "channel": "hkgm",
-   "state": "cached"
-  },
-  {
-   "id": "6oeQKk24rXM",
-   "channel": "hkgm",
-   "state": "cached"
-  },
-  {
-   "id": "7EHcrP6Wn0U",
-   "channel": "hkgm",
-   "state": "cached"
   }
  ],
- "whisper_used": 0,
+ "whisper_used": 2,
  "health": {
   "cookie": {
    "status": "ok",
@@ -127,21 +128,24 @@
     "__Secure-3PSID"
    ],
    "nearest_expiry_kst": "2027-12-19 10:06 KST",
-   "days_left": 388.5,
+   "days_left": 388.1,
    "note": ""
   },
   "pot_provider": "ok",
-  "js_runtime": "ok deno=2.9.8 ejs=0.8.0 ffmpeg=6.1.1-3ubuntu5",
+  "js_runtime": "ok deno=2.9.8 ejs=0.8.0 ffmpeg=8.0.1-3ubuntu2",
   "ejs_failures": 0,
-  "bot_blocked": 0,
-  "caption_bot_blocked": 0,
-  "audio_disabled": false,
-  "fetched": 1,
-  "by_caption": 1,
-  "failed": 0,
+  "bot_blocked": 2,
+  "caption_bot_blocked": 2,
+  "audio_disabled": true,
+  "fetched": 0,
+  "by_caption": 0,
+  "failed": 4,
   "live_pending": 1,
   "live_record": "ok",
   "whisper_errors": 0,
-  "warnings": []
+  "warnings": [
+   "YouTube 봇 차단 — 자막 경로도 막힘(영상 2건, 음성 경로 2회). 쿠키 세션 무효화 또는 러너 IP 차단 — YT_COOKIES 시크릿 갱신이 필요할 수 있습니다.",
+   "이번 회차 신규 수집 0건(실패 4건) — 리포트는 기사 기반으로 작성해야 합니다."
+  ]
  }
 }

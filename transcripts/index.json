@@ -409,6 +409,13 @@
   "ok": false,
   "title": "\"Hike\" said three times by Powell, and Wall Street ready to be fooled again | Wall Street Briefing"
  },
+ "CCVHyPD0TRw": {
+  "channel": "hkwowtv",
+  "duration_sec": 0,
+  "ok": false,
+  "title": "[🔴11/26 #당잠사] S&P, 엔비디아 신용등급 하향 경고ㅣ버리 “현재 대부분 롱 포지션”ㅣ美 10월 PCE 3.8% 상승ㅣ#엔비디아 #구글 #스페이스X",
+  "uploaded_epoch": 0
+ },
  "CFHVGCGHv2E": {
   "channel": "hkgm",
   "chars": 9176,
@@ -419,15 +426,12 @@
   "title": "공급사 쥐어짜던 애플이 '을'이 됐다…아이폰·맥북 가격 치솟는 진짜 이유ㅣ김인엽의 실리콘밸리나우",
   "uploaded_epoch": 1793869212
  },
- "D9mYScmSvTQ": {
+ "CsIkZEzNxiY": {
   "channel": "hkgm",
-  "chars": 7341,
-  "duration_sec": 872,
-  "lang": "ko-orig",
-  "ok": true,
-  "source": "caption",
-  "title": "앤트로픽 IPO, 약속의 11월 될까?ㅣ김현석의 월나우 위클리Q",
-  "uploaded_epoch": 1791754209
+  "duration_sec": 0,
+  "ok": false,
+  "title": "[Plus Live] Government bond yields plummet despite inflation... \"AI: When to buy bonds\"",
+  "uploaded_epoch": 0
  },
  "DEb5daFJUKU": {
   "channel": "hkwowtv",
@@ -438,6 +442,14 @@
   "source": "caption",
   "title": "[🔴11/12 #당잠사] 코어위브 호실적發 AI 훈풍ㅣ앤트로픽 IPO 흥행ㅣ필리반도체 급등…엔비디아 반등ㅣ오픈AI, 분기 매출 100억 달러ㅣ#엔비디아 #마이크로소프트 #알파벳",
   "uploaded_epoch": 1794432408
+ },
+ "Dj4GQEtoIjs": {
+  "channel": "hkgm",
+  "duration_sec": 0,
+  "ok": false,
+  "pending": "upcoming",
+  "title": "[김현석의 월나우-11월26일] 한국 시간 기준 오전 7시 LIVE",
+  "uploaded_epoch": 1795642390
  },
  "DjkGddjliZA": {
   "channel": "hkgm",
@@ -1028,6 +1040,13 @@
   "title": "반도체 수출통제 '칼날' 벼리는 美 의회..韓 기업도 영향권 | 이상은의 워싱턴나우",
   "uploaded_epoch": 1794799839
  },
+ "T1_B5WH4YNo": {
+  "channel": "hkgm",
+  "duration_sec": 0,
+  "ok": false,
+  "title": "[박신영의 클로징벨 요것만-11월26일] '롱'으로 돌아선 마이클 버리...낙폭 줄였지만 AI 매도세 여전",
+  "uploaded_epoch": 0
+ },
  "T3sZ09L3D5A": {
   "channel": "hkgm",
   "chars": 4588,
@@ -1435,8 +1454,7 @@
   "channel": "hkgm",
   "duration_sec": 0,
   "ok": false,
-  "pending": "upcoming",
-  "title": "[박신영의 개장전 요것만-11월25일] 월가, AI 우려 재확산...\"젠슨 황 말고 변한게 없다\"",
+  "title": "[Park Shin-young's Pre-Market Briefing - Nov 25] Wall Street, AI Concerns Resurface... \"Nothing H...",
   "uploaded_epoch": 1795614483
  },
  "i1pUe8llLvA": {
@@ -1917,16 +1935,6 @@
  "wPkt3_elsgM": {
   "ok": false,
   "title": "How South Korea Surpassed Tech Powerhouses US and Japan to Seize AI Memory Supremacy | Park Shin-..."
- },
- "wg_-tqnZN2g": {
-  "channel": "hkwowtv",
-  "chars": 19894,
-  "duration_sec": 2734,
-  "lang": "ko-orig",
-  "ok": true,
-  "source": "caption",
-  "title": "[🔴10/12 #당잠사]AI 종목 강세에 기술주 반등 | 트럼프 “푸틴과 러 경유 공급 합의” | 연준 “美 가계 부채 상환 능력 악화” | #스페이스x #엔비디아 #애플",
-  "uploaded_epoch": 1791753598
  },
  "wgvcb9hGqNQ": {
   "channel": "hkgm",
