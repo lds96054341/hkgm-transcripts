@@ -367,10 +367,13 @@
  },
  "8kjSUv6ZE9k": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
-  "title": "Anthropic Drops Below IPO Price: Strengths and Risks Analyzed | Park Shin-young's Wall Street Ana...",
-  "uploaded_epoch": 0
+  "chars": 7554,
+  "duration_sec": 970,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "공모가 아래로 떨어진 앤트로픽, 강점과 리스크를 살펴봤습니다 | 박신영의 월가아나토미",
+  "uploaded_epoch": 1795568419
  },
  "95uDak_dhcY": {
   "channel": "hkwowtv",
