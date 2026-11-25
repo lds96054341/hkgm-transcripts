@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-11-25T21:50:06+00:00",
- "last_run_kst": "2026-11-26 06:50:06 KST",
+ "last_run_utc": "2026-11-25T23:11:27+00:00",
+ "last_run_kst": "2026-11-26 08:11:27 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -17,10 +17,7 @@
   {
    "id": "CCVHyPD0TRw",
    "channel": "hkwowtv",
-   "state": "fetched",
-   "source": "audio",
-   "lang": "whisper-small",
-   "chars": 21394
+   "state": "cached"
   },
   {
    "id": "KO9Nzb0OsWg",
@@ -35,38 +32,22 @@
   {
    "id": "Dj4GQEtoIjs",
    "channel": "hkgm",
-   "state": "no_subtitle",
-   "error": "ted format is not available\n || [audio/default] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] Dj4GQEtoIjs: Sign in to confirm you’re not a bot. This helps protect o | [audio/tv] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] Dj4GQEtoIjs: Sign in to confirm you’re not a bot. This helps protect o | [audio/web_safari] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] Dj4GQEtoIjs: Sign in to confirm you’re not a bot. This helps protect o | [audio/mweb] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] Dj4GQEtoIjs: Sign in to confirm you’re not a bot. This helps protect o"
+   "state": "cached"
   },
   {
    "id": "T1_B5WH4YNo",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 6502
-  },
-  {
-   "id": "Dj4GQEtoIjs",
-   "channel": "hkgm",
-   "state": "live_pending",
-   "error": "LIVE: 라이브 진행 중 — 방송이 끝난 뒤 다음 실행에서 다시 시도"
+   "state": "cached"
   },
   {
    "id": "CsIkZEzNxiY",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 3940
+   "state": "cached"
   },
   {
    "id": "h70eJBqQJiM",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 13717
+   "state": "cached"
   },
   {
    "id": "T3sZ09L3D5A",
@@ -124,7 +105,7 @@
    "state": "cached"
   }
  ],
- "whisper_used": 1,
+ "whisper_used": 0,
  "health": {
   "cookie": {
    "status": "ok",
@@ -146,15 +127,15 @@
    "note": ""
   },
   "pot_provider": "ok",
-  "js_runtime": "ok deno=2.9.8 ejs=0.8.0 ffmpeg=6.1.1-3ubuntu5",
+  "js_runtime": "ok deno=2.9.8 ejs=0.8.0 ffmpeg=8.0.1-3ubuntu2",
   "ejs_failures": 0,
   "bot_blocked": 0,
   "caption_bot_blocked": 0,
   "audio_disabled": false,
-  "fetched": 4,
-  "by_caption": 3,
+  "fetched": 0,
+  "by_caption": 0,
   "failed": 0,
-  "live_pending": 1,
+  "live_pending": 0,
   "live_record": "ok",
   "whisper_errors": 0,
   "warnings": []
