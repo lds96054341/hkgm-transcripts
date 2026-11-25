@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-11-25T05:10:51+00:00",
- "last_run_kst": "2026-11-25 14:10:51 KST",
+ "last_run_utc": "2026-11-25T14:12:59+00:00",
+ "last_run_kst": "2026-11-25 23:12:59 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -30,15 +30,21 @@
    "state": "cached"
   },
   {
-   "id": "8kjSUv6ZE9k",
+   "id": "h70eJBqQJiM",
    "channel": "hkgm",
-   "state": "cached"
+   "state": "live_pending",
+   "error": "UPCOMING: 예약된 라이브(아직 시작 전) — 방송이 끝난 뒤 다음 실행에서 다시 시도"
   },
   {
    "id": "T3sZ09L3D5A",
    "channel": "hkgm",
-   "state": "live_pending",
-   "error": "UPCOMING: 예약된 라이브(아직 시작 전) — 방송이 끝난 뒤 다음 실행에서 다시 시도"
+   "state": "no_subtitle",
+   "error": "b_safari,mweb) → 음성 받아쓰기로 전환 || [audio/default] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] T3sZ09L3D5A: Sign in to confirm you’re not a bot. This helps protect o | [audio/tv] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] T3sZ09L3D5A: Sign in to confirm you’re not a bot. This helps protect o | [audio/web_safari] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] T3sZ09L3D5A: Sign in to confirm you’re not a bot. This helps protect o | [audio/mweb] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] T3sZ09L3D5A: Sign in to confirm you’re not a bot. This helps protect o"
+  },
+  {
+   "id": "8kjSUv6ZE9k",
+   "channel": "hkgm",
+   "state": "cached"
   },
   {
    "id": "U1sdd_SVx-Q",
@@ -99,14 +105,9 @@
    "id": "7EHcrP6Wn0U",
    "channel": "hkgm",
    "state": "cached"
-  },
-  {
-   "id": "P76jZE8gOWI",
-   "channel": "hkgm",
-   "state": "cached"
   }
  ],
- "whisper_used": 0,
+ "whisper_used": 1,
  "health": {
   "cookie": {
    "status": "ok",
@@ -124,21 +125,24 @@
     "__Secure-3PSID"
    ],
    "nearest_expiry_kst": "2027-12-19 10:06 KST",
-   "days_left": 388.8,
+   "days_left": 388.5,
    "note": ""
   },
   "pot_provider": "ok",
   "js_runtime": "ok deno=2.9.8 ejs=0.8.0 ffmpeg=8.0.1-3ubuntu2",
   "ejs_failures": 0,
-  "bot_blocked": 0,
+  "bot_blocked": 1,
   "caption_bot_blocked": 0,
   "audio_disabled": false,
   "fetched": 0,
   "by_caption": 0,
-  "failed": 0,
+  "failed": 1,
   "live_pending": 1,
   "live_record": "ok",
   "whisper_errors": 0,
-  "warnings": []
+  "warnings": [
+   "YouTube 봇 차단 1회 — GitHub Actions의 데이터센터 IP는 차단 대상입니다. 자막 경로로만 수집됩니다.",
+   "이번 회차 신규 수집 0건(실패 1건) — 리포트는 기사 기반으로 작성해야 합니다."
+  ]
  }
 }
