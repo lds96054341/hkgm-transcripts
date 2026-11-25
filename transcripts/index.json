@@ -1030,10 +1030,13 @@
  },
  "T3sZ09L3D5A": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
+  "chars": 4588,
+  "duration_sec": 687,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
   "title": "[김현석의 브레이킹 뉴스] 근원 +3.3%...12월 금리 인상 확정",
-  "uploaded_epoch": 1795560704
+  "uploaded_epoch": 1795613906
  },
  "TF3F2WxyISA": {
   "ok": false,
@@ -1433,7 +1436,7 @@
   "duration_sec": 0,
   "ok": false,
   "pending": "upcoming",
-  "title": "[박신영의 개장전 요것만-11월25일] 미국장 개장전 알아야 할 특징주 및 주요 뉴스",
+  "title": "[박신영의 개장전 요것만-11월25일] 월가, AI 우려 재확산...\"젠슨 황 말고 변한게 없다\"",
   "uploaded_epoch": 1795614483
  },
  "i1pUe8llLvA": {
