@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-11-26T13:52:14+00:00",
- "last_run_kst": "2026-11-26 22:52:14 KST",
+ "last_run_utc": "2026-11-26T21:38:19+00:00",
+ "last_run_kst": "2026-11-27 06:38:19 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -15,6 +15,12 @@
  },
  "results": [
   {
+   "id": "k0uy1rABZbY",
+   "channel": "hkwowtv",
+   "state": "no_subtitle",
+   "error": "ted format is not available\n || [audio/default] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] k0uy1rABZbY: Sign in to confirm you’re not a bot. This helps protect o | [audio/tv] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] k0uy1rABZbY: Sign in to confirm you’re not a bot. This helps protect o | [audio/web_safari] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] k0uy1rABZbY: Sign in to confirm you’re not a bot. This helps protect o | [audio/mweb] WARNING: [youtube] No title found in player responses; falli / ERROR: [youtube] k0uy1rABZbY: Sign in to confirm you’re not a bot. This helps protect o"
+  },
+  {
    "id": "CCVHyPD0TRw",
    "channel": "hkwowtv",
    "state": "cached"
@@ -25,17 +31,9 @@
    "state": "cached"
   },
   {
-   "id": "jYCUaFdAGUw",
-   "channel": "hkwowtv",
-   "state": "cached"
-  },
-  {
    "id": "DTKrxoURD5A",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 6506
+   "state": "cached"
   },
   {
    "id": "T1_B5WH4YNo",
@@ -108,7 +106,7 @@
    "state": "cached"
   }
  ],
- "whisper_used": 0,
+ "whisper_used": 1,
  "health": {
   "cookie": {
    "status": "ok",
@@ -126,21 +124,24 @@
     "__Secure-3PSID"
    ],
    "nearest_expiry_kst": "2027-12-19 10:06 KST",
-   "days_left": 387.5,
+   "days_left": 387.1,
    "note": ""
   },
   "pot_provider": "ok",
-  "js_runtime": "ok deno=2.9.8 ejs=0.8.0 ffmpeg=6.1.1-3ubuntu5",
+  "js_runtime": "ok deno=2.9.8 ejs=0.8.0 ffmpeg=8.0.1-3ubuntu2",
   "ejs_failures": 0,
-  "bot_blocked": 0,
-  "caption_bot_blocked": 0,
+  "bot_blocked": 1,
+  "caption_bot_blocked": 1,
   "audio_disabled": false,
-  "fetched": 1,
-  "by_caption": 1,
-  "failed": 0,
+  "fetched": 0,
+  "by_caption": 0,
+  "failed": 1,
   "live_pending": 0,
   "live_record": "ok",
   "whisper_errors": 0,
-  "warnings": []
+  "warnings": [
+   "YouTube 봇 차단 — 자막 경로도 막힘(영상 1건, 음성 경로 1회). 쿠키 세션 무효화 또는 러너 IP 차단 — YT_COOKIES 시크릿 갱신이 필요할 수 있습니다.",
+   "이번 회차 신규 수집 0건(실패 1건) — 리포트는 기사 기반으로 작성해야 합니다."
+  ]
  }
 }

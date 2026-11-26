@@ -934,18 +934,6 @@
   "title": "[박신영의 개장전 요것만-11월24일] 뉴욕증시, 걱정의 벽 타고 오를까 vs 희망의 비탈길로 내려올까",
   "uploaded_epoch": 1795532432
  },
- "QoLqSsmwCB8": {
-  "channel": "hkgm",
-  "chars": 17770,
-  "coverage": 0.98,
-  "duration_sec": 2466,
-  "lang": "whisper-small",
-  "live_record": true,
-  "ok": true,
-  "source": "audio",
-  "title": "[김현석의 월나우-10월13일] \"메모리 부족, 1년 내 완화 자금 조달이 가장 큰 문제\" | 반도체 급락…혹 탄의 작심 발언 2026-10-12 21:39",
-  "uploaded_epoch": 1791841135
- },
  "R8JkAUoV0cE": {
   "channel": "hkgm",
   "chars": 13514,
@@ -1226,16 +1214,6 @@
  "_FuiApUkxWI": {
   "ok": false,
   "title": "[박신영의 개장전요것만-8월25일] 비트코인 8만달러 돌파...\"추가 상승 여력 있어\" | 채권시장, 브로드컴 위험 경고"
- },
- "_cgq6oojx4k": {
-  "channel": "hkwowtv",
-  "chars": 18527,
-  "duration_sec": 2614,
-  "lang": "whisper-small",
-  "ok": true,
-  "source": "audio",
-  "title": "[🔴10/13 #당잠사] 中 CXMT, 차세대 D램 기술 공개 | 유가 급등…브렌트유 106달러 돌파 | 美 달러화 18개월래 최고 수준 | #메타 #마이크로소프트 #마이크론",
-  "uploaded_epoch": 1791839884
  },
  "aF0fHSQow3w": {
   "channel": "hkgm",
@@ -1596,6 +1574,13 @@
   "source": "caption",
   "title": "[박신영의 개장전요것만-10월20일] AI 탄광의 카나리아...회사채, 한국, 중국",
   "uploaded_epoch": 1792504894
+ },
+ "k0uy1rABZbY": {
+  "channel": "hkwowtv",
+  "duration_sec": 0,
+  "ok": false,
+  "title": "[🔴11/27 #당잠사] 뉴욕증시 추수감사절 휴장 | 호르무즈 기뢰·사우디 정유시설 피격 | 엔비디아 “中 임대할 경우 GPU 구매 불가 통보” | #엔비디아 #구글 #유가",
+  "uploaded_epoch": 0
  },
  "kHMTjObqSoE": {
   "channel": "hkgm",
