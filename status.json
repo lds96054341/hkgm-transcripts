@@ -1,10 +1,10 @@
 {
- "last_run_utc": "2026-11-26T22:14:49+00:00",
- "last_run_kst": "2026-11-27 07:14:49 KST",
+ "last_run_utc": "2026-11-26T23:11:21+00:00",
+ "last_run_kst": "2026-11-27 08:11:21 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
-   "listed": 3,
+   "listed": 2,
    "list_error": ""
   },
   "hkgm": {
@@ -14,11 +14,6 @@
   }
  },
  "results": [
-  {
-   "id": "k0uy1rABZbY",
-   "channel": "hkwowtv",
-   "state": "cached"
-  },
   {
    "id": "CCVHyPD0TRw",
    "channel": "hkwowtv",
