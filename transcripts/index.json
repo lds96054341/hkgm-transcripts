@@ -451,10 +451,13 @@
  },
  "DTKrxoURD5A": {
   "channel": "hkgm",
-  "duration_sec": 0,
-  "ok": false,
-  "title": "Elementary students win and trillion-dollar companies are born… The Secret of Silicon Valley Hack...",
-  "uploaded_epoch": 0
+  "chars": 6506,
+  "duration_sec": 652,
+  "lang": "ko-orig",
+  "ok": true,
+  "source": "caption",
+  "title": "초등학생 우승하고 100조 기업도 나왔다…실리콘밸리 해커톤의 비밀 | 김인엽의 실리콘밸리나우",
+  "uploaded_epoch": 1795683621
  },
  "Dj4GQEtoIjs": {
   "channel": "hkgm",
