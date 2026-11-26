@@ -1577,10 +1577,13 @@
  },
  "k0uy1rABZbY": {
   "channel": "hkwowtv",
-  "duration_sec": 0,
-  "ok": false,
+  "chars": 23862,
+  "duration_sec": 3418,
+  "lang": "whisper-small",
+  "ok": true,
+  "source": "audio",
   "title": "[🔴11/27 #당잠사] 뉴욕증시 추수감사절 휴장 | 호르무즈 기뢰·사우디 정유시설 피격 | 엔비디아 “中 임대할 경우 GPU 구매 불가 통보” | #엔비디아 #구글 #유가",
-  "uploaded_epoch": 0
+  "uploaded_epoch": 1795728552
  },
  "kHMTjObqSoE": {
   "channel": "hkgm",
