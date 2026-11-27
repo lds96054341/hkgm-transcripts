@@ -1,6 +1,6 @@
 {
- "last_run_utc": "2026-11-27T22:14:45+00:00",
- "last_run_kst": "2026-11-28 07:14:45 KST",
+ "last_run_utc": "2026-11-27T23:11:13+00:00",
+ "last_run_kst": "2026-11-28 08:11:13 KST",
  "channels": {
   "hkwowtv": {
    "name": "한국경제TV",
@@ -34,10 +34,7 @@
   {
    "id": "_CgyHlZytc4",
    "channel": "hkgm",
-   "state": "fetched",
-   "source": "caption",
-   "lang": "ko-orig",
-   "chars": 14533
+   "state": "cached"
   },
   {
    "id": "DTKrxoURD5A",
@@ -127,14 +124,15 @@
   "bot_blocked": 2,
   "caption_bot_blocked": 1,
   "audio_disabled": true,
-  "fetched": 1,
-  "by_caption": 1,
+  "fetched": 0,
+  "by_caption": 0,
   "failed": 2,
   "live_pending": 0,
   "live_record": "ok",
   "whisper_errors": 0,
   "warnings": [
-   "YouTube 봇 차단 — 자막 경로도 막힘(영상 1건, 음성 경로 2회). 쿠키 세션 무효화 또는 러너 IP 차단 — YT_COOKIES 시크릿 갱신이 필요할 수 있습니다."
+   "YouTube 봇 차단 — 자막 경로도 막힘(영상 1건, 음성 경로 2회). 쿠키 세션 무효화 또는 러너 IP 차단 — YT_COOKIES 시크릿 갱신이 필요할 수 있습니다.",
+   "이번 회차 신규 수집 0건(실패 2건) — 리포트는 기사 기반으로 작성해야 합니다."
   ]
  }
 }
